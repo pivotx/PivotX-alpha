@@ -1,0 +1,7 @@
+parameters:
+#    pivot_x_backend.example.class: PivotX\BackendBundle\Example
+
+services:
+#    pivot_x_backend.example:
+#        class: %pivot_x_backend.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
