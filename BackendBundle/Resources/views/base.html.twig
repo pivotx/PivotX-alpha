@@ -3,11 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>{% block title %}PivotX 4{% endblock %} - PivotX 4</title>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -71,7 +68,7 @@
         </div><!--/span-->
         <div class="span9">
           <div class="hero-unit">
-            <h1>{% block title %}PivotX 4{% endblock %}</h1>
+            <h1>{% block heading %}PivotX 4{% endblock %}</h1>
 {% block body %}
 
 <p>
