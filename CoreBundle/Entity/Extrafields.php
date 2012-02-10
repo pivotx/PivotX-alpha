@@ -24,7 +24,8 @@ class Extrafields
     /**
      * @var integer $contentId
      *
-     * @ORM\Column(name="content_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Content")
+     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     private $contentId;
 
