@@ -21,6 +21,7 @@
 
   <body>
 
+
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -42,6 +43,7 @@
       </div>
     </div>
 
+{% block main %}
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
@@ -69,7 +71,7 @@
         <div class="span9">
           <div class="hero-unit">
             <h1>{% block heading %}PivotX 4{% endblock %}</h1>
-{% block body %}
+{% block herounit %}
 
 <p>
 This is where the body goes
@@ -130,6 +132,8 @@ This is where the body goes
 
     </div><!--/.fluid-container-->
 
+{% endblock %}
+
     {% javascripts
         '@PivotXBackendBundle/Resources/public/js/jquery-1.7.1.min.js'
         '@PivotXBackendBundle/Resources/public/js/bootstrap.min.js'
@@ -139,5 +143,3 @@ This is where the body goes
 
   </body>
 </html>
-
-
