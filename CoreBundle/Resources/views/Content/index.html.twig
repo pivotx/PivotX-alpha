@@ -1,0 +1,88 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Content list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Slug</th>
+            <th>Reference</th>
+            <th>Grouping</th>
+            <th>Title</th>
+            <th>Teaser</th>
+            <th>Body</th>
+            <th>Template</th>
+            <th>Datecreated</th>
+            <th>Datemodified</th>
+            <th>Datepublished</th>
+            <th>Datedepublished</th>
+            <th>Datepublishon</th>
+            <th>Datedepublishon</th>
+            <th>Language</th>
+            <th>Version</th>
+            <th>Status</th>
+            <th>Searchable</th>
+            <th>Locked</th>
+            <th>Originurl</th>
+            <th>Origincreator</th>
+            <th>Textformat</th>
+            <th>Allowresponses</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('content_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.slug }}</td>
+            <td>{{ entity.reference }}</td>
+            <td>{{ entity.grouping }}</td>
+            <td>{{ entity.title }}</td>
+            <td>{{ entity.teaser }}</td>
+            <td>{{ entity.body }}</td>
+            <td>{{ entity.template }}</td>
+            <td>{% if entity.dateCreated %}{{ entity.dateCreated|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.dateModified %}{{ entity.dateModified|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.datePublished %}{{ entity.datePublished|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.dateDepublished %}{{ entity.dateDepublished|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.datePublishOn %}{{ entity.datePublishOn|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.dateDepublishOn %}{{ entity.dateDepublishOn|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.language }}</td>
+            <td>{{ entity.version }}</td>
+            <td>{{ entity.status }}</td>
+            <td>{{ entity.searchable }}</td>
+            <td>{{ entity.locked }}</td>
+            <td>{{ entity.originUrl }}</td>
+            <td>{{ entity.originCreator }}</td>
+            <td>{{ entity.textFormat }}</td>
+            <td>{{ entity.allowResponses }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('content_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('content_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+
+{% endblock %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('content_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

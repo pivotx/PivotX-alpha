@@ -2,8 +2,8 @@
 
 
 {% block crud %}
-
-<h1>Contenttype</h1>
+    
+<h1>Taxonomy</h1>
 
 <table class="record_properties">
     <tbody>
@@ -28,25 +28,29 @@
             <td>{{ entity.description }}</td>
         </tr>
         <tr>
-            <th>Extrafields</th>
-            <td>{{ entity.extrafields }}</td>
+            <th>Parentid</th>
+            <td>{{ entity.parentId }}</td>
+        </tr>
+        <tr>
+            <th>Sortingorder</th>
+            <td>{{ entity.sortingOrder }}</td>
         </tr>
     </tbody>
 </table>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('contenttype') }}">
+        <a href="{{ path('taxonomy') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('contenttype_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('taxonomy_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
     <li>
-        <form action="{{ path('contenttype_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('taxonomy_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

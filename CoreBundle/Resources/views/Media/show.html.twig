@@ -1,0 +1,76 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Media</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Reference</th>
+            <td>{{ entity.reference }}</td>
+        </tr>
+        <tr>
+            <th>Filename</th>
+            <td>{{ entity.filename }}</td>
+        </tr>
+        <tr>
+            <th>Filepath</th>
+            <td>{{ entity.filepath }}</td>
+        </tr>
+        <tr>
+            <th>Width</th>
+            <td>{{ entity.width }}</td>
+        </tr>
+        <tr>
+            <th>Height</th>
+            <td>{{ entity.height }}</td>
+        </tr>
+        <tr>
+            <th>Filesize</th>
+            <td>{{ entity.filesize }}</td>
+        </tr>
+        <tr>
+            <th>Originurl</th>
+            <td>{{ entity.originUrl }}</td>
+        </tr>
+        <tr>
+            <th>Origincreator</th>
+            <td>{{ entity.originCreator }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('media') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('media_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('media_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

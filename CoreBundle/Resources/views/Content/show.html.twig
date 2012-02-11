@@ -1,0 +1,124 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Content</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>Reference</th>
+            <td>{{ entity.reference }}</td>
+        </tr>
+        <tr>
+            <th>Grouping</th>
+            <td>{{ entity.grouping }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ entity.title }}</td>
+        </tr>
+        <tr>
+            <th>Teaser</th>
+            <td>{{ entity.teaser }}</td>
+        </tr>
+        <tr>
+            <th>Body</th>
+            <td>{{ entity.body }}</td>
+        </tr>
+        <tr>
+            <th>Template</th>
+            <td>{{ entity.template }}</td>
+        </tr>
+        <tr>
+            <th>Datecreated</th>
+            <td>{{ entity.dateCreated|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Datemodified</th>
+            <td>{{ entity.dateModified|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Datepublished</th>
+            <td>{{ entity.datePublished|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Datedepublished</th>
+            <td>{{ entity.dateDepublished|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Datepublishon</th>
+            <td>{{ entity.datePublishOn|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Datedepublishon</th>
+            <td>{{ entity.dateDepublishOn|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Language</th>
+            <td>{{ entity.language }}</td>
+        </tr>
+        <tr>
+            <th>Version</th>
+            <td>{{ entity.version }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ entity.status }}</td>
+        </tr>
+        <tr>
+            <th>Searchable</th>
+            <td>{{ entity.searchable }}</td>
+        </tr>
+        <tr>
+            <th>Locked</th>
+            <td>{{ entity.locked }}</td>
+        </tr>
+        <tr>
+            <th>Originurl</th>
+            <td>{{ entity.originUrl }}</td>
+        </tr>
+        <tr>
+            <th>Origincreator</th>
+            <td>{{ entity.originCreator }}</td>
+        </tr>
+        <tr>
+            <th>Textformat</th>
+            <td>{{ entity.textFormat }}</td>
+        </tr>
+        <tr>
+            <th>Allowresponses</th>
+            <td>{{ entity.allowResponses }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('content') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('content_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('content_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

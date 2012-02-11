@@ -1,0 +1,48 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Permission</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ entity.type }}</td>
+        </tr>
+        <tr>
+            <th>Editusers</th>
+            <td>{{ entity.editUsers }}</td>
+        </tr>
+        <tr>
+            <th>Value</th>
+            <td>{{ entity.value }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('permission') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('permission_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('permission_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

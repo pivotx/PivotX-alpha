@@ -2,8 +2,8 @@
 
 
 {% block crud %}
-
-<h1>Contenttype list</h1>
+    
+<h1>Taxonomytype list</h1>
 
 <table class="records_list">
     <thead>
@@ -13,28 +13,28 @@
             <th>Reference</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Extrafields</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('contenttype_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td><a href="{{ path('taxonomytype_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.slug }}</td>
             <td>{{ entity.reference }}</td>
             <td>{{ entity.name }}</td>
             <td>{{ entity.description }}</td>
-            <td>{{ entity.extrafields }}</td>
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('contenttype_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('taxonomytype_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('contenttype_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('taxonomytype_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
+
+{% endblock %}
             </td>
         </tr>
     {% endfor %}
@@ -43,7 +43,7 @@
 
 <ul>
     <li>
-        <a href="{{ path('contenttype_new') }}">
+        <a href="{{ path('taxonomytype_new') }}">
             Create a new entry
         </a>
     </li>

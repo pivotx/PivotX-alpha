@@ -3,9 +3,9 @@
 
 {% block crud %}
     
-<h1>Contenttype creation</h1>
+<h1>Userpermission creation</h1>
 
-<form action="{{ path('contenttype_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('userpermission_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
@@ -14,7 +14,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('contenttype') }}">
+        <a href="{{ path('userpermission') }}">
             Back to the list
         </a>
     </li>

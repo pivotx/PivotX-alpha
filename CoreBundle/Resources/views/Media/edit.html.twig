@@ -3,9 +3,9 @@
 
 {% block crud %}
     
-<h1>Contenttype edit</h1>
+<h1>Media edit</h1>
 
-<form action="{{ path('contenttype_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form action="{{ path('media_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
         <button type="submit">Edit</button>
@@ -14,12 +14,12 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('contenttype') }}">
+        <a href="{{ path('media') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <form action="{{ path('contenttype_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('media_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

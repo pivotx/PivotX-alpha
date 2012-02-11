@@ -1,0 +1,64 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>User list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Slug</th>
+            <th>Reference</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Nickname</th>
+            <th>Fullname</th>
+            <th>Language</th>
+            <th>Datelastseen</th>
+            <th>Iplastseen</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.slug }}</td>
+            <td>{{ entity.reference }}</td>
+            <td>{{ entity.role }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.password }}</td>
+            <td>{{ entity.nickname }}</td>
+            <td>{{ entity.fullname }}</td>
+            <td>{{ entity.language }}</td>
+            <td>{% if entity.dateLastseen %}{{ entity.dateLastseen|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.ipLastseen }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('user_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('user_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+
+{% endblock %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('user_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

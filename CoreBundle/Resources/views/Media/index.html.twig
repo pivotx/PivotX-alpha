@@ -1,0 +1,64 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Media list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Slug</th>
+            <th>Date</th>
+            <th>Reference</th>
+            <th>Filename</th>
+            <th>Filepath</th>
+            <th>Width</th>
+            <th>Height</th>
+            <th>Filesize</th>
+            <th>Originurl</th>
+            <th>Origincreator</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('media_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.slug }}</td>
+            <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.reference }}</td>
+            <td>{{ entity.filename }}</td>
+            <td>{{ entity.filepath }}</td>
+            <td>{{ entity.width }}</td>
+            <td>{{ entity.height }}</td>
+            <td>{{ entity.filesize }}</td>
+            <td>{{ entity.originUrl }}</td>
+            <td>{{ entity.originCreator }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('media_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('media_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+
+{% endblock %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('media_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

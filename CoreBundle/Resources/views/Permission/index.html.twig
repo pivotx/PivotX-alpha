@@ -1,0 +1,50 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Permission list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Editusers</th>
+            <th>Value</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('permission_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.type }}</td>
+            <td>{{ entity.editUsers }}</td>
+            <td>{{ entity.value }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('permission_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('permission_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+
+{% endblock %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('permission_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

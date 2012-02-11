@@ -1,0 +1,68 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>Response list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Reference</th>
+            <th>Responsetype</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Url</th>
+            <th>Ip</th>
+            <th>Datecreated</th>
+            <th>Status</th>
+            <th>Originurl</th>
+            <th>Origincreator</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('response_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.reference }}</td>
+            <td>{{ entity.responseType }}</td>
+            <td>{{ entity.title }}</td>
+            <td>{{ entity.body }}</td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.url }}</td>
+            <td>{{ entity.ip }}</td>
+            <td>{% if entity.dateCreated %}{{ entity.dateCreated|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.status }}</td>
+            <td>{{ entity.originUrl }}</td>
+            <td>{{ entity.originCreator }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('response_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('response_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+
+{% endblock %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('response_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

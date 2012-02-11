@@ -1,0 +1,76 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+    
+<h1>User</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>Reference</th>
+            <td>{{ entity.reference }}</td>
+        </tr>
+        <tr>
+            <th>Role</th>
+            <td>{{ entity.role }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ entity.email }}</td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td>{{ entity.password }}</td>
+        </tr>
+        <tr>
+            <th>Nickname</th>
+            <td>{{ entity.nickname }}</td>
+        </tr>
+        <tr>
+            <th>Fullname</th>
+            <td>{{ entity.fullname }}</td>
+        </tr>
+        <tr>
+            <th>Language</th>
+            <td>{{ entity.language }}</td>
+        </tr>
+        <tr>
+            <th>Datelastseen</th>
+            <td>{{ entity.dateLastseen|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Iplastseen</th>
+            <td>{{ entity.ipLastseen }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('user') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('user_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}
