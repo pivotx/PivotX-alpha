@@ -1,0 +1,22 @@
+{% extends 'PivotXCoreBundle::base.html.twig' %}
+
+
+{% block crud %}
+<h1>Contenttype creation</h1>
+
+<form action="{{ path('contenttype_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('contenttype') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+{% endblock %}
