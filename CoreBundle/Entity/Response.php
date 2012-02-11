@@ -95,7 +95,7 @@ class Response
     /**
      * @var text $ip
      *
-     * @ORM\Column(name="ip", type="text", length=255, nullable=false)
+     * @ORM\Column(name="ip", type="text", length=128, nullable=false)
      */
     private $ip;
 
