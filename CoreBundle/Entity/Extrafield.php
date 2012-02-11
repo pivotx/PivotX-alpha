@@ -5,12 +5,12 @@ namespace PivotX\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PivotX\CoreBundle\Entity\Extrafields
+ * PivotX\CoreBundle\Entity\Extrafield
  *
- * @ORM\Table(name="extrafields")
+ * @ORM\Table(name="extrafield")
  * @ORM\Entity
  */
-class Extrafields
+class Extrafield
 {
     /**
      * @var integer $id
@@ -21,20 +21,8 @@ class Extrafields
      */
     private $id;
 
-    /**
-     * @var integer $contentId
-     *
-     * @ORM\ManyToOne(targetEntity="Content")
-     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
-     */
-    private $contentId;
 
-    /**
-     * @var integer $contenttypeId
-     *
-     * @ORM\Column(name="contenttype_id", type="integer", nullable=false)
-     */
-    private $contenttypeId;
+
 
     /**
      * @var text $fieldkey
@@ -65,49 +53,44 @@ class Extrafields
     private $dateValue;
 
     /**
-     * @var integer $mediaId
-     *
-     * @ORM\Column(name="media_id", type="integer", nullable=false)
-     */
-    private $mediaId;
-
-    /**
      * @var text $originCreator
      *
      * @ORM\Column(name="origin_creator", type="text", nullable=false)
      */
     private $originCreator;
 
+    /**
+     * @var Content
+     *
+     * @ORM\ManyToOne(targetEntity="Content")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="content_id", referencedColumnName="id")
+     * })
+     */
+    private $content;
+
+    /**
+     * @var Contenttype
+     *
+     * @ORM\ManyToOne(targetEntity="Contenttype")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="contenttype_id", referencedColumnName="id")
+     * })
+     */
+    private $contenttype;
+
+
+
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set contentId
-     *
-     * @param integer $contentId
-     */
-    public function setContentId($contentId)
-    {
-        $this->contentId = $contentId;
-    }
-
-    /**
-     * Get contentId
-     *
-     * @return integer 
-     */
-    public function getContentId()
-    {
-        return $this->contentId;
     }
 
     /**
@@ -123,7 +106,7 @@ class Extrafields
     /**
      * Get contenttypeId
      *
-     * @return integer 
+     * @return integer
      */
     public function getContenttypeId()
     {
@@ -143,7 +126,7 @@ class Extrafields
     /**
      * Get fieldkey
      *
-     * @return text 
+     * @return text
      */
     public function getFieldkey()
     {
@@ -163,7 +146,7 @@ class Extrafields
     /**
      * Get textValue
      *
-     * @return text 
+     * @return text
      */
     public function getTextValue()
     {
@@ -183,7 +166,7 @@ class Extrafields
     /**
      * Get floatValue
      *
-     * @return float 
+     * @return float
      */
     public function getFloatValue()
     {
@@ -203,31 +186,11 @@ class Extrafields
     /**
      * Get dateValue
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateValue()
     {
         return $this->dateValue;
-    }
-
-    /**
-     * Set mediaId
-     *
-     * @param integer $mediaId
-     */
-    public function setMediaId($mediaId)
-    {
-        $this->mediaId = $mediaId;
-    }
-
-    /**
-     * Get mediaId
-     *
-     * @return integer 
-     */
-    public function getMediaId()
-    {
-        return $this->mediaId;
     }
 
     /**
@@ -243,10 +206,50 @@ class Extrafields
     /**
      * Get originCreator
      *
-     * @return text 
+     * @return text
      */
     public function getOriginCreator()
     {
         return $this->originCreator;
+    }
+
+    /**
+     * Set content
+     *
+     * @param PivotX\CoreBundle\Entity\Content $content
+     */
+    public function setContent(\PivotX\CoreBundle\Entity\Content $content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return PivotX\CoreBundle\Entity\Content
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set media
+     *
+     * @param PivotX\CoreBundle\Entity\Media $media
+     */
+    public function setMedia(\PivotX\CoreBundle\Entity\Media $media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * Get media
+     *
+     * @return PivotX\CoreBundle\Entity\Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

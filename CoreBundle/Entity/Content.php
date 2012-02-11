@@ -22,18 +22,26 @@ class Content
     private $id;
 
     /**
-     * @var integer $contenttypeId
+     * @var Contenttype
      *
-     * @ORM\Column(name="contenttype_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Contenttype")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="contenttype_id", referencedColumnName="id")
+     * })
      */
-    private $contenttypeId;
+    private $contenttype;
+
 
     /**
-     * @var integer $userId
+     * @var User
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
-    private $userId;
+    private $user;
+
 
     /**
      * @var text $slug
@@ -76,6 +84,13 @@ class Content
      * @ORM\Column(name="body", type="text", nullable=false)
      */
     private $body;
+
+    /**
+     * @var text $template
+     *
+     * @ORM\Column(name="template", type="text", nullable=false)
+     */
+    private $template;
 
     /**
      * @var datetime $dateCreated
@@ -187,7 +202,7 @@ class Content
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -207,7 +222,7 @@ class Content
     /**
      * Get contenttypeId
      *
-     * @return integer 
+     * @return integer
      */
     public function getContenttypeId()
     {
@@ -227,7 +242,7 @@ class Content
     /**
      * Get userId
      *
-     * @return integer 
+     * @return integer
      */
     public function getUserId()
     {
@@ -247,7 +262,7 @@ class Content
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -267,7 +282,7 @@ class Content
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -287,7 +302,7 @@ class Content
     /**
      * Get grouping
      *
-     * @return text 
+     * @return text
      */
     public function getGrouping()
     {
@@ -307,7 +322,7 @@ class Content
     /**
      * Get title
      *
-     * @return text 
+     * @return text
      */
     public function getTitle()
     {
@@ -327,7 +342,7 @@ class Content
     /**
      * Get teaser
      *
-     * @return text 
+     * @return text
      */
     public function getTeaser()
     {
@@ -347,11 +362,31 @@ class Content
     /**
      * Get body
      *
-     * @return text 
+     * @return text
      */
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set template
+     *
+     * @param text $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * Get template
+     *
+     * @return text
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     /**
@@ -367,7 +402,7 @@ class Content
     /**
      * Get dateCreated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateCreated()
     {
@@ -387,7 +422,7 @@ class Content
     /**
      * Get dateModified
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateModified()
     {
@@ -407,7 +442,7 @@ class Content
     /**
      * Get datePublished
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDatePublished()
     {
@@ -427,7 +462,7 @@ class Content
     /**
      * Get dateDepublished
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateDepublished()
     {
@@ -447,7 +482,7 @@ class Content
     /**
      * Get datePublishOn
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDatePublishOn()
     {
@@ -467,7 +502,7 @@ class Content
     /**
      * Get dateDepublishOn
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateDepublishOn()
     {
@@ -487,7 +522,7 @@ class Content
     /**
      * Get language
      *
-     * @return text 
+     * @return text
      */
     public function getLanguage()
     {
@@ -507,7 +542,7 @@ class Content
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -527,7 +562,7 @@ class Content
     /**
      * Get status
      *
-     * @return text 
+     * @return text
      */
     public function getStatus()
     {
@@ -547,7 +582,7 @@ class Content
     /**
      * Get searchable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSearchable()
     {
@@ -567,7 +602,7 @@ class Content
     /**
      * Get locked
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getLocked()
     {
@@ -587,7 +622,7 @@ class Content
     /**
      * Get originUrl
      *
-     * @return integer 
+     * @return integer
      */
     public function getOriginUrl()
     {
@@ -607,7 +642,7 @@ class Content
     /**
      * Get originCreator
      *
-     * @return integer 
+     * @return integer
      */
     public function getOriginCreator()
     {
@@ -627,7 +662,7 @@ class Content
     /**
      * Get textFormat
      *
-     * @return text 
+     * @return text
      */
     public function getTextFormat()
     {
@@ -647,7 +682,7 @@ class Content
     /**
      * Get allowResponses
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAllowResponses()
     {
