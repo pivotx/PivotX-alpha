@@ -46,49 +46,49 @@ class Content
     /**
      * @var text $slug
      *
-     * @ORM\Column(name="slug", type="text", nullable=false)
+     * @ORM\Column(name="slug", type="text", length=128, nullable=false)
      */
     private $slug;
 
     /**
      * @var text $reference
      *
-     * @ORM\Column(name="reference", type="text", nullable=false)
+     * @ORM\Column(name="reference", type="text", length=255, nullable=false)
      */
     private $reference;
 
     /**
      * @var text $grouping
      *
-     * @ORM\Column(name="grouping", type="text", nullable=false)
+     * @ORM\Column(name="grouping", type="text", length=128, nullable=false)
      */
     private $grouping;
 
     /**
      * @var text $title
      *
-     * @ORM\Column(name="title", type="text", nullable=false)
+     * @ORM\Column(name="title", type="text", length=255, nullable=false)
      */
     private $title;
 
     /**
      * @var text $teaser
      *
-     * @ORM\Column(name="teaser", type="text", nullable=false)
+     * @ORM\Column(name="teaser", type="text", length=65535, nullable=false)
      */
     private $teaser;
 
     /**
      * @var text $body
      *
-     * @ORM\Column(name="body", type="text", nullable=false)
+     * @ORM\Column(name="body", type="text", length=65535, nullable=false)
      */
     private $body;
 
     /**
      * @var text $template
      *
-     * @ORM\Column(name="template", type="text", nullable=false)
+     * @ORM\Column(name="template", type="text", length=255, nullable=false)
      */
     private $template;
 
@@ -137,7 +137,7 @@ class Content
     /**
      * @var text $language
      *
-     * @ORM\Column(name="language", type="text", nullable=false)
+     * @ORM\Column(name="language", type="text", length=16, nullable=false)
      */
     private $language;
 
@@ -151,7 +151,7 @@ class Content
     /**
      * @var text $status
      *
-     * @ORM\Column(name="status", type="text", nullable=false)
+     * @ORM\Column(name="status", type="text", length=16, nullable=false)
      */
     private $status;
 
@@ -172,21 +172,21 @@ class Content
     /**
      * @var integer $originUrl
      *
-     * @ORM\Column(name="origin_url", type="integer", nullable=false)
+     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
      */
     private $originUrl;
 
     /**
      * @var integer $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="integer", nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
      */
     private $originCreator;
 
     /**
      * @var text $textFormat
      *
-     * @ORM\Column(name="text_format", type="text", nullable=false)
+     * @ORM\Column(name="text_format", type="text", length=255, nullable=false)
      */
     private $textFormat;
 

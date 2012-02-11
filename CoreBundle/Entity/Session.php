@@ -20,7 +20,7 @@ class Session
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
+
     /**
      * @var User
      *
@@ -34,7 +34,7 @@ class Session
     /**
      * @var text $ip
      *
-     * @ORM\Column(name="ip", type="text", nullable=false)
+     * @ORM\Column(name="ip", type="text", length=128, nullable=false)
      */
     private $ip;
 

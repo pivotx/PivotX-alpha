@@ -24,49 +24,49 @@ class User
     /**
      * @var text $slug
      *
-     * @ORM\Column(name="slug", type="text", nullable=false)
+     * @ORM\Column(name="slug", type="text", length=128, nullable=false)
      */
     private $slug;
 
     /**
      * @var text $reference
      *
-     * @ORM\Column(name="reference", type="text", nullable=false)
+     * @ORM\Column(name="reference", type="text", length=255, nullable=false)
      */
     private $reference;
 
     /**
      * @var text $role
      *
-     * @ORM\Column(name="role", type="text", nullable=false)
+     * @ORM\Column(name="role", type="text", length=128, nullable=false)
      */
     private $role;
 
     /**
      * @var text $email
      *
-     * @ORM\Column(name="email", type="text", nullable=false)
+     * @ORM\Column(name="email", type="text", length=128, nullable=false)
      */
     private $email;
 
     /**
      * @var text $password
      *
-     * @ORM\Column(name="password", type="text", nullable=false)
+     * @ORM\Column(name="password", type="text", length=255, nullable=false)
      */
     private $password;
 
     /**
      * @var text $nickname
      *
-     * @ORM\Column(name="nickname", type="text", nullable=false)
+     * @ORM\Column(name="nickname", type="text", length=255, nullable=false)
      */
     private $nickname;
 
     /**
      * @var text $fullname
      *
-     * @ORM\Column(name="fullname", type="text", nullable=false)
+     * @ORM\Column(name="fullname", type="text", length=255, nullable=false)
      */
     private $fullname;
 
@@ -83,7 +83,7 @@ class User
     /**
      * @var text $language
      *
-     * @ORM\Column(name="language", type="text", nullable=false)
+     * @ORM\Column(name="language", type="text", length=16, nullable=false)
      */
     private $language;
 
@@ -97,7 +97,7 @@ class User
     /**
      * @var text $ipLastseen
      *
-     * @ORM\Column(name="ip_lastseen", type="text", nullable=false)
+     * @ORM\Column(name="ip_lastseen", type="text", length=128, nullable=false)
      */
     private $ipLastseen;
 

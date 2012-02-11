@@ -24,7 +24,7 @@ class Permission
     /**
      * @var text $type
      *
-     * @ORM\Column(name="type", type="text", nullable=false)
+     * @ORM\Column(name="type", type="text", length=255, nullable=false)
      */
     private $type;
 

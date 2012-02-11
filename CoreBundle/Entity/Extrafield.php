@@ -27,14 +27,14 @@ class Extrafield
     /**
      * @var text $fieldkey
      *
-     * @ORM\Column(name="fieldkey", type="text", nullable=false)
+     * @ORM\Column(name="fieldkey", type="text", length=255, nullable=false)
      */
     private $fieldkey;
 
     /**
      * @var text $textValue
      *
-     * @ORM\Column(name="text_value", type="text", nullable=false)
+     * @ORM\Column(name="text_value", type="text", length=65535, nullable=false)
      */
     private $textValue;
 
@@ -55,7 +55,7 @@ class Extrafield
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
      */
     private $originCreator;
 

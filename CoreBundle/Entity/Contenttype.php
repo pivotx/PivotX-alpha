@@ -24,35 +24,35 @@ class Contenttype
     /**
      * @var text $slug
      *
-     * @ORM\Column(name="slug", type="text", nullable=false)
+     * @ORM\Column(name="slug", type="text", length=128, nullable=false)
      */
     private $slug;
 
     /**
      * @var text $reference
      *
-     * @ORM\Column(name="reference", type="text", nullable=false)
+     * @ORM\Column(name="reference", type="text", length=255, nullable=false)
      */
     private $reference;
 
     /**
      * @var text $name
      *
-     * @ORM\Column(name="name", type="text", nullable=false)
+     * @ORM\Column(name="name", type="text", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", length=255, nullable=false)
      */
     private $description;
 
     /**
      * @var text $extrafields
      *
-     * @ORM\Column(name="extrafields", type="text", nullable=false)
+     * @ORM\Column(name="extrafields", type="text", length=65535, nullable=false)
      */
     private $extrafields;
 
@@ -61,7 +61,7 @@ class Contenttype
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,7 +81,7 @@ class Contenttype
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -101,7 +101,7 @@ class Contenttype
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -121,7 +121,7 @@ class Contenttype
     /**
      * Get name
      *
-     * @return text 
+     * @return text
      */
     public function getName()
     {
@@ -141,7 +141,7 @@ class Contenttype
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -161,7 +161,7 @@ class Contenttype
     /**
      * Get extrafields
      *
-     * @return text 
+     * @return text
      */
     public function getExtrafields()
     {

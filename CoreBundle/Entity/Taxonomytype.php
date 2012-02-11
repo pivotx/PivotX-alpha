@@ -24,28 +24,28 @@ class Taxonomytype
     /**
      * @var text $slug
      *
-     * @ORM\Column(name="slug", type="text", nullable=false)
+     * @ORM\Column(name="slug", type="text", length=128, nullable=false)
      */
     private $slug;
 
     /**
      * @var text $reference
      *
-     * @ORM\Column(name="reference", type="text", nullable=false)
+     * @ORM\Column(name="reference", type="text", length=255, nullable=false)
      */
     private $reference;
 
     /**
      * @var text $name
      *
-     * @ORM\Column(name="name", type="text", nullable=false)
+     * @ORM\Column(name="name", type="text", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", length=255, nullable=false)
      */
     private $description;
 

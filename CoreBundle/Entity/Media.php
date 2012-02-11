@@ -34,28 +34,35 @@ class Media
     /**
      * @var text $slug
      *
-     * @ORM\Column(name="slug", type="text", nullable=false)
+     * @ORM\Column(name="slug", type="text", length=128, nullable=false)
      */
     private $slug;
 
     /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=false)
+     */
+    private $date;
+
+    /**
      * @var text $reference
      *
-     * @ORM\Column(name="reference", type="text", nullable=false)
+     * @ORM\Column(name="reference", type="text", length=255, nullable=false)
      */
     private $reference;
 
     /**
      * @var text $filename
      *
-     * @ORM\Column(name="filename", type="text", nullable=false)
+     * @ORM\Column(name="filename", type="text", length=128, nullable=false)
      */
     private $filename;
 
     /**
      * @var text $filepath
      *
-     * @ORM\Column(name="filepath", type="text", nullable=false)
+     * @ORM\Column(name="filepath", type="text", length=1024, nullable=false)
      */
     private $filepath;
 
@@ -83,14 +90,14 @@ class Media
     /**
      * @var text $originUrl
      *
-     * @ORM\Column(name="origin_url", type="text", nullable=false)
+     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
      */
     private $originUrl;
 
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=100, nullable=false)
      */
     private $originCreator;
 

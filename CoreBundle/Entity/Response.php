@@ -46,56 +46,56 @@ class Response
     /**
      * @var text $reference
      *
-     * @ORM\Column(name="reference", type="text", nullable=false)
+     * @ORM\Column(name="reference", type="text", length=255, nullable=false)
      */
     private $reference;
 
     /**
      * @var text $responseType
      *
-     * @ORM\Column(name="response_type", type="text", nullable=false)
+     * @ORM\Column(name="response_type", type="text", length=1024, nullable=false)
      */
     private $responseType;
 
     /**
      * @var text $title
      *
-     * @ORM\Column(name="title", type="text", nullable=false)
+     * @ORM\Column(name="title", type="text", length=255, nullable=false)
      */
     private $title;
 
     /**
      * @var text $body
      *
-     * @ORM\Column(name="body", type="text", nullable=false)
+     * @ORM\Column(name="body", type="text", length=65535, nullable=false)
      */
     private $body;
 
     /**
      * @var text $name
      *
-     * @ORM\Column(name="name", type="text", nullable=false)
+     * @ORM\Column(name="name", type="text", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var text $email
      *
-     * @ORM\Column(name="email", type="text", nullable=false)
+     * @ORM\Column(name="email", type="text", length=255, nullable=false)
      */
     private $email;
 
     /**
      * @var text $url
      *
-     * @ORM\Column(name="url", type="text", nullable=false)
+     * @ORM\Column(name="url", type="text", length=1024, nullable=false)
      */
     private $url;
 
     /**
      * @var text $ip
      *
-     * @ORM\Column(name="ip", type="text", nullable=false)
+     * @ORM\Column(name="ip", type="text", length=255, nullable=false)
      */
     private $ip;
 
@@ -109,21 +109,21 @@ class Response
     /**
      * @var text $status
      *
-     * @ORM\Column(name="status", type="text", nullable=false)
+     * @ORM\Column(name="status", type="text", length=255, nullable=false)
      */
     private $status;
 
     /**
      * @var text $originUrl
      *
-     * @ORM\Column(name="origin_url", type="text", nullable=false)
+     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
      */
     private $originUrl;
 
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
      */
     private $originCreator;
 
