@@ -30,7 +30,7 @@ class ContentType extends AbstractType
             ->add('locked')
             ->add('originUrl')
             ->add('originCreator')
-            ->add('textFormat')
+            ->add('textFormatting')
             ->add('allowResponses')
             ->add('contenttype')
             ->add('user')

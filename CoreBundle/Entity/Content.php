@@ -184,11 +184,11 @@ class Content
     private $originCreator;
 
     /**
-     * @var text $textFormat
+     * @var text $textFormatting
      *
-     * @ORM\Column(name="text_format", type="text", length=255, nullable=false)
+     * @ORM\Column(name="text_formatting", type="text", length=255, nullable=false)
      */
-    private $textFormat;
+    private $textFormatting;
 
     /**
      * @var boolean $allowResponses
@@ -650,23 +650,23 @@ class Content
     }
 
     /**
-     * Set textFormat
+     * Set textFormatting
      *
-     * @param text $textFormat
+     * @param text $textFormatting
      */
-    public function setTextFormat($textFormat)
+    public function setTextFormatting($textFormatting)
     {
-        $this->textFormat = $textFormat;
+        $this->textFormatting = $textFormatting;
     }
 
     /**
-     * Get textFormat
+     * Get textFormatting
      *
      * @return text
      */
-    public function getTextFormat()
+    public function getTextFormatting()
     {
-        return $this->textFormat;
+        return $this->textFormatting;
     }
 
     /**
