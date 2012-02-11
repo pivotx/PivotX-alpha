@@ -9,11 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/{name}")
+     * @Route("/", name="dashboard")
      * @Template()
      */
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('PivotXBackendBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('PivotXBackendBundle:Default:index.html.twig');
     }
 }
