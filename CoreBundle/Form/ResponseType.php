@@ -10,20 +10,20 @@ class ResponseType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('reference')
-            ->add('responseType')
-            ->add('title')
+            ->add('reference', 'text')
+            ->add('responseType', 'text')
+            ->add('title', 'text')
             ->add('body')
-            ->add('name')
-            ->add('email')
-            ->add('url')
-            ->add('ip')
-            ->add('dateCreated')
-            ->add('status')
-            ->add('originUrl')
-            ->add('originCreator')
-            ->add('content')
-            ->add('user')
+            ->add('name', 'text')
+            ->add('email', 'text')
+            ->add('url', 'text')
+            ->add('ip', 'text')
+            ->add('dateCreated', 'datetime', array('widget' => 'single_text'))
+            ->add('status', 'text')
+            ->add('originUrl', 'text')
+            ->add('originCreator', 'text')
+            ->add('content', 'choice', array('required'=>false))
+            ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => false ))
         ;
     }
 

@@ -20,7 +20,7 @@ class MediaType extends AbstractType
             ->add('filesize')
             ->add('originUrl', 'text')
             ->add('originCreator', 'text')
-            ->add('user')
+            ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => false ))
         ;
     }
 

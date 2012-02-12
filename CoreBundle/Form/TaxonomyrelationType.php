@@ -12,7 +12,7 @@ class TaxonomyrelationType extends AbstractType
         $builder
             ->add('sortingOrder')
             ->add('parent')
-            ->add('content')
+            ->add('content', 'choice', array('required'=>false))
             ->add('taxonomy')
         ;
     }

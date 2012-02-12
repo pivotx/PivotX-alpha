@@ -11,9 +11,9 @@ class TaxonomytypeType extends AbstractType
     {
         $builder
             ->add('slug', 'text')
-            ->add('reference')
-            ->add('name')
-            ->add('description')
+            ->add('reference', 'text')
+            ->add('name', 'text')
+            ->add('description', 'text')
         ;
     }
 

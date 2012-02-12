@@ -11,7 +11,7 @@ class ExtrafieldType extends AbstractType
     {
         $builder
             ->add('fieldkey')
-            ->add('textValue')
+            ->add('textValue', 'text')
             ->add('floatValue')
             ->add('dateValue', 'datetime', array('widget' => 'single_text'))
             ->add('date', 'datetime', array('widget' => 'single_text'))

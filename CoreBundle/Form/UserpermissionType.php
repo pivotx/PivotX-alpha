@@ -10,7 +10,7 @@ class UserpermissionType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('user')
+            ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => false ))
             ->add('permission')
         ;
     }

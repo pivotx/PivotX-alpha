@@ -12,7 +12,7 @@ class SessionType extends AbstractType
         $builder
             ->add('ip')
             ->add('date', 'datetime', array('widget' => 'single_text'))
-            ->add('user')
+            ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => false ))
         ;
     }
 
