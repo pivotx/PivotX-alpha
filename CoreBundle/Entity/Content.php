@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="content")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Content
 {
@@ -87,28 +88,28 @@ class Content
     /**
      * @var datetime $datePublished
      *
-     * @ORM\Column(name="date_published", type="datetime", nullable=false)
+     * @ORM\Column(name="date_published", type="datetime", nullable=true)
      */
     private $datePublished;
 
     /**
      * @var datetime $dateDepublished
      *
-     * @ORM\Column(name="date_depublished", type="datetime", nullable=false)
+     * @ORM\Column(name="date_depublished", type="datetime", nullable=true)
      */
     private $dateDepublished;
 
     /**
      * @var datetime $datePublishOn
      *
-     * @ORM\Column(name="date_publish_on", type="datetime", nullable=false)
+     * @ORM\Column(name="date_publish_on", type="datetime", nullable=true)
      */
     private $datePublishOn;
 
     /**
      * @var datetime $dateDepublishOn
      *
-     * @ORM\Column(name="date_depublish_on", type="datetime", nullable=false)
+     * @ORM\Column(name="date_depublish_on", type="datetime", nullable=true)
      */
     private $dateDepublishOn;
 
@@ -150,14 +151,14 @@ class Content
     /**
      * @var text $originUrl
      *
-     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
+     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=true)
      */
     private $originUrl;
 
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=true)
      */
     private $originCreator;
 
@@ -695,7 +696,18 @@ class Content
 
     public function __toString() {
 
-        return $this->getId();
+        return $this->getReference();
+
+    }
+
+    /**
+     * @ORM\preUpdate
+     */
+    public function setUpdatedValue()
+    {
+       $this->dateModified = new \DateTime('now');
+
+        $this->setVersion($this->getVersion()+1);
 
     }
 

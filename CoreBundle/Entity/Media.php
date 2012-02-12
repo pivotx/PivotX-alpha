@@ -335,9 +335,13 @@ class Media
 
 
 
+    public function __construct() {
+        $this->date = new \DateTime('now');
+    }
+
     public function __toString() {
 
-        return $this->getFilepath() . "/" . $this->getFilename();
+        return $this->getSlug();
 
     }
 

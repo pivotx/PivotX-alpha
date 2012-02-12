@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="extrafield")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Extrafield
 {
@@ -53,14 +54,14 @@ class Extrafield
     /**
      * @var datetime $date
      *
-     * @ORM\Column(name="date", type="datetime", nullable=true)
+     * @ORM\Column(name="date", type="datetime", nullable=false)
      */
     private $date;
 
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=true)
      */
     private $originCreator;
 
@@ -258,7 +259,7 @@ class Extrafield
 
 
     public function __construct() {
-        $this->date = new \DateTime('today');
+        $this->date = new \DateTime('now');
     }
 
 
@@ -267,4 +268,13 @@ class Extrafield
         return $this->getFieldkey() . " - " . $this->getTextValue();
 
     }
+
+    /**
+     * @ORM\preUpdate
+     */
+    public function setUpdatedValue()
+    {
+       $this->date = new \DateTime('now');
+    }
+
 }
