@@ -10,3 +10,14 @@ body {
 .crudtable {
   margin: 0px 18px;
 }
+
+.required:after {
+  content: "*";
+  color: #D00;
+  padding-left: 2px;
+}
+
+
+.form-horizontal .control-group {
+  margin-bottom: 6px;
+}

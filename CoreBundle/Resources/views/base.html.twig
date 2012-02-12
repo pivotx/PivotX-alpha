@@ -3,6 +3,9 @@
 {% if form is defined %}
 {% form_theme form 'PivotXBackendBundle:Form:fields.html.twig' %}
 {% endif %}
+{% if edit_form is defined %}
+{% form_theme edit_form 'PivotXBackendBundle:Form:fields.html.twig' %}
+{% endif %}
 
 {% block main %}
 

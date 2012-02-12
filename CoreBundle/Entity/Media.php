@@ -4,11 +4,14 @@ namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use PivotX\CoreBundle\Util\Tools;
+
 /**
  * PivotX\CoreBundle\Entity\Media
  *
  * @ORM\Table(name="media")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Media
 {
@@ -80,14 +83,14 @@ class Media
     /**
      * @var text $originUrl
      *
-     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
+     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=true)
      */
     private $originUrl;
 
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", length=100, nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=100, nullable=true)
      */
     private $originCreator;
 
@@ -344,5 +347,32 @@ class Media
         return $this->getSlug();
 
     }
+
+
+    /**
+     * @ORM\preUpdate
+     * @ORM\prePersist
+     */
+    public function setUpdatedValue()
+    {
+
+        if (empty($this->id)) {
+            $this->needPostPersist = true;
+            return;
+        }
+
+        // Make sure the path ends in a slash/
+        $this->filepath = Tools::addTrailingSlash($this->filepath);
+
+        // Set the slug.
+        if ($this->slug == "" ) {
+            $fullname = $this->filepath . $this->filename;
+            $this->slug = Tools::makeSlug($fullname);
+        }
+
+        $this->reference = Tools::makeReference("media", array('slug' => $this->slug, 'id' => $this->id ));
+
+    }
+
 
 }
