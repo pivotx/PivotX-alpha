@@ -1,8 +1,7 @@
 {% extends 'PivotXCoreBundle::base.html.twig' %}
 
-
 {% block crud %}
-    
+
 <h1>Taxonomyrelation edit</h1>
 
 <form action="{{ path('taxonomyrelation_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>

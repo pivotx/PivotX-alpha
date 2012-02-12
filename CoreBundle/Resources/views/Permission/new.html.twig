@@ -1,8 +1,7 @@
 {% extends 'PivotXCoreBundle::base.html.twig' %}
 
-
 {% block crud %}
-    
+
 <h1>Permission creation</h1>
 
 <form action="{{ path('permission_create') }}" method="post" {{ form_enctype(form) }}>
