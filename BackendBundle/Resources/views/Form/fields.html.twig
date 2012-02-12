@@ -1,0 +1,25 @@
+{# See: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig #}
+
+
+{% block form_row %}
+{% spaceless %}
+    <div class="control-group">
+        {{ form_label(form, label|default(null)) }}
+        <div class="controls">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block field_row %}
+{% spaceless %}
+    <div class="control-group">
+        {{ form_label(form, label|default(null)) }}
+        <div class="controls">
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
