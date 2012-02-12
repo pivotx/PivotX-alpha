@@ -106,7 +106,7 @@ class Media
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -126,7 +126,7 @@ class Media
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -146,7 +146,7 @@ class Media
     /**
      * Get date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDate()
     {
@@ -166,7 +166,7 @@ class Media
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -186,7 +186,7 @@ class Media
     /**
      * Get filename
      *
-     * @return text 
+     * @return text
      */
     public function getFilename()
     {
@@ -206,7 +206,7 @@ class Media
     /**
      * Get filepath
      *
-     * @return text 
+     * @return text
      */
     public function getFilepath()
     {
@@ -226,7 +226,7 @@ class Media
     /**
      * Get width
      *
-     * @return integer 
+     * @return integer
      */
     public function getWidth()
     {
@@ -246,7 +246,7 @@ class Media
     /**
      * Get height
      *
-     * @return integer 
+     * @return integer
      */
     public function getHeight()
     {
@@ -266,7 +266,7 @@ class Media
     /**
      * Get filesize
      *
-     * @return integer 
+     * @return integer
      */
     public function getFilesize()
     {
@@ -286,7 +286,7 @@ class Media
     /**
      * Get originUrl
      *
-     * @return text 
+     * @return text
      */
     public function getOriginUrl()
     {
@@ -306,7 +306,7 @@ class Media
     /**
      * Get originCreator
      *
-     * @return text 
+     * @return text
      */
     public function getOriginCreator()
     {
@@ -326,10 +326,19 @@ class Media
     /**
      * Get user
      *
-     * @return PivotX\CoreBundle\Entity\User 
+     * @return PivotX\CoreBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
     }
+
+
+
+    public function __toString() {
+
+        return $this->getFilepath() . "/" . $this->getFilename();
+
+    }
+
 }

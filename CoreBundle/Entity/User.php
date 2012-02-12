@@ -106,7 +106,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -126,7 +126,7 @@ class User
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -146,7 +146,7 @@ class User
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -166,7 +166,7 @@ class User
     /**
      * Get role
      *
-     * @return text 
+     * @return text
      */
     public function getRole()
     {
@@ -186,7 +186,7 @@ class User
     /**
      * Get email
      *
-     * @return text 
+     * @return text
      */
     public function getEmail()
     {
@@ -206,7 +206,7 @@ class User
     /**
      * Get password
      *
-     * @return text 
+     * @return text
      */
     public function getPassword()
     {
@@ -226,7 +226,7 @@ class User
     /**
      * Get nickname
      *
-     * @return text 
+     * @return text
      */
     public function getNickname()
     {
@@ -246,7 +246,7 @@ class User
     /**
      * Get fullname
      *
-     * @return text 
+     * @return text
      */
     public function getFullname()
     {
@@ -266,7 +266,7 @@ class User
     /**
      * Get language
      *
-     * @return text 
+     * @return text
      */
     public function getLanguage()
     {
@@ -286,7 +286,7 @@ class User
     /**
      * Get dateLastseen
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateLastseen()
     {
@@ -306,7 +306,7 @@ class User
     /**
      * Get ipLastseen
      *
-     * @return text 
+     * @return text
      */
     public function getIpLastseen()
     {
@@ -326,10 +326,17 @@ class User
     /**
      * Get media
      *
-     * @return PivotX\CoreBundle\Entity\Media 
+     * @return PivotX\CoreBundle\Entity\Media
      */
     public function getMedia()
     {
         return $this->media;
     }
+
+    public function __toString() {
+
+        return $this->getFullname();
+
+    }
+
 }

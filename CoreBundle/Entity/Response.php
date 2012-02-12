@@ -130,7 +130,7 @@ class Response
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -150,7 +150,7 @@ class Response
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -170,7 +170,7 @@ class Response
     /**
      * Get responseType
      *
-     * @return text 
+     * @return text
      */
     public function getResponseType()
     {
@@ -190,7 +190,7 @@ class Response
     /**
      * Get title
      *
-     * @return text 
+     * @return text
      */
     public function getTitle()
     {
@@ -210,7 +210,7 @@ class Response
     /**
      * Get body
      *
-     * @return text 
+     * @return text
      */
     public function getBody()
     {
@@ -230,7 +230,7 @@ class Response
     /**
      * Get name
      *
-     * @return text 
+     * @return text
      */
     public function getName()
     {
@@ -250,7 +250,7 @@ class Response
     /**
      * Get email
      *
-     * @return text 
+     * @return text
      */
     public function getEmail()
     {
@@ -270,7 +270,7 @@ class Response
     /**
      * Get url
      *
-     * @return text 
+     * @return text
      */
     public function getUrl()
     {
@@ -290,7 +290,7 @@ class Response
     /**
      * Get ip
      *
-     * @return text 
+     * @return text
      */
     public function getIp()
     {
@@ -310,7 +310,7 @@ class Response
     /**
      * Get dateCreated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateCreated()
     {
@@ -330,7 +330,7 @@ class Response
     /**
      * Get status
      *
-     * @return text 
+     * @return text
      */
     public function getStatus()
     {
@@ -350,7 +350,7 @@ class Response
     /**
      * Get originUrl
      *
-     * @return text 
+     * @return text
      */
     public function getOriginUrl()
     {
@@ -370,7 +370,7 @@ class Response
     /**
      * Get originCreator
      *
-     * @return text 
+     * @return text
      */
     public function getOriginCreator()
     {
@@ -390,7 +390,7 @@ class Response
     /**
      * Get user
      *
-     * @return PivotX\CoreBundle\Entity\User 
+     * @return PivotX\CoreBundle\Entity\User
      */
     public function getUser()
     {
@@ -410,10 +410,17 @@ class Response
     /**
      * Get content
      *
-     * @return PivotX\CoreBundle\Entity\Content 
+     * @return PivotX\CoreBundle\Entity\Content
      */
     public function getContent()
     {
         return $this->content;
+    }
+
+
+    public function __toString() {
+
+        return $this->getId();
+
     }
 }

@@ -50,7 +50,7 @@ class Session
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -70,7 +70,7 @@ class Session
     /**
      * Get ip
      *
-     * @return text 
+     * @return text
      */
     public function getIp()
     {
@@ -90,7 +90,7 @@ class Session
     /**
      * Get date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDate()
     {
@@ -110,10 +110,17 @@ class Session
     /**
      * Get user
      *
-     * @return PivotX\CoreBundle\Entity\User 
+     * @return PivotX\CoreBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+
+    public function __toString() {
+
+        return $this->getId();
+
     }
 }

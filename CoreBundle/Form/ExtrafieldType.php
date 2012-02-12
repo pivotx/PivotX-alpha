@@ -13,10 +13,11 @@ class ExtrafieldType extends AbstractType
             ->add('fieldkey')
             ->add('textValue')
             ->add('floatValue')
-            ->add('dateValue')
-            ->add('originCreator')
-            ->add('content')
-            ->add('contenttype')
+            ->add('dateValue', 'datetime', array('widget' => 'single_text'))
+            ->add('date', 'datetime', array('widget' => 'single_text'))
+            ->add('originCreator', 'text', array('required'=>false))
+            ->add('content', 'choice', array('required'=>false))
+            ->add('contenttype', 'entity', array('class' => 'PivotXCoreBundle:Contenttype', "required" => false ))
         ;
     }
 

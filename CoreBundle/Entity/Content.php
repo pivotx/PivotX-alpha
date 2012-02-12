@@ -200,7 +200,7 @@ class Content
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -220,7 +220,7 @@ class Content
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -240,7 +240,7 @@ class Content
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -260,7 +260,7 @@ class Content
     /**
      * Get grouping
      *
-     * @return text 
+     * @return text
      */
     public function getGrouping()
     {
@@ -280,7 +280,7 @@ class Content
     /**
      * Get title
      *
-     * @return text 
+     * @return text
      */
     public function getTitle()
     {
@@ -300,7 +300,7 @@ class Content
     /**
      * Get teaser
      *
-     * @return text 
+     * @return text
      */
     public function getTeaser()
     {
@@ -320,7 +320,7 @@ class Content
     /**
      * Get body
      *
-     * @return text 
+     * @return text
      */
     public function getBody()
     {
@@ -340,7 +340,7 @@ class Content
     /**
      * Get template
      *
-     * @return text 
+     * @return text
      */
     public function getTemplate()
     {
@@ -360,7 +360,7 @@ class Content
     /**
      * Get dateCreated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateCreated()
     {
@@ -380,7 +380,7 @@ class Content
     /**
      * Get dateModified
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateModified()
     {
@@ -400,7 +400,7 @@ class Content
     /**
      * Get datePublished
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDatePublished()
     {
@@ -420,7 +420,7 @@ class Content
     /**
      * Get dateDepublished
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateDepublished()
     {
@@ -440,7 +440,7 @@ class Content
     /**
      * Get datePublishOn
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDatePublishOn()
     {
@@ -460,7 +460,7 @@ class Content
     /**
      * Get dateDepublishOn
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateDepublishOn()
     {
@@ -480,7 +480,7 @@ class Content
     /**
      * Get language
      *
-     * @return text 
+     * @return text
      */
     public function getLanguage()
     {
@@ -500,7 +500,7 @@ class Content
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -520,7 +520,7 @@ class Content
     /**
      * Get status
      *
-     * @return text 
+     * @return text
      */
     public function getStatus()
     {
@@ -540,7 +540,7 @@ class Content
     /**
      * Get searchable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSearchable()
     {
@@ -560,7 +560,7 @@ class Content
     /**
      * Get locked
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getLocked()
     {
@@ -580,7 +580,7 @@ class Content
     /**
      * Get originUrl
      *
-     * @return text 
+     * @return text
      */
     public function getOriginUrl()
     {
@@ -600,7 +600,7 @@ class Content
     /**
      * Get originCreator
      *
-     * @return text 
+     * @return text
      */
     public function getOriginCreator()
     {
@@ -620,7 +620,7 @@ class Content
     /**
      * Get textFormatting
      *
-     * @return text 
+     * @return text
      */
     public function getTextFormatting()
     {
@@ -640,7 +640,7 @@ class Content
     /**
      * Get allowResponses
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAllowResponses()
     {
@@ -660,7 +660,7 @@ class Content
     /**
      * Get user
      *
-     * @return PivotX\CoreBundle\Entity\User 
+     * @return PivotX\CoreBundle\Entity\User
      */
     public function getUser()
     {
@@ -680,10 +680,24 @@ class Content
     /**
      * Get contenttype
      *
-     * @return PivotX\CoreBundle\Entity\Contenttype 
+     * @return PivotX\CoreBundle\Entity\Contenttype
      */
     public function getContenttype()
     {
         return $this->contenttype;
     }
+
+
+    public function __construct() {
+        $this->dateCreated = new \DateTime('now');
+        $this->dateModified = new \DateTime('now');
+    }
+
+    public function __toString() {
+
+        return $this->getId();
+
+    }
+
+
 }

@@ -46,7 +46,7 @@ class Userpermission
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -66,7 +66,7 @@ class Userpermission
     /**
      * Get permission
      *
-     * @return PivotX\CoreBundle\Entity\Permission 
+     * @return PivotX\CoreBundle\Entity\Permission
      */
     public function getPermission()
     {
@@ -86,10 +86,18 @@ class Userpermission
     /**
      * Get user
      *
-     * @return PivotX\CoreBundle\Entity\User 
+     * @return PivotX\CoreBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
     }
+
+
+    public function __toString() {
+
+        return $this->getId();
+
+    }
+    
 }

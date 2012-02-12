@@ -27,6 +27,10 @@
             <td>{{ entity.dateValue|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
+            <th>Date</th>
+            <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
             <th>Origincreator</th>
             <td>{{ entity.originCreator }}</td>
         </tr>
@@ -47,7 +51,7 @@
     <li>
         <form action="{{ path('extrafield_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
         </form>
     </li>
 </ul>

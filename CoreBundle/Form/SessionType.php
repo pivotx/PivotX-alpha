@@ -11,7 +11,7 @@ class SessionType extends AbstractType
     {
         $builder
             ->add('ip')
-            ->add('date')
+            ->add('date', 'datetime', array('widget' => 'single_text'))
             ->add('user')
         ;
     }

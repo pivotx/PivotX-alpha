@@ -13,7 +13,7 @@ class MediarelationType extends AbstractType
             ->add('sortingOrder')
             ->add('content')
             ->add('extrafield')
-            ->add('media')
+            ->add('media', 'entity', array('class' => 'PivotXCoreBundle:Media', "required" => false ))
         ;
     }
 

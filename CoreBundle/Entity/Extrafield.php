@@ -31,23 +31,31 @@ class Extrafield
     /**
      * @var text $textValue
      *
-     * @ORM\Column(name="text_value", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="text_value", type="text", length=65535, nullable=true)
      */
     private $textValue;
 
     /**
      * @var float $floatValue
      *
-     * @ORM\Column(name="float_value", type="float", nullable=false)
+     * @ORM\Column(name="float_value", type="float", nullable=true)
      */
     private $floatValue;
 
     /**
      * @var datetime $dateValue
      *
-     * @ORM\Column(name="date_value", type="datetime", nullable=false)
+     * @ORM\Column(name="date_value", type="datetime", nullable=true)
      */
     private $dateValue;
+
+
+    /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
 
     /**
      * @var text $originCreator
@@ -81,7 +89,7 @@ class Extrafield
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +109,7 @@ class Extrafield
     /**
      * Get fieldkey
      *
-     * @return text 
+     * @return text
      */
     public function getFieldkey()
     {
@@ -121,7 +129,7 @@ class Extrafield
     /**
      * Get textValue
      *
-     * @return text 
+     * @return text
      */
     public function getTextValue()
     {
@@ -141,7 +149,7 @@ class Extrafield
     /**
      * Get floatValue
      *
-     * @return float 
+     * @return float
      */
     public function getFloatValue()
     {
@@ -161,11 +169,31 @@ class Extrafield
     /**
      * Get dateValue
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateValue()
     {
         return $this->dateValue;
+    }
+
+    /**
+     * Set date
+     *
+     * @param datetime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Get date
+     *
+     * @return datetime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 
     /**
@@ -181,7 +209,7 @@ class Extrafield
     /**
      * Get originCreator
      *
-     * @return text 
+     * @return text
      */
     public function getOriginCreator()
     {
@@ -201,7 +229,7 @@ class Extrafield
     /**
      * Get contenttype
      *
-     * @return PivotX\CoreBundle\Entity\Contenttype 
+     * @return PivotX\CoreBundle\Entity\Contenttype
      */
     public function getContenttype()
     {
@@ -221,10 +249,22 @@ class Extrafield
     /**
      * Get content
      *
-     * @return PivotX\CoreBundle\Entity\Content 
+     * @return PivotX\CoreBundle\Entity\Content
      */
     public function getContent()
     {
         return $this->content;
+    }
+
+
+    public function __construct() {
+        $this->date = new \DateTime('today');
+    }
+
+
+    public function __toString() {
+
+        return $this->getFieldkey() . " - " . $this->getTextValue();
+
     }
 }

@@ -12,6 +12,7 @@
             <th>Textvalue</th>
             <th>Floatvalue</th>
             <th>Datevalue</th>
+            <th>Date</th>
             <th>Origincreator</th>
             <th>Actions</th>
         </tr>
@@ -24,6 +25,7 @@
             <td>{{ entity.textValue }}</td>
             <td>{{ entity.floatValue }}</td>
             <td>{% if entity.dateValue %}{{ entity.dateValue|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{{ entity.originCreator }}</td>
             <td>
                 <ul>

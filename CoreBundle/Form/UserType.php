@@ -10,17 +10,17 @@ class UserType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('slug')
-            ->add('reference')
-            ->add('role')
-            ->add('email')
-            ->add('password')
-            ->add('nickname')
-            ->add('fullname')
-            ->add('language')
-            ->add('dateLastseen')
-            ->add('ipLastseen')
-            ->add('media')
+            ->add('slug', 'text')
+            ->add('reference', 'text')
+            ->add('role', 'text')
+            ->add('email', 'text')
+            ->add('password', 'text')
+            ->add('nickname', 'text')
+            ->add('fullname', 'text')
+            ->add('language', 'text')
+            ->add('dateLastseen', 'datetime', array('widget' => 'single_text'))
+            ->add('ipLastseen', 'text')
+            ->add('media', 'entity', array('class' => 'PivotXCoreBundle:Media', "required" => false ))
         ;
     }
 

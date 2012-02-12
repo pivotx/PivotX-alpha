@@ -10,7 +10,7 @@ class TaxonomyType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('slug')
+            ->add('slug', 'text')
             ->add('reference')
             ->add('name')
             ->add('description')

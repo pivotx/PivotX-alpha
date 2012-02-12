@@ -78,7 +78,7 @@ class Taxonomy
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -98,7 +98,7 @@ class Taxonomy
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -118,7 +118,7 @@ class Taxonomy
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -138,7 +138,7 @@ class Taxonomy
     /**
      * Get name
      *
-     * @return text 
+     * @return text
      */
     public function getName()
     {
@@ -158,7 +158,7 @@ class Taxonomy
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -178,7 +178,7 @@ class Taxonomy
     /**
      * Get parentId
      *
-     * @return integer 
+     * @return integer
      */
     public function getParentId()
     {
@@ -198,7 +198,7 @@ class Taxonomy
     /**
      * Get sortingOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getSortingOrder()
     {
@@ -218,10 +218,17 @@ class Taxonomy
     /**
      * Get taxonomytype
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomytype 
+     * @return PivotX\CoreBundle\Entity\Taxonomytype
      */
     public function getTaxonomytype()
     {
         return $this->taxonomytype;
+    }
+
+
+    public function __toString() {
+
+        return $this->getName();
+
     }
 }

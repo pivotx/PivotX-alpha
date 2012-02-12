@@ -1,5 +1,9 @@
 {% extends 'PivotXBackendBundle::base.html.twig' %}
 
+{% if form is defined %}
+{% form_theme form 'PivotXBackendBundle:Form:fields.html.twig' %}
+{% endif %}
+
 {% block main %}
 
     <div class="crudtable">

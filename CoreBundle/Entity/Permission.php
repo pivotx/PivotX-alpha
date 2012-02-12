@@ -67,7 +67,7 @@ class Permission
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,7 +87,7 @@ class Permission
     /**
      * Get type
      *
-     * @return text 
+     * @return text
      */
     public function getType()
     {
@@ -107,7 +107,7 @@ class Permission
     /**
      * Get editUsers
      *
-     * @return integer 
+     * @return integer
      */
     public function getEditUsers()
     {
@@ -127,7 +127,7 @@ class Permission
     /**
      * Get value
      *
-     * @return integer 
+     * @return integer
      */
     public function getValue()
     {
@@ -147,7 +147,7 @@ class Permission
     /**
      * Get taxonomy
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomy 
+     * @return PivotX\CoreBundle\Entity\Taxonomy
      */
     public function getTaxonomy()
     {
@@ -167,10 +167,17 @@ class Permission
     /**
      * Get contenttype
      *
-     * @return PivotX\CoreBundle\Entity\Contenttype 
+     * @return PivotX\CoreBundle\Entity\Contenttype
      */
     public function getContenttype()
     {
         return $this->contenttype;
+    }
+
+
+    public function __toString() {
+
+        return $this->getId();
+
     }
 }

@@ -63,7 +63,7 @@ class Mediarelation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,7 +83,7 @@ class Mediarelation
     /**
      * Get sortingOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getSortingOrder()
     {
@@ -103,7 +103,7 @@ class Mediarelation
     /**
      * Get media
      *
-     * @return PivotX\CoreBundle\Entity\Media 
+     * @return PivotX\CoreBundle\Entity\Media
      */
     public function getMedia()
     {
@@ -123,7 +123,7 @@ class Mediarelation
     /**
      * Get content
      *
-     * @return PivotX\CoreBundle\Entity\Content 
+     * @return PivotX\CoreBundle\Entity\Content
      */
     public function getContent()
     {
@@ -143,10 +143,17 @@ class Mediarelation
     /**
      * Get extrafield
      *
-     * @return PivotX\CoreBundle\Entity\Extrafield 
+     * @return PivotX\CoreBundle\Entity\Extrafield
      */
     public function getExtrafield()
     {
         return $this->extrafield;
+    }
+
+
+    public function __toString() {
+
+        return $this->getId();
+
     }
 }

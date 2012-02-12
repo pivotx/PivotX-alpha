@@ -63,7 +63,7 @@ class Taxonomyrelation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,7 +83,7 @@ class Taxonomyrelation
     /**
      * Get sortingOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getSortingOrder()
     {
@@ -103,7 +103,7 @@ class Taxonomyrelation
     /**
      * Get taxonomy
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomy 
+     * @return PivotX\CoreBundle\Entity\Taxonomy
      */
     public function getTaxonomy()
     {
@@ -123,7 +123,7 @@ class Taxonomyrelation
     /**
      * Get parent
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomyrelation 
+     * @return PivotX\CoreBundle\Entity\Taxonomyrelation
      */
     public function getParent()
     {
@@ -143,10 +143,17 @@ class Taxonomyrelation
     /**
      * Get content
      *
-     * @return PivotX\CoreBundle\Entity\Content 
+     * @return PivotX\CoreBundle\Entity\Content
      */
     public function getContent()
     {
         return $this->content;
+    }
+
+
+    public function __toString() {
+
+        return $this->getId();
+
     }
 }
