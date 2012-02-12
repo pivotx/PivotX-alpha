@@ -29,6 +29,16 @@ class Mediarelation
     private $sortingOrder;
 
     /**
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="Media")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * })
+     */
+    private $media;
+
+    /**
      * @var Content
      *
      * @ORM\ManyToOne(targetEntity="Content")
@@ -48,23 +58,12 @@ class Mediarelation
      */
     private $extrafield;
 
-    /**
-     * @var Media
-     *
-     * @ORM\ManyToOne(targetEntity="Media")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     * })
-     */
-    private $media;
-
-
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -84,31 +83,11 @@ class Mediarelation
     /**
      * Get sortingOrder
      *
-     * @return integer
+     * @return integer 
      */
     public function getSortingOrder()
     {
         return $this->sortingOrder;
-    }
-
-    /**
-     * Set content
-     *
-     * @param PivotX\CoreBundle\Entity\Content $content
-     */
-    public function setContent(\PivotX\CoreBundle\Entity\Content $content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get content
-     *
-     * @return PivotX\CoreBundle\Entity\Content
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 
     /**
@@ -124,10 +103,50 @@ class Mediarelation
     /**
      * Get media
      *
-     * @return PivotX\CoreBundle\Entity\Media
+     * @return PivotX\CoreBundle\Entity\Media 
      */
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Set content
+     *
+     * @param PivotX\CoreBundle\Entity\Content $content
+     */
+    public function setContent(\PivotX\CoreBundle\Entity\Content $content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return PivotX\CoreBundle\Entity\Content 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set extrafield
+     *
+     * @param PivotX\CoreBundle\Entity\Extrafield $extrafield
+     */
+    public function setExtrafield(\PivotX\CoreBundle\Entity\Extrafield $extrafield)
+    {
+        $this->extrafield = $extrafield;
+    }
+
+    /**
+     * Get extrafield
+     *
+     * @return PivotX\CoreBundle\Entity\Extrafield 
+     */
+    public function getExtrafield()
+    {
+        return $this->extrafield;
     }
 }

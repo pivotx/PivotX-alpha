@@ -167,4 +167,12 @@ class Contenttype
     {
         return $this->extrafields;
     }
+
+
+    public function __toString() {
+
+        return $this->getName();
+
+    }
+
 }

@@ -21,9 +21,6 @@ class Extrafield
      */
     private $id;
 
-
-
-
     /**
      * @var text $fieldkey
      *
@@ -60,16 +57,6 @@ class Extrafield
     private $originCreator;
 
     /**
-     * @var Content
-     *
-     * @ORM\ManyToOne(targetEntity="Content")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_id", referencedColumnName="id")
-     * })
-     */
-    private $content;
-
-    /**
      * @var Contenttype
      *
      * @ORM\ManyToOne(targetEntity="Contenttype")
@@ -79,38 +66,26 @@ class Extrafield
      */
     private $contenttype;
 
-
+    /**
+     * @var Content
+     *
+     * @ORM\ManyToOne(targetEntity="Content")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="content_id", referencedColumnName="id")
+     * })
+     */
+    private $content;
 
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set contenttypeId
-     *
-     * @param integer $contenttypeId
-     */
-    public function setContenttypeId($contenttypeId)
-    {
-        $this->contenttypeId = $contenttypeId;
-    }
-
-    /**
-     * Get contenttypeId
-     *
-     * @return integer
-     */
-    public function getContenttypeId()
-    {
-        return $this->contenttypeId;
     }
 
     /**
@@ -126,7 +101,7 @@ class Extrafield
     /**
      * Get fieldkey
      *
-     * @return text
+     * @return text 
      */
     public function getFieldkey()
     {
@@ -146,7 +121,7 @@ class Extrafield
     /**
      * Get textValue
      *
-     * @return text
+     * @return text 
      */
     public function getTextValue()
     {
@@ -166,7 +141,7 @@ class Extrafield
     /**
      * Get floatValue
      *
-     * @return float
+     * @return float 
      */
     public function getFloatValue()
     {
@@ -186,7 +161,7 @@ class Extrafield
     /**
      * Get dateValue
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateValue()
     {
@@ -206,11 +181,31 @@ class Extrafield
     /**
      * Get originCreator
      *
-     * @return text
+     * @return text 
      */
     public function getOriginCreator()
     {
         return $this->originCreator;
+    }
+
+    /**
+     * Set contenttype
+     *
+     * @param PivotX\CoreBundle\Entity\Contenttype $contenttype
+     */
+    public function setContenttype(\PivotX\CoreBundle\Entity\Contenttype $contenttype)
+    {
+        $this->contenttype = $contenttype;
+    }
+
+    /**
+     * Get contenttype
+     *
+     * @return PivotX\CoreBundle\Entity\Contenttype 
+     */
+    public function getContenttype()
+    {
+        return $this->contenttype;
     }
 
     /**
@@ -226,30 +221,10 @@ class Extrafield
     /**
      * Get content
      *
-     * @return PivotX\CoreBundle\Entity\Content
+     * @return PivotX\CoreBundle\Entity\Content 
      */
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * Set media
-     *
-     * @param PivotX\CoreBundle\Entity\Media $media
-     */
-    public function setMedia(\PivotX\CoreBundle\Entity\Media $media)
-    {
-        $this->media = $media;
-    }
-
-    /**
-     * Get media
-     *
-     * @return PivotX\CoreBundle\Entity\Media
-     */
-    public function getMedia()
-    {
-        return $this->media;
     }
 }

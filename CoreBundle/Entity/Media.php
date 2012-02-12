@@ -22,16 +22,6 @@ class Media
     private $id;
 
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
-     */
-    private $user;
-
-    /**
      * @var text $slug
      *
      * @ORM\Column(name="slug", type="text", length=128, nullable=false)
@@ -101,12 +91,22 @@ class Media
      */
     private $originCreator;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -126,11 +126,31 @@ class Media
     /**
      * Get slug
      *
-     * @return text
+     * @return text 
      */
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set date
+     *
+     * @param datetime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Get date
+     *
+     * @return datetime 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 
     /**
@@ -146,7 +166,7 @@ class Media
     /**
      * Get reference
      *
-     * @return text
+     * @return text 
      */
     public function getReference()
     {
@@ -166,7 +186,7 @@ class Media
     /**
      * Get filename
      *
-     * @return text
+     * @return text 
      */
     public function getFilename()
     {
@@ -186,7 +206,7 @@ class Media
     /**
      * Get filepath
      *
-     * @return text
+     * @return text 
      */
     public function getFilepath()
     {
@@ -206,7 +226,7 @@ class Media
     /**
      * Get width
      *
-     * @return integer
+     * @return integer 
      */
     public function getWidth()
     {
@@ -226,7 +246,7 @@ class Media
     /**
      * Get height
      *
-     * @return integer
+     * @return integer 
      */
     public function getHeight()
     {
@@ -246,7 +266,7 @@ class Media
     /**
      * Get filesize
      *
-     * @return integer
+     * @return integer 
      */
     public function getFilesize()
     {
@@ -266,7 +286,7 @@ class Media
     /**
      * Get originUrl
      *
-     * @return text
+     * @return text 
      */
     public function getOriginUrl()
     {
@@ -286,10 +306,30 @@ class Media
     /**
      * Get originCreator
      *
-     * @return text
+     * @return text 
      */
     public function getOriginCreator()
     {
         return $this->originCreator;
+    }
+
+    /**
+     * Set user
+     *
+     * @param PivotX\CoreBundle\Entity\User $user
+     */
+    public function setUser(\PivotX\CoreBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return PivotX\CoreBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

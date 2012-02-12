@@ -22,17 +22,6 @@ class Taxonomy
     private $id;
 
     /**
-     * @var Taxonomy
-     *
-     * @ORM\ManyToOne(targetEntity="Taxonomytype")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxonomytype_id", referencedColumnName="id")
-     * })
-     */
-    private $taxonomytype;
-
-
-    /**
      * @var text $slug
      *
      * @ORM\Column(name="slug", type="text", length=128, nullable=false)
@@ -74,13 +63,22 @@ class Taxonomy
      */
     private $sortingOrder;
 
+    /**
+     * @var Taxonomytype
+     *
+     * @ORM\ManyToOne(targetEntity="Taxonomytype")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxonomytype_id", referencedColumnName="id")
+     * })
+     */
+    private $taxonomytype;
 
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -100,7 +98,7 @@ class Taxonomy
     /**
      * Get slug
      *
-     * @return text
+     * @return text 
      */
     public function getSlug()
     {
@@ -120,7 +118,7 @@ class Taxonomy
     /**
      * Get reference
      *
-     * @return text
+     * @return text 
      */
     public function getReference()
     {
@@ -140,7 +138,7 @@ class Taxonomy
     /**
      * Get name
      *
-     * @return text
+     * @return text 
      */
     public function getName()
     {
@@ -160,7 +158,7 @@ class Taxonomy
     /**
      * Get description
      *
-     * @return text
+     * @return text 
      */
     public function getDescription()
     {
@@ -180,7 +178,7 @@ class Taxonomy
     /**
      * Get parentId
      *
-     * @return integer
+     * @return integer 
      */
     public function getParentId()
     {
@@ -200,7 +198,7 @@ class Taxonomy
     /**
      * Get sortingOrder
      *
-     * @return integer
+     * @return integer 
      */
     public function getSortingOrder()
     {
@@ -210,9 +208,9 @@ class Taxonomy
     /**
      * Set taxonomytype
      *
-     * @param PivotX\CoreBundle\Entity\Taxonomy $taxonomytype
+     * @param PivotX\CoreBundle\Entity\Taxonomytype $taxonomytype
      */
-    public function setTaxonomytype(\PivotX\CoreBundle\Entity\Taxonomy $taxonomytype)
+    public function setTaxonomytype(\PivotX\CoreBundle\Entity\Taxonomytype $taxonomytype)
     {
         $this->taxonomytype = $taxonomytype;
     }
@@ -220,7 +218,7 @@ class Taxonomy
     /**
      * Get taxonomytype
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomy
+     * @return PivotX\CoreBundle\Entity\Taxonomytype 
      */
     public function getTaxonomytype()
     {

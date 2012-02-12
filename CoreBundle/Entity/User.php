@@ -71,16 +71,6 @@ class User
     private $fullname;
 
     /**
-     * @var Media
-     *
-     * @ORM\ManyToOne(targetEntity="Media")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     * })
-     */
-    private $media;
-
-    /**
      * @var text $language
      *
      * @ORM\Column(name="language", type="text", length=16, nullable=false)
@@ -101,12 +91,22 @@ class User
      */
     private $ipLastseen;
 
+    /**
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="Media")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * })
+     */
+    private $media;
+
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -126,7 +126,7 @@ class User
     /**
      * Get slug
      *
-     * @return text
+     * @return text 
      */
     public function getSlug()
     {
@@ -146,7 +146,7 @@ class User
     /**
      * Get reference
      *
-     * @return text
+     * @return text 
      */
     public function getReference()
     {
@@ -166,7 +166,7 @@ class User
     /**
      * Get role
      *
-     * @return text
+     * @return text 
      */
     public function getRole()
     {
@@ -186,7 +186,7 @@ class User
     /**
      * Get email
      *
-     * @return text
+     * @return text 
      */
     public function getEmail()
     {
@@ -206,7 +206,7 @@ class User
     /**
      * Get password
      *
-     * @return text
+     * @return text 
      */
     public function getPassword()
     {
@@ -226,7 +226,7 @@ class User
     /**
      * Get nickname
      *
-     * @return text
+     * @return text 
      */
     public function getNickname()
     {
@@ -246,31 +246,11 @@ class User
     /**
      * Get fullname
      *
-     * @return text
+     * @return text 
      */
     public function getFullname()
     {
         return $this->fullname;
-    }
-
-    /**
-     * Set mediaId
-     *
-     * @param integer $mediaId
-     */
-    public function setMediaId($mediaId)
-    {
-        $this->mediaId = $mediaId;
-    }
-
-    /**
-     * Get mediaId
-     *
-     * @return integer
-     */
-    public function getMediaId()
-    {
-        return $this->mediaId;
     }
 
     /**
@@ -286,7 +266,7 @@ class User
     /**
      * Get language
      *
-     * @return text
+     * @return text 
      */
     public function getLanguage()
     {
@@ -306,7 +286,7 @@ class User
     /**
      * Get dateLastseen
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateLastseen()
     {
@@ -326,10 +306,30 @@ class User
     /**
      * Get ipLastseen
      *
-     * @return text
+     * @return text 
      */
     public function getIpLastseen()
     {
         return $this->ipLastseen;
+    }
+
+    /**
+     * Set media
+     *
+     * @param PivotX\CoreBundle\Entity\Media $media
+     */
+    public function setMedia(\PivotX\CoreBundle\Entity\Media $media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * Get media
+     *
+     * @return PivotX\CoreBundle\Entity\Media 
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

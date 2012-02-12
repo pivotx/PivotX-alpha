@@ -22,28 +22,6 @@ class Response
     private $id;
 
     /**
-     * @var Content
-     *
-     * @ORM\ManyToOne(targetEntity="Content")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_id", referencedColumnName="id")
-     * })
-     */
-    private $content;
-
-
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
-     */
-    private $user;
-
-
-    /**
      * @var text $reference
      *
      * @ORM\Column(name="reference", type="text", length=255, nullable=false)
@@ -127,56 +105,36 @@ class Response
      */
     private $originCreator;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var Content
+     *
+     * @ORM\ManyToOne(targetEntity="Content")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="content_id", referencedColumnName="id")
+     * })
+     */
+    private $content;
+
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set contentId
-     *
-     * @param integer $contentId
-     */
-    public function setContentId($contentId)
-    {
-        $this->contentId = $contentId;
-    }
-
-    /**
-     * Get contentId
-     *
-     * @return integer
-     */
-    public function getContentId()
-    {
-        return $this->contentId;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 
     /**
@@ -192,7 +150,7 @@ class Response
     /**
      * Get reference
      *
-     * @return text
+     * @return text 
      */
     public function getReference()
     {
@@ -212,7 +170,7 @@ class Response
     /**
      * Get responseType
      *
-     * @return text
+     * @return text 
      */
     public function getResponseType()
     {
@@ -232,7 +190,7 @@ class Response
     /**
      * Get title
      *
-     * @return text
+     * @return text 
      */
     public function getTitle()
     {
@@ -240,23 +198,23 @@ class Response
     }
 
     /**
-     * Set content
+     * Set body
      *
-     * @param text $content
+     * @param text $body
      */
-    public function setContent($content)
+    public function setBody($body)
     {
-        $this->content = $content;
+        $this->body = $body;
     }
 
     /**
-     * Get content
+     * Get body
      *
-     * @return text
+     * @return text 
      */
-    public function getContent()
+    public function getBody()
     {
-        return $this->content;
+        return $this->body;
     }
 
     /**
@@ -272,7 +230,7 @@ class Response
     /**
      * Get name
      *
-     * @return text
+     * @return text 
      */
     public function getName()
     {
@@ -292,7 +250,7 @@ class Response
     /**
      * Get email
      *
-     * @return text
+     * @return text 
      */
     public function getEmail()
     {
@@ -312,7 +270,7 @@ class Response
     /**
      * Get url
      *
-     * @return text
+     * @return text 
      */
     public function getUrl()
     {
@@ -332,7 +290,7 @@ class Response
     /**
      * Get ip
      *
-     * @return text
+     * @return text 
      */
     public function getIp()
     {
@@ -352,7 +310,7 @@ class Response
     /**
      * Get dateCreated
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateCreated()
     {
@@ -372,7 +330,7 @@ class Response
     /**
      * Get status
      *
-     * @return text
+     * @return text 
      */
     public function getStatus()
     {
@@ -392,7 +350,7 @@ class Response
     /**
      * Get originUrl
      *
-     * @return text
+     * @return text 
      */
     public function getOriginUrl()
     {
@@ -412,10 +370,50 @@ class Response
     /**
      * Get originCreator
      *
-     * @return text
+     * @return text 
      */
     public function getOriginCreator()
     {
         return $this->originCreator;
+    }
+
+    /**
+     * Set user
+     *
+     * @param PivotX\CoreBundle\Entity\User $user
+     */
+    public function setUser(\PivotX\CoreBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return PivotX\CoreBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set content
+     *
+     * @param PivotX\CoreBundle\Entity\Content $content
+     */
+    public function setContent(\PivotX\CoreBundle\Entity\Content $content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return PivotX\CoreBundle\Entity\Content 
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

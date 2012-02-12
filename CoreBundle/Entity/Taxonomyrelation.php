@@ -28,6 +28,15 @@ class Taxonomyrelation
      */
     private $sortingOrder;
 
+    /**
+     * @var Taxonomy
+     *
+     * @ORM\ManyToOne(targetEntity="Taxonomy")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxonomy_id", referencedColumnName="id")
+     * })
+     */
+    private $taxonomy;
 
     /**
      * @var Taxonomyrelation
@@ -49,22 +58,12 @@ class Taxonomyrelation
      */
     private $content;
 
-    /**
-     * @var Taxonomy
-     *
-     * @ORM\ManyToOne(targetEntity="Taxonomy")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxonomy_id", referencedColumnName="id")
-     * })
-     */
-    private $taxonomy;
-
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -84,51 +83,11 @@ class Taxonomyrelation
     /**
      * Get sortingOrder
      *
-     * @return integer
+     * @return integer 
      */
     public function getSortingOrder()
     {
         return $this->sortingOrder;
-    }
-
-    /**
-     * Set parentId
-     *
-     * @param integer $parentId
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-    }
-
-    /**
-     * Get parentId
-     *
-     * @return integer
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * Set content
-     *
-     * @param PivotX\CoreBundle\Entity\Content $content
-     */
-    public function setContent(\PivotX\CoreBundle\Entity\Content $content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get content
-     *
-     * @return PivotX\CoreBundle\Entity\Content
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 
     /**
@@ -144,10 +103,50 @@ class Taxonomyrelation
     /**
      * Get taxonomy
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomy
+     * @return PivotX\CoreBundle\Entity\Taxonomy 
      */
     public function getTaxonomy()
     {
         return $this->taxonomy;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param PivotX\CoreBundle\Entity\Taxonomyrelation $parent
+     */
+    public function setParent(\PivotX\CoreBundle\Entity\Taxonomyrelation $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return PivotX\CoreBundle\Entity\Taxonomyrelation 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set content
+     *
+     * @param PivotX\CoreBundle\Entity\Content $content
+     */
+    public function setContent(\PivotX\CoreBundle\Entity\Content $content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return PivotX\CoreBundle\Entity\Content 
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

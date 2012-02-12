@@ -54,7 +54,7 @@ class Taxonomytype
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -74,7 +74,7 @@ class Taxonomytype
     /**
      * Get slug
      *
-     * @return text
+     * @return text 
      */
     public function getSlug()
     {
@@ -94,7 +94,7 @@ class Taxonomytype
     /**
      * Get reference
      *
-     * @return text
+     * @return text 
      */
     public function getReference()
     {
@@ -114,7 +114,7 @@ class Taxonomytype
     /**
      * Get name
      *
-     * @return text
+     * @return text 
      */
     public function getName()
     {
@@ -134,7 +134,7 @@ class Taxonomytype
     /**
      * Get description
      *
-     * @return text
+     * @return text 
      */
     public function getDescription()
     {

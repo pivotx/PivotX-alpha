@@ -22,28 +22,6 @@ class Content
     private $id;
 
     /**
-     * @var Contenttype
-     *
-     * @ORM\ManyToOne(targetEntity="Contenttype")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="contenttype_id", referencedColumnName="id")
-     * })
-     */
-    private $contenttype;
-
-
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
-     */
-    private $user;
-
-
-    /**
      * @var text $slug
      *
      * @ORM\Column(name="slug", type="text", length=128, nullable=false)
@@ -170,14 +148,14 @@ class Content
     private $locked;
 
     /**
-     * @var integer $originUrl
+     * @var text $originUrl
      *
      * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
      */
     private $originUrl;
 
     /**
-     * @var integer $originCreator
+     * @var text $originCreator
      *
      * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
      */
@@ -197,56 +175,36 @@ class Content
      */
     private $allowResponses;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var Contenttype
+     *
+     * @ORM\ManyToOne(targetEntity="Contenttype")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="contenttype_id", referencedColumnName="id")
+     * })
+     */
+    private $contenttype;
+
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set contenttypeId
-     *
-     * @param integer $contenttypeId
-     */
-    public function setContenttypeId($contenttypeId)
-    {
-        $this->contenttypeId = $contenttypeId;
-    }
-
-    /**
-     * Get contenttypeId
-     *
-     * @return integer
-     */
-    public function getContenttypeId()
-    {
-        return $this->contenttypeId;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 
     /**
@@ -262,7 +220,7 @@ class Content
     /**
      * Get slug
      *
-     * @return text
+     * @return text 
      */
     public function getSlug()
     {
@@ -282,7 +240,7 @@ class Content
     /**
      * Get reference
      *
-     * @return text
+     * @return text 
      */
     public function getReference()
     {
@@ -302,7 +260,7 @@ class Content
     /**
      * Get grouping
      *
-     * @return text
+     * @return text 
      */
     public function getGrouping()
     {
@@ -322,7 +280,7 @@ class Content
     /**
      * Get title
      *
-     * @return text
+     * @return text 
      */
     public function getTitle()
     {
@@ -342,7 +300,7 @@ class Content
     /**
      * Get teaser
      *
-     * @return text
+     * @return text 
      */
     public function getTeaser()
     {
@@ -362,7 +320,7 @@ class Content
     /**
      * Get body
      *
-     * @return text
+     * @return text 
      */
     public function getBody()
     {
@@ -382,7 +340,7 @@ class Content
     /**
      * Get template
      *
-     * @return text
+     * @return text 
      */
     public function getTemplate()
     {
@@ -402,7 +360,7 @@ class Content
     /**
      * Get dateCreated
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateCreated()
     {
@@ -422,7 +380,7 @@ class Content
     /**
      * Get dateModified
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateModified()
     {
@@ -442,7 +400,7 @@ class Content
     /**
      * Get datePublished
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDatePublished()
     {
@@ -462,7 +420,7 @@ class Content
     /**
      * Get dateDepublished
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateDepublished()
     {
@@ -482,7 +440,7 @@ class Content
     /**
      * Get datePublishOn
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDatePublishOn()
     {
@@ -502,7 +460,7 @@ class Content
     /**
      * Get dateDepublishOn
      *
-     * @return datetime
+     * @return datetime 
      */
     public function getDateDepublishOn()
     {
@@ -522,7 +480,7 @@ class Content
     /**
      * Get language
      *
-     * @return text
+     * @return text 
      */
     public function getLanguage()
     {
@@ -542,7 +500,7 @@ class Content
     /**
      * Get version
      *
-     * @return integer
+     * @return integer 
      */
     public function getVersion()
     {
@@ -562,7 +520,7 @@ class Content
     /**
      * Get status
      *
-     * @return text
+     * @return text 
      */
     public function getStatus()
     {
@@ -582,7 +540,7 @@ class Content
     /**
      * Get searchable
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getSearchable()
     {
@@ -602,7 +560,7 @@ class Content
     /**
      * Get locked
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getLocked()
     {
@@ -612,7 +570,7 @@ class Content
     /**
      * Set originUrl
      *
-     * @param integer $originUrl
+     * @param text $originUrl
      */
     public function setOriginUrl($originUrl)
     {
@@ -622,7 +580,7 @@ class Content
     /**
      * Get originUrl
      *
-     * @return integer
+     * @return text 
      */
     public function getOriginUrl()
     {
@@ -632,7 +590,7 @@ class Content
     /**
      * Set originCreator
      *
-     * @param integer $originCreator
+     * @param text $originCreator
      */
     public function setOriginCreator($originCreator)
     {
@@ -642,7 +600,7 @@ class Content
     /**
      * Get originCreator
      *
-     * @return integer
+     * @return text 
      */
     public function getOriginCreator()
     {
@@ -662,7 +620,7 @@ class Content
     /**
      * Get textFormatting
      *
-     * @return text
+     * @return text 
      */
     public function getTextFormatting()
     {
@@ -682,10 +640,50 @@ class Content
     /**
      * Get allowResponses
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getAllowResponses()
     {
         return $this->allowResponses;
+    }
+
+    /**
+     * Set user
+     *
+     * @param PivotX\CoreBundle\Entity\User $user
+     */
+    public function setUser(\PivotX\CoreBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return PivotX\CoreBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set contenttype
+     *
+     * @param PivotX\CoreBundle\Entity\Contenttype $contenttype
+     */
+    public function setContenttype(\PivotX\CoreBundle\Entity\Contenttype $contenttype)
+    {
+        $this->contenttype = $contenttype;
+    }
+
+    /**
+     * Get contenttype
+     *
+     * @return PivotX\CoreBundle\Entity\Contenttype 
+     */
+    public function getContenttype()
+    {
+        return $this->contenttype;
     }
 }

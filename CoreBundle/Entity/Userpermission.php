@@ -21,6 +21,15 @@ class Userpermission
      */
     private $id;
 
+    /**
+     * @var Permission
+     *
+     * @ORM\ManyToOne(targetEntity="Permission")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="permission_id", referencedColumnName="id")
+     * })
+     */
+    private $permission;
 
     /**
      * @var User
@@ -33,56 +42,54 @@ class Userpermission
     private $user;
 
 
-    /**
-     * @var Permission
-     *
-     * @ORM\ManyToOne(targetEntity="Permission")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="permission_id", referencedColumnName="id")
-     * })
-     */
-    private $permission;
-
-
-
 
     /**
-     * Set userId
+     * Get id
      *
-     * @param integer $userId
+     * @return integer 
      */
-    public function setUserId($userId)
+    public function getId()
     {
-        $this->userId = $userId;
+        return $this->id;
     }
 
     /**
-     * Get userId
+     * Set permission
      *
-     * @return integer
+     * @param PivotX\CoreBundle\Entity\Permission $permission
      */
-    public function getUserId()
+    public function setPermission(\PivotX\CoreBundle\Entity\Permission $permission)
     {
-        return $this->userId;
+        $this->permission = $permission;
     }
 
     /**
-     * Set permissionId
+     * Get permission
      *
-     * @param integer $permissionId
+     * @return PivotX\CoreBundle\Entity\Permission 
      */
-    public function setPermissionId($permissionId)
+    public function getPermission()
     {
-        $this->permissionId = $permissionId;
+        return $this->permission;
     }
 
     /**
-     * Get permissionId
+     * Set user
      *
-     * @return integer
+     * @param PivotX\CoreBundle\Entity\User $user
      */
-    public function getPermissionId()
+    public function setUser(\PivotX\CoreBundle\Entity\User $user)
     {
-        return $this->permissionId;
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return PivotX\CoreBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
