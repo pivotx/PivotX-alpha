@@ -36,12 +36,12 @@
             <td>{% if entity.dateLastseen %}{{ entity.dateLastseen|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{{ entity.ipLastseen }}</td>
             <td>
-                <ul>
+                <ul class="record_actions">
                     <li>
-                        <a href="{{ path('user_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('user_show', { 'id': entity.id }) }}" class="btn">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('user_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('user_edit', { 'id': entity.id }) }}" class="btn">edit</a>
                     </li>
                 </ul>
             </td>
@@ -50,9 +50,9 @@
     </tbody>
 </table>
 
-<ul>
+<ul class="record_actions">
     <li>
-        <a href="{{ path('user_new') }}">
+        <a href="{{ path('user_new') }}" class="btn">
             Create a new entry
         </a>
     </li>

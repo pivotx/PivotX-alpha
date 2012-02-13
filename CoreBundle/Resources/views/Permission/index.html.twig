@@ -17,17 +17,17 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('permission_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td><a href="{{ path('permission_show', { 'id': entity.id }) }}" class="btn">{{ entity.id }}</a></td>
             <td>{{ entity.type }}</td>
             <td>{{ entity.editUsers }}</td>
             <td>{{ entity.value }}</td>
             <td>
-                <ul>
+                <ul class="record_actions">
                     <li>
-                        <a href="{{ path('permission_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('permission_show', { 'id': entity.id }) }}" class="btn">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('permission_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('permission_edit', { 'id': entity.id }) }}" class="btn">edit</a>
                     </li>
                 </ul>
             </td>
@@ -36,9 +36,9 @@
     </tbody>
 </table>
 
-<ul>
+<ul class="record_actions">
     <li>
-        <a href="{{ path('permission_new') }}">
+        <a href="{{ path('permission_new') }}" class="btn">
             Create a new entry
         </a>
     </li>

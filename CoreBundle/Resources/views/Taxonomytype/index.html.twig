@@ -24,12 +24,12 @@
             <td>{{ entity.name }}</td>
             <td>{{ entity.description }}</td>
             <td>
-                <ul>
+                <ul class="record_actions">
                     <li>
-                        <a href="{{ path('taxonomytype_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('taxonomytype_show', { 'id': entity.id }) }}" class="btn">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('taxonomytype_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('taxonomytype_edit', { 'id': entity.id }) }}" class="btn">edit</a>
                     </li>
                 </ul>
             </td>
@@ -38,9 +38,9 @@
     </tbody>
 </table>
 
-<ul>
+<ul class="record_actions">
     <li>
-        <a href="{{ path('taxonomytype_new') }}">
+        <a href="{{ path('taxonomytype_new') }}" class="btn">
             Create a new entry
         </a>
     </li>

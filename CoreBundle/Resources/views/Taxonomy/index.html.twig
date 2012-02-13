@@ -28,12 +28,12 @@
             <td>{{ entity.parentId }}</td>
             <td>{{ entity.sortingOrder }}</td>
             <td>
-                <ul>
+                <ul class="record_actions">
                     <li>
-                        <a href="{{ path('taxonomy_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('taxonomy_show', { 'id': entity.id }) }}" class="btn">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('taxonomy_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('taxonomy_edit', { 'id': entity.id }) }}" class="btn">edit</a>
                     </li>
                 </ul>
             </td>
@@ -42,9 +42,9 @@
     </tbody>
 </table>
 
-<ul>
+<ul class="record_actions">
     <li>
-        <a href="{{ path('taxonomy_new') }}">
+        <a href="{{ path('taxonomy_new') }}" class="btn">
             Create a new entry
         </a>
     </li>

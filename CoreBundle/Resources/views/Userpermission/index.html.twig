@@ -16,12 +16,12 @@
         <tr>
             <td><a href="{{ path('userpermission_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>
-                <ul>
+                <ul class="record_actions">
                     <li>
-                        <a href="{{ path('userpermission_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('userpermission_show', { 'id': entity.id }) }}" class="btn">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('userpermission_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('userpermission_edit', { 'id': entity.id }) }}" class="btn">edit</a>
                     </li>
                 </ul>
             </td>
@@ -30,9 +30,9 @@
     </tbody>
 </table>
 
-<ul>
+<ul class="record_actions">
     <li>
-        <a href="{{ path('userpermission_new') }}">
+        <a href="{{ path('userpermission_new') }}" class="btn">
             Create a new entry
         </a>
     </li>
