@@ -3,7 +3,6 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use PivotX\CoreBundle\Util\Tools;
 
 /**
@@ -356,11 +355,6 @@ class Media
     public function setUpdatedValue()
     {
 
-        if (empty($this->id)) {
-            $this->needPostPersist = true;
-            return;
-        }
-
         // Make sure the path ends in a slash/
         $this->filepath = Tools::addTrailingSlash($this->filepath);
 
@@ -370,6 +364,7 @@ class Media
             $this->slug = Tools::makeSlug($fullname);
         }
 
+        // Set the reference.
         $this->reference = Tools::makeReference("media", array('slug' => $this->slug, 'id' => $this->id ));
 
     }

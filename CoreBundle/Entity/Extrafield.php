@@ -271,10 +271,11 @@ class Extrafield
 
     /**
      * @ORM\preUpdate
+     * @ORM\prePersist
      */
     public function setUpdatedValue()
     {
-       $this->date = new \DateTime('now');
+
     }
 
 }

@@ -3,6 +3,7 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Content
@@ -702,12 +703,28 @@ class Content
 
     /**
      * @ORM\preUpdate
+     * @ORM\prePersist
      */
     public function setUpdatedValue()
     {
-       $this->dateModified = new \DateTime('now');
+
+        $this->dateModified = new \DateTime('now');
 
         $this->setVersion($this->getVersion()+1);
+
+        // Set the slug.
+        if ($this->slug == "" ) {
+            $this->slug = Tools::makeSlug($this->title);
+        }
+
+        // Set the reference.
+        $this->reference = Tools::makeReference("content", array(
+            'content-type' => $this->getContenttype(),
+            'slug' => $this->slug,
+            'id' => $this->id,
+            'language' => $this->language,
+            'grouping' => $this->grouping
+        ));
 
     }
 

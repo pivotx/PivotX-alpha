@@ -169,9 +169,33 @@ abstract class Tools
     }
 
 
+    /**
+     * Make a reference for an entity, template, user, or whatnot.
+     *
+     * @param string $entity
+     * @param array $parameters
+     */
     public static function makeReference($entity="unknown", $parameters = array()) {
 
+        // Make sure $parameters is an array
+        if (!is_array($parameters)) {
+            $parameters = array($parameters);
+        }
 
+        $parts = array();
+
+        $parts[] = $entity;
+
+        // Add the contenttype, but only for references to content.
+        if ($entity == "content") {
+            if (!empty($parameters['contenttype'])) {
+                $parts[] = "/" . Tools::safeString($parameters['contenttype']);
+            } else {
+                $parts[] = "/generic";
+            }
+        }
+
+        // Put together the id
         $id = array();
         if (!empty($parameters['slug'])) {
             $id[] = Tools::makeSlug($parameters['slug']);
@@ -179,17 +203,20 @@ abstract class Tools
         if (!empty($parameters['id'])) {
             $id[] = intval($parameters['id']);
         }
-
-        $id = implode(",", $id);
-
-        if (!empty($parameters['language'])) {
-            $language = "/" . Tools::safeString($parameters['language']);
-        } else {
-            $language = "";
+        if (!empty($parameters['grouping']) && $parameters['grouping'] != $parameters['id']) {
+            $id[] = $parameters['grouping'];
         }
 
-        $reference = sprintf("%s/%s%s",
-            $entity, $id, $language);
+        $parts[] = "/" . implode(",", $id);
+
+        // Add an optional language.
+        if (!empty($parameters['language'])) {
+            $parts[] = "/" . Tools::safeString($parameters['language']);
+        }
+
+
+        // Put it together..
+        $reference = implode("", $parts);
 
         return $reference;
 
