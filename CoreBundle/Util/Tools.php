@@ -186,10 +186,10 @@ abstract class Tools
 
         $parts[] = $entity;
 
-        // Add the contenttype, but only for references to content.
-        if ($entity == "content") {
-            if (!empty($parameters['contenttype'])) {
-                $parts[] = "/" . Tools::safeString($parameters['contenttype']);
+        // Add the contenttype, but only for certain entities.
+        if ( in_array($entity, array("content", "response", "taxonomy")) ) {
+            if (!empty($parameters['type'])) {
+                $parts[] = "/" . Tools::safeString($parameters['type']);
             } else {
                 $parts[] = "/generic";
             }
@@ -200,9 +200,17 @@ abstract class Tools
         if (!empty($parameters['slug'])) {
             $id[] = Tools::makeSlug($parameters['slug']);
         }
+        if (!empty($parameters['name'])) {
+            $id[] = Tools::makeSlug($parameters['name']);
+        }
+        if (!empty($parameters['date'])) {
+            $date = ( is_object($parameters['date']) ? $parameters['date']->format("Y-m-d H:i:s") : $parameters['date']);
+            $id[] = Tools::makeSlug($date);
+        }
         if (!empty($parameters['id'])) {
             $id[] = intval($parameters['id']);
         }
+
         if (!empty($parameters['grouping']) && $parameters['grouping'] != $parameters['id']) {
             $id[] = $parameters['grouping'];
         }

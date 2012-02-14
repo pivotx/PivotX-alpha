@@ -719,7 +719,7 @@ class Content
 
         // Set the reference.
         $this->reference = Tools::makeReference("content", array(
-            'content-type' => $this->getContenttype(),
+            'type' => $this->getContenttype(),
             'slug' => $this->slug,
             'id' => $this->id,
             'language' => $this->language,

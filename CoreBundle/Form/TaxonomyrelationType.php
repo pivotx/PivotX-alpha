@@ -12,8 +12,8 @@ class TaxonomyrelationType extends AbstractType
         $builder
             ->add('sortingOrder')
             ->add('parent')
-            ->add('content', 'choice', array('required'=>false))
-            ->add('taxonomy')
+            ->add('content', 'entity', array('class' => 'PivotXCoreBundle:Content', "required" => false ))
+            ->add('taxonomy', 'entity', array('class' => 'PivotXCoreBundle:TaxonomyType', "required" => true ))
         ;
     }
 

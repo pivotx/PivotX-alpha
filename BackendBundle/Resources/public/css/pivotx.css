@@ -34,3 +34,16 @@ ul.record_actions li {
 ul.record_actions form, ul.record_actions div  {
   display: inline;
 }
+
+table.records_list th {
+  border: 1px solid #CCC;
+  background: #EEE;
+  padding: 3px;
+  margin: 0px;
+}
+
+table.records_list td {
+  border: 1px solid #CCC;
+  padding: 3px;
+  margin: 0px;
+}
