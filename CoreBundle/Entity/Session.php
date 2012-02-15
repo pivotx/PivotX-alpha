@@ -149,6 +149,7 @@ class Session
     public function __construct() {
         $this->date = new \DateTime('now');
         $this->ip = $_SERVER['REMOTE_ADDR'];
+        $this->sessionkey = Tools::makeKey(16);
     }
 
 

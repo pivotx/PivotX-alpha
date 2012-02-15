@@ -3,11 +3,11 @@
 
 namespace PivotX\CoreBundle\Util;
 
-
+/**
+ * A collection of miscellaneous tools, that can be used in various places.
+ */
 abstract class Tools
 {
-
-
 
     /**
      * Returns a "safe" version of the given string - basically only US-ASCII and
@@ -229,5 +229,27 @@ abstract class Tools
         return $reference;
 
     }
+
+    /**
+     * Makes a random key with the specified length.
+     *
+     * @param int $length
+     * @return string
+     */
+    public static function makeKey($length) {
+
+        $seed = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $len = strlen($seed);
+        $key = "";
+
+        for ($i=0;$i<$length;$i++) {
+            $key .= $seed[ rand(0,$len) ];
+        }
+
+        return $key;
+
+    }
+
+
 
 }

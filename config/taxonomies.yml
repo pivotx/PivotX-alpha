@@ -1,0 +1,19 @@
+category:
+  name: "Category"
+  description: "These are the categories"
+  behave_like: "category"
+  multiple: true
+  
+chapter:
+  name: "Chapter"
+  description: "These are the chapters"
+  behave_like: "chapters"
+  multiple: false
+  sorted: true
+  hierarchical: true
+  
+tag:
+  name: "Tag"
+  description: "These are the categories"
+  behave_like: "chapters"
+  multiple: true

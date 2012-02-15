@@ -1,0 +1,24 @@
+# some default content types.
+
+
+# Entry
+entry:
+  name: "Entry"
+  description: "Entries go here"
+  extrafields: ""
+  options: ""
+
+# Page
+page:
+  name: "Page"
+  description: "Pages go here"
+  extrafields: ""
+  options: ""
+
+# Snippet / Widget
+widget:
+  name: "snippet"
+  description: "This is where we store the widgets and snippets."
+  extrafields: ""
+  options: ""
+
