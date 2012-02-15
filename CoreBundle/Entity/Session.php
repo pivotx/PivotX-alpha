@@ -3,12 +3,14 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Session
  *
  * @ORM\Table(name="session")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Session
 {
@@ -27,6 +29,13 @@ class Session
      * @ORM\Column(name="ip", type="text", length=128, nullable=false)
      */
     private $ip;
+
+    /**
+     * @var text $sessionkey
+     *
+     * @ORM\Column(name="sessionkey", type="text", length=128, nullable=false)
+     */
+    private $sessionkey;
 
     /**
      * @var datetime $date
@@ -78,6 +87,26 @@ class Session
     }
 
     /**
+     * Set sessionkey
+     *
+     * @param text $sessionkey
+     */
+    public function setSessionkey($sessionkey)
+    {
+        $this->sessionkey = $sessionkey;
+    }
+
+    /**
+     * Get sessionkey
+     *
+     * @return text
+     */
+    public function getSessionkey()
+    {
+        return $this->sessionkey;
+    }
+
+    /**
      * Set date
      *
      * @param datetime $date
@@ -117,10 +146,16 @@ class Session
         return $this->user;
     }
 
+    public function __construct() {
+        $this->date = new \DateTime('now');
+        $this->ip = $_SERVER['REMOTE_ADDR'];
+    }
+
+
 
     public function __toString() {
 
-        return $this->getId();
+        return strval($this->getId());
 
     }
 }

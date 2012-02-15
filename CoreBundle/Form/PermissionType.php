@@ -10,9 +10,9 @@ class PermissionType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('type')
-            ->add('editUsers', 'checkbox')
-            ->add('value')
+            ->add('type', 'text')
+            ->add('editUsers', 'checkbox', array('required' => false))
+            ->add('value', 'text', array('required' => false))
             ->add('contenttype', 'entity', array('class' => 'PivotXCoreBundle:ContentType', "required" => false ))
             ->add('taxonomy', 'entity', array('class' => 'PivotXCoreBundle:Taxonomy', "required" => false ))
         ;

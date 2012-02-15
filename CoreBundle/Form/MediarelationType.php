@@ -10,9 +10,9 @@ class MediarelationType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('sortingOrder')
+            ->add('sortingOrder', 'integer', array('required' => false))
             ->add('content', 'entity', array('class' => 'PivotXCoreBundle:Content', "required" => false ))
-            ->add('extrafield', 'choice', array('required'=>false))
+            ->add('extrafield', 'entity', array('class' => 'PivotXCoreBundle:Extrafield', "required" => false ))
             ->add('media', 'entity', array('class' => 'PivotXCoreBundle:Media', "required" => false ))
         ;
     }

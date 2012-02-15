@@ -16,7 +16,7 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('session_show', { 'id': entity.id }) }}" class="btn">{{ entity.id }}</a></td>
+            <td><a href="{{ path('session_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.ip }}</td>
             <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>

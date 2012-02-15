@@ -8,6 +8,9 @@
     <thead>
         <tr>
             <th>Id</th>
+            <th>Content</th>
+            <th>Extrafield</th>
+            <th>Media</th>
             <th>Sortingorder</th>
             <th>Actions</th>
         </tr>
@@ -15,7 +18,10 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('mediarelation_show', { 'id': entity.id }) }}" class="btn">{{ entity.id }}</a></td>
+            <td><a href="{{ path('mediarelation_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.content }}</td>
+            <td>{{ entity.extraField }}</td>
+            <td>{{ entity.Media }}</td>
             <td>{{ entity.sortingOrder }}</td>
             <td>
                 <ul class="record_actions">

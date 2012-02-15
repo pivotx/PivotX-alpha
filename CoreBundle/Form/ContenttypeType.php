@@ -10,11 +10,12 @@ class ContenttypeType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('slug', 'text')
-            ->add('reference', 'text')
+            ->add('slug', 'text', array('required' => false))
+            ->add('reference', 'text', array('required' => false))
             ->add('name', 'text')
-            ->add('description', 'text')
+            ->add('description', 'text', array('required' => false))
             ->add('extrafields')
+            ->add('options')
         ;
     }
 

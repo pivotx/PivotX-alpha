@@ -3,12 +3,14 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Mediarelation
  *
  * @ORM\Table(name="mediarelation")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Mediarelation
 {
@@ -24,7 +26,7 @@ class Mediarelation
     /**
      * @var integer $sortingOrder
      *
-     * @ORM\Column(name="sorting_order", type="integer", nullable=false)
+     * @ORM\Column(name="sorting_order", type="integer", nullable=true)
      */
     private $sortingOrder;
 

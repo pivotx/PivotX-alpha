@@ -10,6 +10,8 @@
             <th>Id</th>
             <th>Sortingorder</th>
             <th>Actions</th>
+            <th>Taxonomy</th>
+            <th>Content</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +19,8 @@
         <tr>
             <td><a href="{{ path('taxonomyrelation_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.sortingOrder }}</td>
+            <td>{{ entity.taxonomy }}</td>
+            <td>{{ entity.content }}</td>
             <td>
                 <ul class="record_actions">
                     <li>

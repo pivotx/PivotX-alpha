@@ -3,12 +3,15 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
+
 
 /**
  * PivotX\CoreBundle\Entity\Userpermission
  *
  * @ORM\Table(name="userpermission")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Userpermission
 {
@@ -99,5 +102,5 @@ class Userpermission
         return $this->getId();
 
     }
-    
+
 }

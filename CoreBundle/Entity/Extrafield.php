@@ -3,6 +3,7 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Extrafield

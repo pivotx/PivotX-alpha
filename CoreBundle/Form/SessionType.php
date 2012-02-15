@@ -10,9 +10,10 @@ class SessionType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('ip')
+            ->add('ip', 'text')
+            ->add('sessionkey', 'text')
             ->add('date', 'datetime', array('widget' => 'single_text'))
-            ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => false ))
+            ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => true ))
         ;
     }
 
