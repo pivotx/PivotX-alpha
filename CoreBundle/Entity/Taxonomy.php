@@ -225,7 +225,8 @@ class Taxonomy
     }
 
 
-    public function __toString() {
+    public function __toString()
+    {
 
         return $this->getName();
 

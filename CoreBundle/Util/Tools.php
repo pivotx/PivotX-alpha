@@ -101,7 +101,6 @@ abstract class Tools
      * safeString, but using hyphens instead of underscores.
      *
      * @param string $str
-     * @param string $type
      * @return string
      */
     public static function makeSlug($str) {
@@ -120,6 +119,34 @@ abstract class Tools
             $str = "c-".$str;
         }
 
+        return $str;
+
+    }
+
+    /**
+     * Modify a slug-like string, so it prints better
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function unSlug($str) {
+
+        $smallwordsarray = array(
+            'of','a','the','and','an','or','nor','but','is','if','then', 'else',
+            'when', 'at','from','by','on','off','for','in','out', 'over','to','into','with',
+            'van', 'de', 'der', 'het', 'een'
+        );
+
+        $str = strtolower(str_replace("-", " ", $str));
+
+        $words = explode(' ', $str);
+        foreach ($words as $key => $word)
+        {
+            if ( ($key == 0) || (!in_array($word, $smallwordsarray)))
+            $words[$key] = ucfirst($word);
+        }
+
+        $str = implode(' ', $words);
         return $str;
 
     }
@@ -247,6 +274,33 @@ abstract class Tools
         }
 
         return $key;
+
+    }
+
+    /**
+     * Make a simple array consisting of key=>value pairs, that can be used
+     * in select-boxes in forms.
+     *
+     * @param array $array
+     * @param string $key
+     * @param string $value
+     */
+    public static function makeValuepairs($array, $key, $value) {
+
+            $temp_array = array();
+
+            if (is_array($array)) {
+                    foreach($array as $item) {
+                            if (empty($key)) {
+                                $temp_array[] = $item[$value];
+                            } else {
+                                $temp_array[$item[$key]] = $item[$value];
+                            }
+
+                    }
+            }
+
+            return $temp_array;
 
     }
 
