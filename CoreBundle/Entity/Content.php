@@ -702,6 +702,7 @@ class Content
 
     /**
      * @ORM\preUpdate
+     * @ORM\prePersist
      */
     public function setUpdatedValue()
     {
