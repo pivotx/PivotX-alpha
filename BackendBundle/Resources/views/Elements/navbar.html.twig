@@ -1,0 +1,59 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="{{ path('dashboard') }}">PivotX</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="dropdown" id="menu1">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                  Crud
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ path('content') }}">Content</a></li>
+                  <li><a href="{{ path('extrafield') }}">Extrafield</a></li>
+                  <li><a href="{{ path('media') }}">Media</a></li>
+                  <li><a href="{{ path('response') }}">Response</a></li>
+                  <li><a href="{{ path('taxonomy') }}">Taxonomy</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{{ path('user') }}">User</a></li>
+                  <li><a href="{{ path('permission') }}">Permission</a></li>
+                  {# <li><a href="{{ path('taxonomytype') }}">Taxonomytype</a></li> #}
+                  {# <li><a href="{{ path('contenttype') }}">Contenttype</a></li> #}
+                  <li class="divider"></li>
+                  <li><a href="{{ path('mediarelation') }}">Mediarelation</a></li>
+                  <li><a href="{{ path('taxonomyrelation') }}">Taxonomyrelation</a></li>
+                  <li><a href="{{ path('userpermission') }}">Userpermission</a></li>
+                  <li><a href="{{ path('session') }}">Session</a></li>
+                </ul>
+
+              </li>
+              
+              <li class="dropdown" id="menu2">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">
+                  Content
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                {% for name, contenttype in contenttypes %}
+                    <li><a href="{{ path('overview', { 'name': name }) }}">{{ contenttype.name }}</a></li>
+                {% endfor %}
+                </ul>                
+              </li>
+              
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>

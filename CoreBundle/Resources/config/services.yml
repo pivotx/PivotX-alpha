@@ -6,3 +6,13 @@ services:
         class:        PivotX\CoreBundle\Util\Configuration
         arguments:    []
         
+    cms:
+        class:        PivotX\CoreBundle\Util\Cms
+        arguments:    []
+        
+    debug.twig.extension:
+        class: PivotX\CoreBundle\Util\Twig
+        tags: [{ name: 'twig.extension' }]
+        
+                
+                

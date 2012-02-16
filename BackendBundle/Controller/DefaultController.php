@@ -9,16 +9,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
 
-    protected $response;
-    protected $request;
-    protected $configuration;
-
     /**
      * Set up some things we'll need in most/all actions..
      */
     public function __construct()
     {
-
+    
+        // $configuration = $this->get('configuration');
+    
 
     }
 
@@ -37,6 +35,19 @@ class DefaultController extends Controller
         return $this->render('PivotXBackendBundle:Default:index.html.twig');
     }
 
+    /**
+     * @Route("/overview/{name}", name="overview", defaults={"name"=""})
+     * @Template()
+     */
+    public function overviewAction()
+    {
+
+        $configuration = $this->get('configuration');
+
+        echo "joe!";
+
+//        return $this->render('PivotXBackendBundle:Default:index.html.twig');
+    }
 
 
 

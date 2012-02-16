@@ -17,7 +17,7 @@ page:
 
 # Snippet / Widget
 widget:
-  name: "snippet"
+  name: "Widget"
   description: "This is where we store the widgets and snippets."
   extrafields: ""
   options: ""
