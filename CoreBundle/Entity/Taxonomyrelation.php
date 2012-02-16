@@ -3,12 +3,14 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Taxonomyrelation
  *
  * @ORM\Table(name="taxonomyrelation")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Taxonomyrelation
 {
@@ -24,7 +26,7 @@ class Taxonomyrelation
     /**
      * @var integer $sortingOrder
      *
-     * @ORM\Column(name="sorting_order", type="integer", nullable=false)
+     * @ORM\Column(name="sorting_order", type="integer", nullable=true)
      */
     private $sortingOrder;
 
@@ -153,7 +155,7 @@ class Taxonomyrelation
 
     public function __toString() {
 
-        return $this->getId();
+        return $this->content . " - " . $this->taxonomy;
 
     }
 }

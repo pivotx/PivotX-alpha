@@ -3,12 +3,14 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Contenttype
  *
  * @ORM\Table(name="contenttype")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Contenttype
 {
@@ -45,7 +47,7 @@ class Contenttype
     /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text", length=255, nullable=false)
+     * @ORM\Column(name="description", type="text", length=255, nullable=true)
      */
     private $description;
 
@@ -55,6 +57,14 @@ class Contenttype
      * @ORM\Column(name="extrafields", type="text", length=65535, nullable=false)
      */
     private $extrafields;
+
+    /**
+     * @var text $options
+     *
+     * @ORM\Column(name="options", type="text", length=65535, nullable=false)
+     */
+    private $options;
+
 
 
 
@@ -169,9 +179,51 @@ class Contenttype
     }
 
 
+    /**
+     * Set options
+     *
+     * @param text $options
+     */
+    public function setoptions($options)
+    {
+        $this->options = $options;
+    }
+
+    /**
+     * Get options
+     *
+     * @return text
+     */
+    public function getoptions()
+    {
+        return $this->options;
+    }
+
+
     public function __toString() {
 
         return $this->getName();
+
+    }
+
+
+    /**
+     * @ORM\preUpdate
+     * @ORM\prePersist
+     */
+    public function setUpdatedValue()
+    {
+
+        // Set the slug.
+        if ($this->slug == "" ) {
+            $this->slug = Tools::makeSlug($this->name);
+        }
+
+        // Set the reference.
+        $this->reference = Tools::makeReference("contenttype", array(
+            'slug' => $this->slug,
+            'id' => $this->id
+        ));
 
     }
 

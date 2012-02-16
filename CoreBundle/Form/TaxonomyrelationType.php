@@ -10,10 +10,10 @@ class TaxonomyrelationType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('sortingOrder')
-            ->add('parent')
-            ->add('content', 'choice', array('required'=>false))
-            ->add('taxonomy')
+            ->add('sortingOrder', 'integer', array('required' => false))
+            ->add('parent', 'entity', array('class' => 'PivotXCoreBundle:Taxonomyrelation', "required" => false ))
+            ->add('content', 'entity', array('class' => 'PivotXCoreBundle:Content', "required" => true ))
+            ->add('taxonomy', 'entity', array('class' => 'PivotXCoreBundle:Taxonomy', "required" => true ))
         ;
     }
 

@@ -3,12 +3,14 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Taxonomytype
  *
  * @ORM\Table(name="taxonomytype")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Taxonomytype
 {
@@ -45,7 +47,7 @@ class Taxonomytype
     /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text", length=255, nullable=false)
+     * @ORM\Column(name="description", type="text", length=255, nullable=true)
      */
     private $description;
 
@@ -54,7 +56,7 @@ class Taxonomytype
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +76,7 @@ class Taxonomytype
     /**
      * Get slug
      *
-     * @return text 
+     * @return text
      */
     public function getSlug()
     {
@@ -94,7 +96,7 @@ class Taxonomytype
     /**
      * Get reference
      *
-     * @return text 
+     * @return text
      */
     public function getReference()
     {
@@ -114,7 +116,7 @@ class Taxonomytype
     /**
      * Get name
      *
-     * @return text 
+     * @return text
      */
     public function getName()
     {
@@ -134,7 +136,7 @@ class Taxonomytype
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -146,5 +148,26 @@ class Taxonomytype
         return $this->getName();
 
     }
+
+    /**
+     * @ORM\preUpdate
+     * @ORM\prePersist
+     */
+    public function setUpdatedValue()
+    {
+
+        // Set the slug.
+        if ($this->slug == "" ) {
+            $this->slug = Tools::makeSlug($this->name);
+        }
+
+        // Set the reference.
+        $this->reference = Tools::makeReference("taxonomytype", array(
+            'slug' => $this->slug,
+            'id' => $this->id
+        ));
+
+    }
+
 
 }

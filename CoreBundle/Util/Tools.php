@@ -3,11 +3,11 @@
 
 namespace PivotX\CoreBundle\Util;
 
-
+/**
+ * A collection of miscellaneous tools, that can be used in various places.
+ */
 abstract class Tools
 {
-
-
 
     /**
      * Returns a "safe" version of the given string - basically only US-ASCII and
@@ -169,30 +169,87 @@ abstract class Tools
     }
 
 
+    /**
+     * Make a reference for an entity, template, user, or whatnot.
+     *
+     * @param string $entity
+     * @param array $parameters
+     */
     public static function makeReference($entity="unknown", $parameters = array()) {
 
+        // Make sure $parameters is an array
+        if (!is_array($parameters)) {
+            $parameters = array($parameters);
+        }
 
+        $parts = array();
+
+        $parts[] = $entity;
+
+        // Add the contenttype, but only for certain entities.
+        if ( in_array($entity, array("content", "response", "taxonomy")) ) {
+            if (!empty($parameters['type'])) {
+                $parts[] = "/" . Tools::safeString($parameters['type']);
+            } else {
+                $parts[] = "/generic";
+            }
+        }
+
+        // Put together the id
         $id = array();
         if (!empty($parameters['slug'])) {
             $id[] = Tools::makeSlug($parameters['slug']);
+        }
+        if (!empty($parameters['name'])) {
+            $id[] = Tools::makeSlug($parameters['name']);
+        }
+        if (!empty($parameters['date'])) {
+            $date = ( is_object($parameters['date']) ? $parameters['date']->format("Y-m-d H:i:s") : $parameters['date']);
+            $id[] = Tools::makeSlug($date);
         }
         if (!empty($parameters['id'])) {
             $id[] = intval($parameters['id']);
         }
 
-        $id = implode(",", $id);
-
-        if (!empty($parameters['language'])) {
-            $language = "/" . Tools::safeString($parameters['language']);
-        } else {
-            $language = "";
+        if (!empty($parameters['grouping']) && $parameters['grouping'] != $parameters['id']) {
+            $id[] = $parameters['grouping'];
         }
 
-        $reference = sprintf("%s/%s%s",
-            $entity, $id, $language);
+        $parts[] = "/" . implode(",", $id);
+
+        // Add an optional language.
+        if (!empty($parameters['language'])) {
+            $parts[] = "/" . Tools::safeString($parameters['language']);
+        }
+
+
+        // Put it together..
+        $reference = implode("", $parts);
 
         return $reference;
 
     }
+
+    /**
+     * Makes a random key with the specified length.
+     *
+     * @param int $length
+     * @return string
+     */
+    public static function makeKey($length) {
+
+        $seed = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $len = strlen($seed);
+        $key = "";
+
+        for ($i=0;$i<$length;$i++) {
+            $key .= $seed[ rand(0,$len) ];
+        }
+
+        return $key;
+
+    }
+
+
 
 }

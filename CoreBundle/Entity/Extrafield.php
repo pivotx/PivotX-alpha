@@ -3,6 +3,7 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Extrafield
@@ -271,10 +272,11 @@ class Extrafield
 
     /**
      * @ORM\preUpdate
+     * @ORM\prePersist
      */
     public function setUpdatedValue()
     {
-       $this->date = new \DateTime('now');
+
     }
 
 }

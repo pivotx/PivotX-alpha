@@ -7,7 +7,7 @@ body {
 }
 
 
-.crudtable {
+div.crudtable {
   margin: 0px 18px;
 }
 
@@ -18,6 +18,32 @@ body {
 }
 
 
-.form-horizontal .control-group {
+form.form-horizontal .control-group {
   margin-bottom: 6px;
+}
+
+ul.record_actions {
+  margin: 6px 0;
+}
+
+ul.record_actions li {
+  display: inline;
+  margin-right: 2px;
+}
+
+ul.record_actions form, ul.record_actions div  {
+  display: inline;
+}
+
+table.records_list th {
+  border: 1px solid #CCC;
+  background: #EEE;
+  padding: 3px;
+  margin: 0px;
+}
+
+table.records_list td {
+  border: 1px solid #CCC;
+  padding: 3px;
+  margin: 0px;
 }

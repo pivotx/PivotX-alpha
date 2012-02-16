@@ -3,12 +3,15 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
+
 
 /**
  * PivotX\CoreBundle\Entity\Response
  *
  * @ORM\Table(name="response")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Response
 {
@@ -38,7 +41,7 @@ class Response
     /**
      * @var text $title
      *
-     * @ORM\Column(name="title", type="text", length=255, nullable=false)
+     * @ORM\Column(name="title", type="text", length=255, nullable=true)
      */
     private $title;
 
@@ -59,14 +62,14 @@ class Response
     /**
      * @var text $email
      *
-     * @ORM\Column(name="email", type="text", length=255, nullable=false)
+     * @ORM\Column(name="email", type="text", length=255, nullable=true)
      */
     private $email;
 
     /**
      * @var text $url
      *
-     * @ORM\Column(name="url", type="text", length=1024, nullable=false)
+     * @ORM\Column(name="url", type="text", length=1024, nullable=true)
      */
     private $url;
 
@@ -94,14 +97,14 @@ class Response
     /**
      * @var text $originUrl
      *
-     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=false)
+     * @ORM\Column(name="origin_url", type="text", length=1024, nullable=true)
      */
     private $originUrl;
 
     /**
      * @var text $originCreator
      *
-     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=false)
+     * @ORM\Column(name="origin_creator", type="text", length=255, nullable=true)
      */
     private $originCreator;
 
@@ -423,4 +426,37 @@ class Response
         return $this->getId();
 
     }
+
+
+
+
+    public function __construct() {
+        $this->dateCreated = new \DateTime('now');
+        $this->ip = $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    /**
+     * @ORM\preUpdate
+     * @ORM\prePersist
+     */
+    public function setUpdatedValue()
+    {
+
+        if (empty($this->status)) {
+            $this->status = "neutral";
+        }
+
+
+        // Set the reference.
+        $this->reference = Tools::makeReference("response", array(
+            'type' => $this->getResponsetype(),
+            'name' => $this->name,
+            'date' => $this->dateCreated,
+            'id' => $this->id
+        ));
+
+    }
+
+
 }

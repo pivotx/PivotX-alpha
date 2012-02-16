@@ -26,12 +26,12 @@
             <td>{{ entity.description }}</td>
             <td>{{ entity.extrafields }}</td>
             <td>
-                <ul>
+                <ul class="record_actions">
                     <li>
-                        <a href="{{ path('contenttype_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('contenttype_show', { 'id': entity.id }) }}" class="btn">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('contenttype_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('contenttype_edit', { 'id': entity.id }) }}" class="btn">edit</a>
                     </li>
                 </ul>
             </td>
@@ -40,9 +40,9 @@
     </tbody>
 </table>
 
-<ul>
+<ul class="record_actions">
     <li>
-        <a href="{{ path('contenttype_new') }}">
+        <a href="{{ path('contenttype_new') }}" class="btn">
             Create a new entry
         </a>
     </li>

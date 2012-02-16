@@ -3,12 +3,14 @@
 namespace PivotX\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PivotX\CoreBundle\Util\Tools;
 
 /**
  * PivotX\CoreBundle\Entity\Taxonomy
  *
  * @ORM\Table(name="taxonomy")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Taxonomy
 {
@@ -45,7 +47,7 @@ class Taxonomy
     /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text", length=255, nullable=false)
+     * @ORM\Column(name="description", type="text", length=255, nullable=true)
      */
     private $description;
 
@@ -59,7 +61,7 @@ class Taxonomy
     /**
      * @var integer $sortingOrder
      *
-     * @ORM\Column(name="sorting_order", type="integer", nullable=false)
+     * @ORM\Column(name="sorting_order", type="integer", nullable=true)
      */
     private $sortingOrder;
 
@@ -231,4 +233,28 @@ class Taxonomy
         return $this->getName();
 
     }
+
+
+    /**
+     * @ORM\preUpdate
+     * @ORM\prePersist
+     */
+    public function setUpdatedValue()
+    {
+
+        // Set the slug.
+        if ($this->slug == "" ) {
+            $this->slug = Tools::makeSlug($this->name);
+        }
+
+        // Set the reference.
+        $this->reference = Tools::makeReference("taxonomy", array(
+            'type' => $this->getTaxonomytype()->getSlug(),
+            'slug' => $this->slug,
+            'id' => $this->id
+        ));
+
+    }
+
+
 }

@@ -1,0 +1,8 @@
+# Note: do NOT put any site-specific configuration in this file. Put it in the file
+# src/Config/config.yml or one of the other files in that folder instead. 
+
+services:
+    configuration:
+        class:        PivotX\CoreBundle\Util\Configuration
+        arguments:    []
+        

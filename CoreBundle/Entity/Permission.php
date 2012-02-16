@@ -38,7 +38,7 @@ class Permission
     /**
      * @var integer $value
      *
-     * @ORM\Column(name="value", type="integer", nullable=false)
+     * @ORM\Column(name="value", type="text", length=255, nullable=true)
      */
     private $value;
 
@@ -177,7 +177,7 @@ class Permission
 
     public function __toString() {
 
-        return $this->getId();
+        return strval($this->getId());
 
     }
 }
