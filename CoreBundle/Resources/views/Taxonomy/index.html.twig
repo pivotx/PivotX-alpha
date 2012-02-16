@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>Id</th>
+            <th>Taxonomytype</th>
             <th>Slug</th>
             <th>Reference</th>
             <th>Name</th>
@@ -21,6 +22,7 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('taxonomy_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.taxonomytype }}</td>
             <td>{{ entity.slug }}</td>
             <td>{{ entity.reference }}</td>
             <td>{{ entity.name }}</td>

@@ -246,7 +246,7 @@ class Taxonomy
 
         // Set the reference.
         $this->reference = Tools::makeReference("taxonomy", array(
-            'type' => $this->getTaxonomytype()->getSlug(),
+            'type' => $this->getTaxonomytype(),
             'slug' => $this->slug,
             'id' => $this->id
         ));

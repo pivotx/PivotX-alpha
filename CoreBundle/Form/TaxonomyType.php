@@ -16,7 +16,7 @@ class TaxonomyType extends AbstractType
             ->add('description', 'text', array('required' => false))
             ->add('parentId', 'integer', array('required' => false))
             ->add('sortingOrder', 'integer', array('required' => false))
-            ->add('taxonomytype', 'entity', array('class' => 'PivotXCoreBundle:TaxonomyType', "required" => true ))
+            ->add('taxonomytype', 'text', array('required' => false))
         ;
     }
 
