@@ -190,10 +190,7 @@ class Content
     /**
      * @var Contenttype
      *
-     * @ORM\ManyToOne(targetEntity="Contenttype")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="contenttype_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="contenttype", type="text", length=255, nullable=true)
      */
     private $contenttype;
 
@@ -672,9 +669,9 @@ class Content
     /**
      * Set contenttype
      *
-     * @param PivotX\CoreBundle\Entity\Contenttype $contenttype
+     * @param text $contenttype
      */
-    public function setContenttype(\PivotX\CoreBundle\Entity\Contenttype $contenttype)
+    public function setContenttype($contenttype)
     {
         $this->contenttype = $contenttype;
     }
@@ -682,13 +679,12 @@ class Content
     /**
      * Get contenttype
      *
-     * @return PivotX\CoreBundle\Entity\Contenttype
+     * @return text
      */
     public function getContenttype()
     {
         return $this->contenttype;
     }
-
 
     public function __construct() {
         $this->dateCreated = new \DateTime('now');

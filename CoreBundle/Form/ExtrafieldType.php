@@ -17,7 +17,7 @@ class ExtrafieldType extends AbstractType
             ->add('date', 'datetime', array('widget' => 'single_text'))
             ->add('originCreator', 'text', array('required'=>false))
             ->add('content', 'entity', array('class' => 'PivotXCoreBundle:Content', "required" => false ))
-            ->add('contenttype', 'entity', array('class' => 'PivotXCoreBundle:Contenttype', "required" => false ))
+            ->add('contenttype', 'text', array("required" => false ))
         ;
     }
 

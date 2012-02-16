@@ -32,7 +32,7 @@ class ContentType extends AbstractType
             ->add('originCreator', 'text', array("required" => false))
             ->add('textFormatting', 'text')
             ->add('allowResponses', 'checkbox', array("required" => false))
-            ->add('contenttype', 'entity', array('class' => 'PivotXCoreBundle:ContentType', "required" => false ))
+            ->add('contenttype', 'text', array("required" => false ))
             ->add('user', 'entity', array('class' => 'PivotXCoreBundle:User', "required" => false ))
 
         ;

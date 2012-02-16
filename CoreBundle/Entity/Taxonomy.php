@@ -68,10 +68,7 @@ class Taxonomy
     /**
      * @var Taxonomytype
      *
-     * @ORM\ManyToOne(targetEntity="Taxonomytype")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxonomytype_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="taxonomytype", type="text", length=255, nullable=true)
      */
     private $taxonomytype;
 
@@ -210,9 +207,9 @@ class Taxonomy
     /**
      * Set taxonomytype
      *
-     * @param PivotX\CoreBundle\Entity\Taxonomytype $taxonomytype
+     * @param text $taxonomytype
      */
-    public function setTaxonomytype(\PivotX\CoreBundle\Entity\Taxonomytype $taxonomytype)
+    public function setTaxonomytype($taxonomytype)
     {
         $this->taxonomytype = $taxonomytype;
     }
@@ -220,7 +217,7 @@ class Taxonomy
     /**
      * Get taxonomytype
      *
-     * @return PivotX\CoreBundle\Entity\Taxonomytype
+     * @return text
      */
     public function getTaxonomytype()
     {

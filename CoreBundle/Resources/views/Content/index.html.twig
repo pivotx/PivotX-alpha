@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>Id</th>
+            <th>Contenttype</th>
             <th>Slug</th>
 {#            <th>Reference</th> #}
             <th>Grouping</th>
@@ -37,6 +38,7 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('content_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.contenttype }}</td>
             <td>{{ entity.slug }}</td>
 {#            <td>{{ entity.reference }}</td> #}
             <td>{{ entity.grouping }}</td>

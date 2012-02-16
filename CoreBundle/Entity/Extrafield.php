@@ -69,10 +69,7 @@ class Extrafield
     /**
      * @var Contenttype
      *
-     * @ORM\ManyToOne(targetEntity="Contenttype")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="contenttype_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="contenttype", type="text", length=255, nullable=true)
      */
     private $contenttype;
 
@@ -221,9 +218,9 @@ class Extrafield
     /**
      * Set contenttype
      *
-     * @param PivotX\CoreBundle\Entity\Contenttype $contenttype
+     * @param text $contenttype
      */
-    public function setContenttype(\PivotX\CoreBundle\Entity\Contenttype $contenttype)
+    public function setContenttype($contenttype)
     {
         $this->contenttype = $contenttype;
     }
@@ -231,12 +228,13 @@ class Extrafield
     /**
      * Get contenttype
      *
-     * @return PivotX\CoreBundle\Entity\Contenttype
+     * @return text
      */
     public function getContenttype()
     {
         return $this->contenttype;
     }
+
 
     /**
      * Set content

@@ -13,7 +13,7 @@ class PermissionType extends AbstractType
             ->add('type', 'text')
             ->add('editUsers', 'checkbox', array('required' => false))
             ->add('value', 'text', array('required' => false))
-            ->add('contenttype', 'entity', array('class' => 'PivotXCoreBundle:ContentType', "required" => false ))
+            ->add('contenttype', 'text', array("required" => false ))
             ->add('taxonomy', 'entity', array('class' => 'PivotXCoreBundle:Taxonomy', "required" => false ))
         ;
     }
