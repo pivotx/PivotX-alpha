@@ -37,7 +37,7 @@
                 </ul>
 
               </li>
-              
+
               <li class="dropdown" id="menu2">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">
                   Content
@@ -45,11 +45,11 @@
                 </a>
                 <ul class="dropdown-menu">
                 {% for name, contenttype in contenttypes %}
-                    <li><a href="{{ path('overview', { 'name': name }) }}">{{ contenttype.name }}</a></li>
+                    <li><a href="{{ path('overview', { 'contenttype': name }) }}">{{ contenttype.name }}</a></li>
                 {% endfor %}
-                </ul>                
+                </ul>
               </li>
-              
+
               <li><a href="#contact">Contact</a></li>
             </ul>
             <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
@@ -57,3 +57,6 @@
         </div>
       </div>
     </div>
+
+
+{# { vardump(contenttypes) } #}

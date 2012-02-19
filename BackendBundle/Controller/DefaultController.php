@@ -5,12 +5,17 @@ namespace PivotX\BackendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Symfony\Component\HttpFoundation\Response;
+
 use PivotX\CoreBundle\Util\Tools;
 use PivotX\CoreBundle\Entity\Content;
 use PivotX\CoreBundle\Entity\Taxonomy;
 use PivotX\CoreBundle\Entity\TaxonomyRelation;
+
+use MakerLabs\PagerBundle\Pager;
+use MakerLabs\PagerBundle\Adapter\ArrayAdapter;
+use MakerLabs\PagerBundle\Adapter\DoctrineOrmAdapter;
+
 
 class DefaultController extends Controller
 {
@@ -36,23 +41,42 @@ class DefaultController extends Controller
 
         $configuration = $this->get('configuration');
 
-        return $this->render('PivotXBackendBundle:Default:index.html.twig');
+        return array();
+
     }
 
 
 
+
     /**
-     * @Route("/overview/{name}", name="overview", defaults={"name"=""})
+     * @Route("/overview/{contenttype}/{page}", name="overview", defaults={"contenttype"="", "page"=1 })
      * @Template()
      */
-    public function overviewAction()
+    public function overviewAction($contenttype, $page)
     {
 
-        $configuration = $this->get('configuration');
+        $cms = $this->get('cms');
+        $contenttypes = $cms->getContentTypes();
 
-        echo "joe!";
+        if (isset($contenttypes[$contenttype])) {
 
-//        return $this->render('PivotXBackendBundle:Default:index.html.twig');
+            $em = $this->getDoctrine()->getEntityManager();
+
+            $qb = $em->createQueryBuilder()
+                ->select('c')->from('PivotXCoreBundle:Content', 'c')
+                ->add('where', 'c.contenttype = :contenttype')->setParameter('contenttype', $contenttype)
+                ->add('orderBy', 'c.dateCreated DESC');
+
+            $adapter = new DoctrineOrmAdapter($qb);
+            $pager = new Pager($adapter, array('page' => $page, 'limit' => 15));
+
+            return array('pager' => $pager, 'contenttype' => $contenttype);
+
+        } else {
+            return new Response('<html><head></head><body>Not a valid contenttype!</body></html>');
+        }
+
+
     }
 
 

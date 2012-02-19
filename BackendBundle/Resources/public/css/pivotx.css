@@ -47,3 +47,23 @@ table.records_list td {
   padding: 3px;
   margin: 0px;
 }
+
+div.content-overview {
+
+  margin: 0px 18px;
+}
+
+.pagination a{
+    line-height: 28px;
+    padding: 0 8px;
+}
+
+div.item {
+  border: 1px solid #DDD;
+  margin: 0;
+  padding: 4px;
+}
+
+div.item p {
+  margin: 0;
+}

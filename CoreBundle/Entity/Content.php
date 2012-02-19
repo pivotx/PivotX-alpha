@@ -306,6 +306,21 @@ class Content
         return $this->teaser;
     }
 
+
+    /**
+     * Get excerpt
+     *
+     * @return text
+     */
+    public function getExcerpt()
+    {
+
+        $this->excerpt = Tools::makeExcerpt($this->teaser . $this->body, 400);
+
+        return $this->excerpt;
+    }
+
+
     /**
      * Set body
      *

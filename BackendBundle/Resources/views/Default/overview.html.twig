@@ -1,0 +1,38 @@
+{% extends 'PivotXBackendBundle::base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block heading %}This is the heading{% endblock %}
+
+
+{% block main %}
+
+<div class="content-overview">
+
+{% if pager.isPaginable %}
+   {{ paginate(pager, 'overview', {contenttype: contenttype}, "PivotXBackendBundle:Elements:pagination.html.twig") }}
+{% endif %}
+
+{% for item in pager.getResults %}
+
+<div class="item">
+
+<strong>{{ item.getId() }} - {{ item.getTitle() }} </strong> - {{ item.getReference() }}
+<p>{{item.getExcerpt() }}</p>
+<p>Created: {{ item.getDateCreated()|date("Y-m-d H:i") }} - Modified {{ item.getDateCreated()|date("Y-m-d H:i") }} -
+Version {{ item.getVersion() }} - Status: {{ item.getStatus() }} - User: {{ item.getUser() }} </p>
+
+
+</div>
+
+{% endfor %}
+
+
+{% if pager.isPaginable %}
+   {{ paginate(pager, 'overview', {contenttype: contenttype}, "PivotXBackendBundle:Elements:pagination.html.twig") }}
+{% endif %}
+
+</div>
+
+
+{% endblock %}
