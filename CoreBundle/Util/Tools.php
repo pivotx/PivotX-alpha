@@ -17,7 +17,8 @@ abstract class Tools
      * @param boolean $strict
      * @return string
      */
-    public static function safeString($str, $strict=false, $extrachars="") {
+    public static function safeString($str, $strict=false, $extrachars="")
+    {
 
         // replace UTF-8 non ISO-8859-1 first
         $str = strtr($str, array(
@@ -103,7 +104,8 @@ abstract class Tools
      * @param string $str
      * @return string
      */
-    public static function makeSlug($str) {
+    public static function makeSlug($str)
+    {
 
         $str = Tools::safeString($str, false, " /_-+");
 
@@ -129,7 +131,8 @@ abstract class Tools
      * @param string $str
      * @return string
      */
-    public static function unSlug($str) {
+    public static function unSlug($str)
+    {
 
         $smallwordsarray = array(
             'of','a','the','and','an','or','nor','but','is','if','then', 'else',
@@ -157,7 +160,8 @@ abstract class Tools
      * Remove trailing whitespace from a given string. Not just spaces and linebreaks,
      * but also &nbsp;, <br />'s and the like.
      */
-    public static function stripTrailingSpace($text) {
+    public static function stripTrailingSpace($text)
+    {
 
         $text=trim($text)."[[end]]";
         $end_p = preg_match("~</p>\[\[end\]\]$~mi", $text);
@@ -174,7 +178,8 @@ abstract class Tools
      * @param string $path
      * @return string
      */
-    public static function stripTrailingSlash($path) {
+    public static function stripTrailingSlash($path)
+    {
         if(substr($path,-1,1) == "/") {
             $path = substr($path,0,-1);
         }
@@ -188,7 +193,8 @@ abstract class Tools
      * @param string $path
      * @return string
      */
-    public static function addTrailingSlash($path) {
+    public static function addTrailingSlash($path)
+    {
         if(substr($path,-1,1) != "/") {
             $path .= "/";
         }
@@ -202,7 +208,8 @@ abstract class Tools
      * @param string $entity
      * @param array $parameters
      */
-    public static function makeReference($entity="unknown", $parameters = array()) {
+    public static function makeReference($entity="unknown", $parameters = array())
+    {
 
         // Make sure $parameters is an array
         if (!is_array($parameters)) {
@@ -263,7 +270,8 @@ abstract class Tools
      * @param int $length
      * @return string
      */
-    public static function makeKey($length) {
+    public static function makeKey($length)
+    {
 
         $seed = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $len = strlen($seed);
@@ -285,7 +293,8 @@ abstract class Tools
      * @param string $key
      * @param string $value
      */
-    public static function makeValuepairs($array, $key, $value) {
+    public static function makeValuepairs($array, $key, $value)
+    {
 
             $temp_array = array();
 

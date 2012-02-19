@@ -68,7 +68,7 @@ class Content
     /**
      * @var text $template
      *
-     * @ORM\Column(name="template", type="text", length=255, nullable=false)
+     * @ORM\Column(name="template", type="text", length=255, nullable=true)
      */
     private $template;
 

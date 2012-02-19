@@ -236,7 +236,7 @@ class DefaultController extends Controller
                 $content->setTextFormatting($page['convert_lb']);
                 $content->setAllowResponses($page['allow_comments']);
                 $content->setLocked(0);
-                $content->setSearchable(0);
+                $content->setSearchable(1);
                 $content->setContenttype("page");
 
 
@@ -266,6 +266,139 @@ class DefaultController extends Controller
         }
 
         return new Response('<html><head></head><body></pre><br /><br />Ready!</body></html>');
+
+    }
+
+
+
+
+    /**
+     * @Route("/import/entries")
+     * @Template()
+     */
+    public function importEntriesAction()
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $conn = $this->get('database_connection');
+        $entries = $conn->fetchAll('SELECT e.* FROM `pivotx_entries` e LIMIT 6000, 10000;');
+
+        echo "<pre>";
+
+        $count = 1;
+
+        foreach($entries as $entry) {
+
+
+            echo "\n$count - Entry: " . $entry['uri'];
+
+            $count++;
+
+
+            $query = $em->createQuery("SELECT c FROM PivotXCoreBundle:Content c WHERE c.slug= :slug AND c.dateCreated = :date ")
+                ->setParameter('slug', $entry['uri'])
+                ->setParameter('date', $entry['date']);
+
+            $res = $query->getArrayResult();
+
+            // Create it, if it's not there yet.
+            if (empty($res)) {
+
+                $content = new Content();
+                $content->setTitle($entry['title']);
+                $content->setSlug($entry['uri']);
+                $content->setGrouping(0);
+                $content->setTeaser($entry['introduction']);
+                $content->setBody($entry['body']);
+                $content->setDateCreated(new \DateTime($entry['date']));
+                $content->setDateModified(new \DateTime($entry['edit_date']));
+                $content->setDatePublishOn(new \DateTime($entry['publish_date']));
+                $content->setLanguage("NL");
+                $content->setStatus($entry['status']);
+                $content->setTextFormatting($entry['convert_lb']);
+                $content->setAllowResponses($entry['allow_comments']);
+                $content->setLocked(0);
+                $content->setSearchable(1);
+                $content->setContenttype("entry");
+
+
+                $em->persist($content);
+                $em->flush();
+
+
+            } else {
+                echo " - Skip!";
+            }
+
+        }
+
+        return new Response('<html><head></head><body></pre><br /><br />Ready!</body></html>');
+
+    }
+
+
+    /**
+     * @Route("/import/tagrelations")
+     * @Template()
+     */
+    public function importTagRelationAction()
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+        $conn = $this->get('database_connection');
+        $pages = $conn->fetchAll('SELECT * FROM pivotx_entries WHERE keywords!="" LIMIT 200,5000;');
+
+        $count = 200;
+
+        foreach($pages as $page) {
+
+            $tags = explode(" ", $page['keywords']);
+
+            $query = $em->createQuery("SELECT c FROM PivotXCoreBundle:Content c WHERE c.slug= :slug  AND c.contenttype= :contenttype")
+                    ->setParameter('slug', Tools::makeSlug($page['uri']))
+                    ->setParameter('contenttype', 'entry');
+
+            $content = $query->getResult();
+
+            if (empty($content)){
+                continue;
+            }
+
+            echo "<br />$count - Tag:" . print_r($tags);
+
+            $count++;
+
+            foreach($tags as $tag) {
+
+                $tag = trim($tag);
+
+
+                $query = $em->createQuery("SELECT t FROM PivotXCoreBundle:Taxonomy t WHERE t.slug= :slug AND t.taxonomytype = :type ")
+                    ->setParameter('slug', $tag)
+                    ->setParameter('type', 'tag')
+                    ->setMaxResults(1);
+
+                $taxonomy = $query->getResult();
+
+                if (!empty($taxonomy)) {
+
+                    $rel = new TaxonomyRelation();
+                    $rel->setTaxonomy($taxonomy[0]);
+                    $rel->setContent($content[0]);
+                    $rel->setSortingOrder(100);
+                    $em->persist($rel);
+                    $em->flush();
+                }
+
+            }
+
+
+        }
+
+        return new Response('<html><head></head><body><br /><br />Ready!</body></html>');
 
     }
 
