@@ -1,0 +1,12 @@
+PivotXBackendBundle:
+    resource: "@PivotXBackendBundle/Resources/config/routing.php"
+    prefix:   /pivotx
+
+PivotXCoreBundle:
+    resource: "@PivotXCoreBundle/Resources/config/routing.php"
+    prefix:   /pivotx_core
+
+# Internal routing configuration to handle ESI
+#_internal:
+#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#   prefix:   /_internal
