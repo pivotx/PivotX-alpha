@@ -9,7 +9,7 @@ use PivotX\CoreBundle\Util\Tools;
  * PivotX\CoreBundle\Entity\Content
  *
  * @ORM\Table(name="content")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PivotX\CoreBundle\Repository\ContentRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Content
