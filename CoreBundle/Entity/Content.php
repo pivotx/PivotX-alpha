@@ -195,6 +195,29 @@ class Content
     private $contenttype;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Response", mappedBy="content")
+     */
+    protected $responses;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Media", mappedBy="content")
+     */
+    protected $media;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Taxonomy", mappedBy="content")
+     */
+    protected $taxonomy;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Extrafield", mappedBy="content")
+     */
+    protected $extrafields;
+
 
     /**
      * Get id
@@ -702,6 +725,12 @@ class Content
     }
 
     public function __construct() {
+
+        $this->responses = new ArrayCollection();
+        $this->media = new ArrayCollection();
+        $this->extrafields = new ArrayCollection();
+        $this->taxonomies = new ArrayCollection();
+
         $this->dateCreated = new \DateTime('now');
         $this->dateModified = new \DateTime('now');
     }
@@ -740,4 +769,84 @@ class Content
     }
 
 
+
+    /**
+     * Add responses
+     *
+     * @param PivotX\CoreBundle\Entity\Response $responses
+     */
+    public function addResponse(\PivotX\CoreBundle\Entity\Response $responses)
+    {
+        $this->responses[] = $responses;
+    }
+
+    /**
+     * Get responses
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getResponses()
+    {
+        return $this->responses;
+    }
+
+    /**
+     * Add media
+     *
+     * @param PivotX\CoreBundle\Entity\Media $media
+     */
+    public function addMedia(\PivotX\CoreBundle\Entity\Media $media)
+    {
+        $this->media[] = $media;
+    }
+
+    /**
+     * Get media
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * Add extrafields
+     *
+     * @param PivotX\CoreBundle\Entity\Extrafield $extrafields
+     */
+    public function addExtrafield(\PivotX\CoreBundle\Entity\Extrafield $extrafields)
+    {
+        $this->extrafields[] = $extrafields;
+    }
+
+    /**
+     * Get extrafields
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getExtrafields()
+    {
+        return $this->extrafields;
+    }
+
+    /**
+     * Add taxonomy
+     *
+     * @param PivotX\CoreBundle\Entity\Taxonomy $taxonomy
+     */
+    public function addTaxonomy(\PivotX\CoreBundle\Entity\Taxonomy $taxonomy)
+    {
+        $this->taxonomy[] = $taxonomy;
+    }
+
+    /**
+     * Get taxonomy
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTaxonomy()
+    {
+        return $this->taxonomy;
+    }
 }

@@ -9,7 +9,7 @@ use PivotX\CoreBundle\Util\Tools;
  * PivotX\CoreBundle\Entity\Media
  *
  * @ORM\Table(name="media")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PivotX\CoreBundle\Repository\MediaRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Media

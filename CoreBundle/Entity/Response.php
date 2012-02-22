@@ -10,7 +10,7 @@ use PivotX\CoreBundle\Util\Tools;
  * PivotX\CoreBundle\Entity\Response
  *
  * @ORM\Table(name="response")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PivotX\CoreBundle\Repository\ResponseRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Response

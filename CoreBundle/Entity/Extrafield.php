@@ -9,7 +9,7 @@ use PivotX\CoreBundle\Util\Tools;
  * PivotX\CoreBundle\Entity\Extrafield
  *
  * @ORM\Table(name="extrafield")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PivotX\CoreBundle\Repository\ExtrafieldRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Extrafield
