@@ -12,9 +12,6 @@ use PivotX\CoreBundle\Entity\Content;
 use PivotX\CoreBundle\Entity\Taxonomy;
 use PivotX\CoreBundle\Entity\TaxonomyRelation;
 
-use MakerLabs\PagerBundle\Pager;
-use MakerLabs\PagerBundle\Adapter\ArrayAdapter;
-use MakerLabs\PagerBundle\Adapter\DoctrineOrmAdapter;
 
 
 class DefaultController extends Controller
@@ -62,20 +59,16 @@ class DefaultController extends Controller
 
             $em = $this->getDoctrine()->getEntityManager();
 
-            $qb = $em->createQueryBuilder()
-                ->select('c')->from('PivotXCoreBundle:Content', 'c')
-                ->add('where', 'c.contenttype = :contenttype')->setParameter('contenttype', $contenttype)
-                ->add('orderBy', 'c.dateCreated DESC');
-
-            $adapter = new DoctrineOrmAdapter($qb);
-            $pager = new Pager($adapter, array('page' => $page, 'limit' => 15));
+            $pager = $em->getRepository('PivotXCoreBundle:Content')
+                    ->getPagedContent($contenttype, $page, 15);
 
             return array('pager' => $pager, 'contenttype' => $contenttype);
 
         } else {
-            return new Response('<html><head></head><body>Not a valid contenttype!</body></html>');
-        }
 
+            throw new \Exception("Contenttype '$contenttype' does not exist!");
+
+        }
 
     }
 

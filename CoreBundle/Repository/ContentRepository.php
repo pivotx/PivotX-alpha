@@ -4,6 +4,10 @@ namespace PivotX\CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
+use MakerLabs\PagerBundle\Pager;
+use MakerLabs\PagerBundle\Adapter\ArrayAdapter;
+use MakerLabs\PagerBundle\Adapter\DoctrineOrmAdapter;
+
 /**
  * ContentRepository
  *
@@ -12,4 +16,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContentRepository extends EntityRepository
 {
+
+    public function getPagedContent($contenttype="", $page=1, $limit=15) {
+
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->add('orderBy', 'c.dateCreated DESC');
+
+        if (!empty($contenttype)) {
+            $qb->add('where', 'c.contenttype = :contenttype')->setParameter('contenttype', $contenttype);
+        }
+
+        $adapter = new DoctrineOrmAdapter($qb);
+        $pager = new Pager($adapter, array('page' => $page, 'limit' => $limit));
+
+        return $pager;
+
+    }
+
+
+
 }

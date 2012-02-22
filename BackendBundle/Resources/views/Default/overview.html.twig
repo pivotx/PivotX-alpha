@@ -9,6 +9,8 @@
 
 <div class="content-overview">
 
+<h1>Overview for: {{ contenttype }}</h1>
+
 {% if pager.isPaginable %}
    {{ paginate(pager, 'overview', {contenttype: contenttype}, "PivotXBackendBundle:Elements:pagination.html.twig") }}
 {% endif %}
