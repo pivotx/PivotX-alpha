@@ -19,11 +19,16 @@
 
 <div class="item">
 
-<strong>{{ item.getId() }} - {{ item.getTitle() }} </strong> - {{ item.getReference() }}
-<p>{{item.getExcerpt() }}</p>
-<p>Created: {{ item.getDateCreated()|date("Y-m-d H:i") }} - Modified {{ item.getDateCreated()|date("Y-m-d H:i") }} -
-Version {{ item.getVersion() }} - Status: {{ item.getStatus() }} - User: {{ item.getUser() }} </p>
-
+    <strong>
+        <a href="{{ path('view', { 'id': item.id }) }}">{{ item.id }} - {{ item.title }} </a>
+    </strong>
+    - {{ item.reference }}
+    <p>{{item.excerpt }}</p>
+    <p>Created: {{ item.datecreated|date("Y-m-d H:i") }} - Modified {{ item.datemodified|date("Y-m-d H:i") }} -
+    Version {{ item.version }} - Status: {{ item.status }} - User: {{ item.user }} </p>
+    <p>Responses: {{ item.responses|length }} - Extrafields: {{ item.extrafields|length }} -
+    {# Taxonomies: {{ item.taxonomy|length }} #} -
+    {# Media: {{ item.media|length }}</p> #}
 
 </div>
 

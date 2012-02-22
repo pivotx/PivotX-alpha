@@ -1,0 +1,29 @@
+{% extends 'PivotXBackendBundle::base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block heading %}This is the heading{% endblock %}
+
+
+{% block main %}
+
+<div class="content-overview">
+
+<h1>View: {{ content }}</h1>
+
+<p>Responses: {{ content.responses|length }}</p>
+
+<pre>
+{{ vardump(contentarray)}}
+</pre>
+
+{% for response in content.responses %}
+
+<p>Response: {{ response.name }} - {{ response.email }} - {{ response.body }}</p>
+
+{% endfor %}
+
+</div>
+
+
+{% endblock %}

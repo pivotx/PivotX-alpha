@@ -35,5 +35,28 @@ class ContentRepository extends EntityRepository
     }
 
 
+    public function getContent($id, $hydrate=false) {
+
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->add('where', 'c.id = :id')->setParameter('id', $id)
+            ->setMaxResults(1);
+
+        if ($hydrate) {
+
+            $result = $qb->getQuery()->getArrayResult();
+
+            return $result[0];
+
+        } else {
+
+            return $qb->getQuery()->getSingleResult();
+
+        }
+
+
+    }
+
+
 
 }

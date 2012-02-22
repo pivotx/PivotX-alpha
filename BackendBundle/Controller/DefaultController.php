@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use PivotX\CoreBundle\Util\Tools;
 use PivotX\CoreBundle\Entity\Content;
 use PivotX\CoreBundle\Entity\Taxonomy;
+// use PivotX\CoreBundle\Entity\Response;
 use PivotX\CoreBundle\Entity\TaxonomyRelation;
 
 
@@ -71,6 +72,78 @@ class DefaultController extends Controller
         }
 
     }
+
+
+
+
+    /**
+     * @Route("/view/{id}", name="view")
+     * @Template()
+     */
+    public function viewAction($id)
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $content = $em->getRepository('PivotXCoreBundle:Content')
+                ->getContent($id);
+
+        $contentarray = $em->getRepository('PivotXCoreBundle:Content')
+                ->getContent($id, true);
+
+
+        return array('content' => $content, 'contentarray' => $contentarray);
+
+
+    }
+
+
+    /**
+     * @Route("/import/responses")
+     * @Template()
+     */
+    public function importResponsesAction()
+    {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+        $conn = $this->get('database_connection');
+        $comments = $conn->fetchAll('SELECT * FROM pivotx_comments ORDER BY RAND() LIMIT 10;');
+
+        foreach ($comments as $comment) {
+
+            $content = $em->getRepository('PivotXCoreBundle:Content')
+                ->getContent(1);
+
+            echo "<pre>\n";
+            print_r($comment);
+            echo "</pre>\n";
+
+            $response = new \PivotX\CoreBundle\Entity\Response();
+
+            $response->setContent($content);
+
+            $response->setName($comment['name']);
+            $response->setEmail($comment['email']);
+            $response->setUrl($comment['url']);
+            $response->setIp($comment['ip']);
+            $response->setDateCreated(new \DateTime($comment['date']));
+            $response->setBody($comment['comment']);
+            $response->setResponseType("comment");
+
+
+            $em->persist($response);
+            $em->flush();
+
+        }
+
+
+        return new Response('<html><head></head><body>Ready!</body></html>');
+
+
+    }
+
 
 
     /**
