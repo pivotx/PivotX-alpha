@@ -105,6 +105,14 @@ class Media
 
 
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Content", mappedBy="media")
+     */
+    protected $content;
+
+    
+
     /**
      * Get id
      *
@@ -338,6 +346,9 @@ class Media
 
 
     public function __construct() {
+        
+        $this->content = new ArrayCollection();
+
         $this->date = new \DateTime('now');
     }
 
@@ -370,4 +381,24 @@ class Media
     }
 
 
+
+    /**
+     * Add content
+     *
+     * @param PivotX\CoreBundle\Entity\Content $content
+     */
+    public function addContent(\PivotX\CoreBundle\Entity\Content $content)
+    {
+        $this->content[] = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 }

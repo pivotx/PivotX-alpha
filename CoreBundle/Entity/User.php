@@ -104,6 +104,12 @@ class User
     private $media;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="users")
+     * @ORM\JoinTable(name="userpermission")
+     */
+    protected $permissions;
+
 
     /**
      * Get id
@@ -341,4 +347,34 @@ class User
 
     }
 
+    
+
+    public function __construct() {
+        
+        $this->permissions = new ArrayCollection();
+
+
+    }
+
+    
+
+    /**
+     * Add permissions
+     *
+     * @param PivotX\CoreBundle\Entity\Permission $permissions
+     */
+    public function addPermission(\PivotX\CoreBundle\Entity\Permission $permissions)
+    {
+        $this->permissions[] = $permissions;
+    }
+
+    /**
+     * Get permissions
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
 }

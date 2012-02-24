@@ -202,15 +202,19 @@ class Content
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Media", mappedBy="content")
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="content")
+     * @ORM\JoinTable(name="mediarelation")
+     * 
      */
     protected $media;
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Taxonomy", mappedBy="content")
+     * @ORM\ManyToMany(targetEntity="Taxonomy", inversedBy="content")
+     * @ORM\JoinTable(name="taxonomyrelation")
      */
-    protected $taxonomy;
+    protected $taxonomies;
+
 
 
     /**
@@ -830,23 +834,24 @@ class Content
         return $this->extrafields;
     }
 
-    /**
-     * Add taxonomy
-     *
-     * @param PivotX\CoreBundle\Entity\Taxonomy $taxonomy
-     */
-    public function addTaxonomy(\PivotX\CoreBundle\Entity\Taxonomy $taxonomy)
-    {
-        $this->taxonomy[] = $taxonomy;
-    }
 
     /**
-     * Get taxonomy
+     * Get taxonomies
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getTaxonomy()
+    public function getTaxonomies()
     {
-        return $this->taxonomy;
+        return $this->taxonomies;
+    }
+
+    /**
+     * Add taxonomies
+     *
+     * @param PivotX\CoreBundle\Entity\Taxonomy $taxonomies
+     */
+    public function addTaxonomy(\PivotX\CoreBundle\Entity\Taxonomy $taxonomies)
+    {
+        $this->taxonomies[] = $taxonomies;
     }
 }

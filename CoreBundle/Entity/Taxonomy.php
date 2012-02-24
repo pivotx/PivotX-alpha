@@ -73,6 +73,11 @@ class Taxonomy
     private $taxonomytype;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Content", mappedBy="taxonomies")
+     */
+    protected $content;
+
 
     /**
      * Get id
@@ -233,6 +238,16 @@ class Taxonomy
     }
 
 
+
+
+    public function __construct() {
+        
+        $this->content = new ArrayCollection();
+
+
+    }
+    
+
     /**
      * @ORM\preUpdate
      * @ORM\prePersist
@@ -255,4 +270,24 @@ class Taxonomy
     }
 
 
+
+    /**
+     * Add content
+     *
+     * @param PivotX\CoreBundle\Entity\Content $content
+     */
+    public function addContent(\PivotX\CoreBundle\Entity\Content $content)
+    {
+        $this->content[] = $content;
+    }
+
+    /**
+     * Get content
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 }

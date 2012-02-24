@@ -62,6 +62,14 @@ class Permission
 
 
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="permissions")
+     */
+    protected $users;
+
+    
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -176,5 +184,33 @@ class Permission
 
         return strval($this->getId());
 
+    }
+    
+    public function __construct() {
+        
+        $this->users = new ArrayCollection();
+
+
+    }
+    
+
+    /**
+     * Add users
+     *
+     * @param PivotX\CoreBundle\Entity\User $users
+     */
+    public function addUser(\PivotX\CoreBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+    }
+
+    /**
+     * Get users
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
