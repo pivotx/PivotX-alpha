@@ -26,19 +26,18 @@
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
     <parameter key="kernel.container_class">appDevDebugProjectContainer</parameter>
-    <parameter key="database_driver">pdo_sqlite</parameter>
+    <parameter key="database_driver">pdo_mysql</parameter>
     <parameter key="database_host">localhost</parameter>
     <parameter key="database_port"></parameter>
     <parameter key="database_name">symfony</parameter>
     <parameter key="database_user">root</parameter>
     <parameter key="database_password"></parameter>
-    <parameter key="datapath_path">database.sqlite</parameter>
     <parameter key="mailer_transport">smtp</parameter>
     <parameter key="mailer_host">localhost</parameter>
     <parameter key="mailer_user"></parameter>
     <parameter key="mailer_password"></parameter>
     <parameter key="locale">en</parameter>
-    <parameter key="secret">642f2059aa551b46241e9d7ece35ad2be70b6018</parameter>
+    <parameter key="secret">ThisTokenIsNotSoSecretChangeIt</parameter>
     <parameter key="router_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\RouterListener</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
@@ -56,7 +55,7 @@
     <parameter key="translation.loader.xliff.class">Symfony\Component\Translation\Loader\XliffFileLoader</parameter>
     <parameter key="debug.event_dispatcher.class">Symfony\Bundle\FrameworkBundle\Debug\TraceableEventDispatcher</parameter>
     <parameter key="debug.container.dump">/2kdata/dev/____users/marcel/px4b/Symfony/app/cache/dev/appDevDebugProjectContainer.xml</parameter>
-    <parameter key="kernel.secret">642f2059aa551b46241e9d7ece35ad2be70b6018</parameter>
+    <parameter key="kernel.secret">ThisTokenIsNotSoSecretChangeIt</parameter>
     <parameter key="kernel.trust_proxy_headers">false</parameter>
     <parameter key="session.class">Symfony\Component\HttpFoundation\Session</parameter>
     <parameter key="session.storage.native.class">Symfony\Component\HttpFoundation\SessionStorage\NativeSessionStorage</parameter>
@@ -854,7 +853,7 @@
     </service>
     <service id="form.csrf_provider" class="Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider">
       <argument type="service" id="session"/>
-      <argument>642f2059aa551b46241e9d7ece35ad2be70b6018</argument>
+      <argument>ThisTokenIsNotSoSecretChangeIt</argument>
     </service>
     <service id="form.type.csrf" class="Symfony\Component\Form\Extension\Csrf\Type\CsrfType">
       <tag name="form.type" alias="csrf"/>
@@ -1555,8 +1554,7 @@
         <argument key="port"></argument>
         <argument key="user">root</argument>
         <argument key="password"></argument>
-        <argument key="driver">pdo_sqlite</argument>
-        <argument key="charset">UTF8</argument>
+        <argument key="driver">pdo_mysql</argument>
         <argument key="driverOptions" type="collection"/>
       </argument>
       <argument type="service">
@@ -1567,7 +1565,16 @@
         </service>
       </argument>
       <argument type="service">
-        <service class="Doctrine\Common\EventManager" public="false"/>
+        <service class="Doctrine\Common\EventManager" public="false">
+          <call method="addEventSubscriber">
+            <argument type="service">
+              <service class="Doctrine\DBAL\Event\Listeners\MysqlSessionInit" public="false">
+                <tag name="doctrine.event_subscriber" connection="default"/>
+                <argument>UTF8</argument>
+              </service>
+            </argument>
+          </call>
+        </service>
       </argument>
       <argument type="collection"/>
     </service>

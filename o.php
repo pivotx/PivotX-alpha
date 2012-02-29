@@ -139,7 +139,7 @@ class publishable_storage extends pxstorage
     /**
      * @SCT\Filter(type="DefaultBack")
      */
-    public static function filterAll();
+    public static function filterNone();
 
     /**
      * @SCT\Filter
@@ -165,10 +165,10 @@ class record_aspect extends pxaspect
 class record_storage extends pxstorage
 {
     /**
-     * @SCT\Filter(type="DefaultFront")
+     * @SCT\Order(type="DefaultFront")
      */
-    public static filterNormal();
-    public static filterRecent($args);
+    public static orderNormal();
+    public static orderRecent($args);
 }
 
 /**
@@ -224,6 +224,11 @@ class versionable_storage extends pxstorage
      * @SCT\Filter
      */
     public static function filterVersion($version);
+
+    /**
+     * @SCT\Filter(type="DefaultBack")
+     */
+    public static function filterAny();
 }
 
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="{{ html.language }}">
+    <head>
+        <meta charset="{{ html.meta.charset }}">
+        <title>{{ html.title }}</title>
+    </head>
+
+    <body>
+
+{#
+    {{ page_load }}
+    {{ page_loadall }}
+    {{ page_loadmultiple }}
+
+    {{ load_entry }}
+    {{ load_entries }}
+    {{ loadall_entry }}
+    {{ loadmultiple_entry }}
+    
+    {{ set pages = pageLoadAll('filter=head;recent;size=10') %}
+#}
+
+    <h2>non-working dynamically loaded records from function to assignment</h2>
+    {{'{{'}} entryLoadAll('filter=head,recent;size=10') {{'}}'}}
+
+    {# werkt niet omdat een function() geen assignment in de huidige context kan doen #}
+    <br/>{{ entryLoadAll('filter=head,recent;size=10') }}
+
+
+    <h2>dynamically loaded records through a function</h2>
+    {{'{%'}} set testrecords = entryLoadAll('filter=head,recent;size=10') {{'%}'}}
+
+    {# dit werkt, nu nog mooie syntax uitzoeken... #}
+
+    {% set testrecords = entryLoadAll('filter=head,recent;size=10') %}
+    <ul>
+    {% for record in testrecords %}
+        <li>
+            {{ record.title }}
+        </li>
+    {% else %}
+        No records.
+    {% endfor %}
+    </ul>
+
+
+
+{#
+    {{ loadByDQL assign='records' order_by='date desc' size=10 }}
+
+    {{ entryLoadRecent assign=news category='news' size=3 }}
+    {{ pageLoadChapter assign=pages chapter='contact' }}
+    {{ eventLoadByDateRange assign=events from='last week'|dateparse to='now'|dateparse }}
+
+    {{ entryLoadOrdered assign=entries category='video' exclude=highlights size=10 }}   exclude! a must have, but how?
+
+    {{ loadView highlights 'homepage_highlights' }}
+    {{ set highlights = viewHomepageHighlights() }}
+    {{ loadViewHomepageHighlights }}
+
+    {{ loadView entries 'unpublished' }}
+    {{ loadViewUnpublished }}
+
+    {{ loadOne assign='about' id='page/about' }}
+    {{ loadOne assign='entry' id='entry/'~about.newsitem_reference }}
+
+    {{ loadAll assign='contactpages' entity='page' by_chapter='contact' }}
+    {{ loadView contactpages 'contact_pages' }}
+#}
+
+    {% set a = "abc" %}
+    {% set b = "def" %}
+
+    {{ a }} / {{ b }} / {{ a~b }}
+
+    <h2>something with a new tag</h2>
+    {{'{%'}} loadAll testtag = 'test' {{'%}'}}
+
+    {# dit werkt ook, is heel veel mee mogelijk, ook uitzoeken wat handig is #}
+    {% loadAll testtag = 'test' %}
+
+    <ul>
+    {% for record in testtag %}
+        <li>
+            {{ record.title }}
+        </li>
+    {% else %}
+        No records.
+    {% endfor %}
+    </ul>
+
+
+
+
+    <h2>statically loaded records</h2>
+
+    {# uiteraard kan dit, maar niet handig vanuit template-bouwer gezien #}
+
+    <ul>
+    {% for record in records %}
+        <li>
+            {{ record.title }}
+        </li>
+    {% else %}
+        No users.
+    {% endfor %}
+    </ul>
+
+
+
+    <h2>new-style for loop</h2>
+
+    {% for record in records  %}
+
+        <ul>
+
+        {#% iterate  %#}
+            <li>{{ loop.index }} {{ record.title }}</li>
+        {#% enditerate %#}
+
+        </ul>
+
+    {% else %}
+
+        <p>There are no records.</p>
+
+    {% endfor %}
+
+    </body>
+
+</html>

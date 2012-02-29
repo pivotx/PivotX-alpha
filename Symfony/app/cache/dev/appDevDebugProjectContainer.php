@@ -211,7 +211,10 @@ class appDevDebugProjectContainer extends Container
         $a = new \Doctrine\DBAL\Configuration();
         $a->setSQLLogger($this->get('doctrine.dbal.logger'));
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'symfony', 'host' => 'localhost', 'port' => '', 'user' => 'root', 'password' => '', 'driver' => 'pdo_sqlite', 'charset' => 'UTF8', 'driverOptions' => array()), $a, new \Doctrine\Common\EventManager(), array());
+        $b = new \Doctrine\Common\EventManager();
+        $b->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('UTF8'));
+
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'symfony', 'host' => 'localhost', 'port' => '', 'user' => 'root', 'password' => '', 'driver' => 'pdo_mysql', 'driverOptions' => array()), $a, $b, array());
     }
 
     /**
@@ -346,7 +349,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getForm_CsrfProviderService()
     {
-        return $this->services['form.csrf_provider'] = new \Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider($this->get('session'), '642f2059aa551b46241e9d7ece35ad2be70b6018');
+        return $this->services['form.csrf_provider'] = new \Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider($this->get('session'), 'ThisTokenIsNotSoSecretChangeIt');
     }
 
     /**
@@ -2129,19 +2132,18 @@ class appDevDebugProjectContainer extends Container
             ),
             'kernel.charset' => 'UTF-8',
             'kernel.container_class' => 'appDevDebugProjectContainer',
-            'database_driver' => 'pdo_sqlite',
+            'database_driver' => 'pdo_mysql',
             'database_host' => 'localhost',
             'database_port' => '',
             'database_name' => 'symfony',
             'database_user' => 'root',
             'database_password' => '',
-            'datapath_path' => 'database.sqlite',
             'mailer_transport' => 'smtp',
             'mailer_host' => 'localhost',
             'mailer_user' => '',
             'mailer_password' => '',
             'locale' => 'en',
-            'secret' => '642f2059aa551b46241e9d7ece35ad2be70b6018',
+            'secret' => 'ThisTokenIsNotSoSecretChangeIt',
             'router_listener.class' => 'Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener',
             'controller_resolver.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver',
             'controller_name_converter.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerNameParser',
@@ -2159,7 +2161,7 @@ class appDevDebugProjectContainer extends Container
             'translation.loader.xliff.class' => 'Symfony\\Component\\Translation\\Loader\\XliffFileLoader',
             'debug.event_dispatcher.class' => 'Symfony\\Bundle\\FrameworkBundle\\Debug\\TraceableEventDispatcher',
             'debug.container.dump' => '/2kdata/dev/____users/marcel/px4b/Symfony/app/cache/dev/appDevDebugProjectContainer.xml',
-            'kernel.secret' => '642f2059aa551b46241e9d7ece35ad2be70b6018',
+            'kernel.secret' => 'ThisTokenIsNotSoSecretChangeIt',
             'kernel.trust_proxy_headers' => false,
             'session.class' => 'Symfony\\Component\\HttpFoundation\\Session',
             'session.storage.native.class' => 'Symfony\\Component\\HttpFoundation\\SessionStorage\\NativeSessionStorage',

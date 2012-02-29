@@ -34,6 +34,7 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        '_configurator_step' => true,
        '_configurator_final' => true,
        'PivotXBackendBundle_homepage' => true,
+       'PivotXBackendBundle_test' => true,
        'PivotXCoreBundle_homepage' => true,
     );
 
@@ -161,6 +162,11 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
     private function getPivotXBackendBundle_homepageRouteInfo()
     {
         return array(array (  0 => 'name',), array (  '_controller' => 'PivotX\\BackendBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/pivotx/hello',  ),));
+    }
+
+    private function getPivotXBackendBundle_testRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'PivotX\\BackendBundle\\Controller\\DefaultController::testAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/pivotx/test',  ),));
     }
 
     private function getPivotXCoreBundle_homepageRouteInfo()

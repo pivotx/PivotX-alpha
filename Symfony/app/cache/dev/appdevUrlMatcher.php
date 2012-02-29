@@ -143,14 +143,22 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // PivotXBackendBundle_homepage
-        if (0 === strpos($pathinfo, '/pivotx/hello') && preg_match('#^/pivotx/hello/(?P<name>[^/]+?)$#xs', $pathinfo, $matches)) {
-            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'PivotX\\BackendBundle\\Controller\\DefaultController::indexAction',)), array('_route' => 'PivotXBackendBundle_homepage'));
-        }
+        if (0 === strpos($pathinfo, '/pivotx')) {
+            // PivotXBackendBundle_homepage
+            if (0 === strpos($pathinfo, '/pivotx/hello') && preg_match('#^/pivotx/hello/(?P<name>[^/]+?)$#xs', $pathinfo, $matches)) {
+                return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'PivotX\\BackendBundle\\Controller\\DefaultController::indexAction',)), array('_route' => 'PivotXBackendBundle_homepage'));
+            }
 
-        // PivotXCoreBundle_homepage
-        if (0 === strpos($pathinfo, '/pivotx_core/hello') && preg_match('#^/pivotx_core/hello/(?P<name>[^/]+?)$#xs', $pathinfo, $matches)) {
-            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'PivotX\\CoreBundle\\Controller\\DefaultController::indexAction',)), array('_route' => 'PivotXCoreBundle_homepage'));
+            // PivotXBackendBundle_test
+            if ($pathinfo === '/pivotx/test') {
+                return array (  '_controller' => 'PivotX\\BackendBundle\\Controller\\DefaultController::testAction',  '_route' => 'PivotXBackendBundle_test',);
+            }
+
+            // PivotXCoreBundle_homepage
+            if (0 === strpos($pathinfo, '/pivotx_core/hello') && preg_match('#^/pivotx_core/hello/(?P<name>[^/]+?)$#xs', $pathinfo, $matches)) {
+                return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'PivotX\\CoreBundle\\Controller\\DefaultController::indexAction',)), array('_route' => 'PivotXCoreBundle_homepage'));
+            }
+
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
