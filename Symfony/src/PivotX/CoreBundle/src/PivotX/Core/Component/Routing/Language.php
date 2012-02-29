@@ -3,8 +3,6 @@
 /**
  * This file is part of the PivotX Core bundle
  *
- * @todo somehow this also should be allowed to have it's own hostname
- *
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
@@ -41,12 +39,14 @@ class Language
      * @param string $locale      locale to set
      * @param string $description friendly description
      */
-    public function __construct($name, $locale, $description = false)
+    public function __construct($name, $description = false, $locale = false)
     {
         $this->setName($name);
-        $this->setLocale($locale);
         if ($description !== false) {
             $this->setDescription($description);
+        }
+        if ($locale !== false) {
+            $this->setLocale($locale);
         }
     }
 
