@@ -15,6 +15,11 @@ namespace PivotX\Core\Component\Routing;
  *
  * @api
  */
-interface EntityInterface
+interface EntityRouteInterface
 {
+    public function setName($name);
+    public function getName();
+
+    public function setDescription($description);
+    public function getDescription();
 }

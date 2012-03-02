@@ -23,6 +23,8 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
     {
         $reference = new Reference();
         $this->assertTrue($reference !== false);
+
+        $this->assertEquals($reference->getBestValue('entity','default-test'),'default-test');
     }
 
     public function testSimpleNamedEntity()
@@ -30,6 +32,10 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
         $reference = new Reference(null,'page/contact');
         $this->assertTrue($reference->getEntity() === 'page');
         $this->assertTrue($reference->getFilter() === 'contact');
+
+        $reference = new Reference(null,'archive');
+        $this->assertTrue($reference->getEntity() === 'archive');
+        $this->assertTrue($reference->getFilter() === false);
     }
 
     public function testSimpleNumericEntity()
@@ -130,5 +136,39 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($reference->getLanguage() === 'en');
         $this->assertTrue($reference->getValue() === 'link');
         $this->assertTrue($reference->getTarget() === 'desktop');
+    }
+
+    public function testArrayReference()
+    {
+        $arr = array(
+            'value' => 'title',
+            'language' => 'en',
+            'target' => 'mobile',
+            'site' => 'example.com',
+            'entity' => 'entry',
+            'filter' => '234',
+            'query' => 'args=233&text=Marcel',
+            'anchor_entity' => 'page',
+            'anchor_filter' => 'about',
+            'anchor_query' => 'nothing',
+        );
+        $reference = new Reference(null,$arr);
+
+        $this->assertTrue($reference->getEntity() === 'entry');
+        $this->assertTrue($reference->getFilter() === '234');
+        $this->assertTrue($reference->getValue() === 'title');
+        $this->assertTrue($reference->getSite() === 'example.com');
+        $this->assertTrue($reference->getTarget() === 'mobile');
+        $this->assertTrue($reference->getLanguage() === 'en');
+        $this->assertTrue($reference->getQuery() === 'args=233&text=Marcel');
+        $this->assertTrue($reference->getAnchorEntity() === 'page');
+        $this->assertTrue($reference->getAnchorFilter() === 'about');
+        $this->assertTrue($reference->getAnchorQuery() === 'nothing');
+    }
+
+    public function setReferenceFilter()
+    {
+        $reference = new Reference(null,'main/desktop(nl)@page/234');
+        $this->assertEquals($reference->getRouteFilter(),array('site' => 'main', 'target' => 'desktop', 'language' => 'nl'));
     }
 }

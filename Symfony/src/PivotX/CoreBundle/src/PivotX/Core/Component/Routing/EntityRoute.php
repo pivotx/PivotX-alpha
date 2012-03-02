@@ -15,22 +15,22 @@ namespace PivotX\Core\Component\Routing;
  *
  * @api
  */
-class Entity implements EntityInterface
+class EntityRoute implements EntityRouteInterface
 {
     /**
-     * Name of the entity
+     * Name of the entityroute
      */
     private $name = false;
 
     /**
-     * Description of the target
+     * Description of the entityroute
      */
     private $description = false;
 
     /**
      * Constructor.
      *
-     * @param string $name          name of the target
+     * @param string $name          name of the entityroute
      * @param string $description   friendly description
      */
     public function __construct($name, $description = false)
@@ -56,6 +56,16 @@ class Entity implements EntityInterface
     }
 
     /**
+     * Get the name
+     *
+     * @return string The name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the description
      *
      * This method implements a fluent interface.
@@ -67,5 +77,15 @@ class Entity implements EntityInterface
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Get the description
+     *
+     * @return string The description
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

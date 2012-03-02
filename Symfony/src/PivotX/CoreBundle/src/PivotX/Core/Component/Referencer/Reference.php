@@ -118,7 +118,7 @@ class Reference
      *                              an associative array containing reference
      *                              attributes
      */
-    public function __construct(Reference $parent = null, $link = '/')
+    public function __construct(Reference $parent = null, $link = false)
     {
         $this->setParent($parent);
         $this->setLink($link);
@@ -128,8 +128,11 @@ class Reference
      * Set the parent reference
      *
      * This method implements a fluent interface.
+     *
+     * @param mixed $parent Parent reference
+     * @return $this
      */
-    public function setParent($parent)
+    public function setParent(Reference $parent = null)
     {
         if (is_null($parent)) {
             $this->parent = false;
@@ -145,6 +148,9 @@ class Reference
      * Decode a link to a reference
      *
      * This method implements a fluent interface.
+     *
+     * @param mixed $link Link to decode
+     * @return $this
      */
     public function setLink($link)
     {
@@ -161,7 +167,8 @@ class Reference
     /**
      * Set the array to the proper internal values
      *
-     * @param array $data    associative array with values
+     * @param array $data associative array with values
+     * @return boolean    true if array has been processed
      */
     private function processReferenceArray($data)
     {
@@ -171,7 +178,9 @@ class Reference
             }
         }
 
-        $this->valid = true;
+        if ($this->entity !== false) {
+            $this->valid = true;
+        }
 
         return true;
     }
@@ -181,8 +190,9 @@ class Reference
      *
      * @return boolean     true if text link was syntactically ok
      */
-    public function setTextReference($link)
+    public function setTextReference($_link)
     {
+        $link              = $_link;
         $value_site_target = false;
         $value             = false;
         $anchor            = false;
@@ -200,9 +210,6 @@ class Reference
             $values['query'] = $query;
         }
 
-        if ($value !== false) {
-            $values['value'] = $value;
-        }
         if ($value_site_target) {
             if (preg_match('|^([^(]*)([(]([^)]+)[)])$|',$value_site_target,$match)) {
                 $value_site_target = $match[1];
@@ -387,5 +394,19 @@ class Reference
     public function getAnchorQuery()
     {
         return $this->getBestValue('anchor_query',false);
+    }
+
+    /**
+     * Get a simplified filter from this reference
+     *
+     * @return array simplified filter
+     */
+    public function getRouteFilter()
+    {
+        return array(
+            'site' => $this->getSite(),
+            'target' => $this->getTarget(),
+            'language' => $this->getLanguage(),
+        );
     }
 }
