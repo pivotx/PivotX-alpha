@@ -13,6 +13,7 @@ namespace PivotX\Core\Component\Referencer;
  *
  * @todo should this be in Routing?
  * @todo setTextReference is a bit of a mess
+ * @todo rewrite to new style reference?
  *
  * Complete reference:
  * value:site/target(language)@entity/filter?query#entity/filter?query
@@ -31,6 +32,11 @@ namespace PivotX\Core\Component\Referencer;
  * subtitle:example.org/@page/contact
  * /desktop@page/contact
  * (nl)@page/contact#?comments
+ *
+ * New style - Complete reference:
+ * value:s=site&d=device&l=language@entity/filter?query#entity/filter?query
+ * ----- -------------------------- ------------------- ---------------
+ * A     B                          C                   D
  * 
  *
  * @author Marcel Wouters <marcel@twokings.nl>

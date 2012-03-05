@@ -82,7 +82,11 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+        unset($this->routecollection);
+        $this->routecollection = null;
+
         unset($this->routesetup);
+        $this->routesetup = null;
     }
 
     public function testUrlToRoute()
@@ -115,6 +119,7 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
     public function testReferenceToRoute()
     {
         $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@_page/latest-news')));
+        // @todo should test the value of routematch
         $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@archive/2012-01')));
     }
 }

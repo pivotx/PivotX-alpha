@@ -8,6 +8,8 @@
 
 namespace PivotX\Core\Component\Routing;
 
+use PivotX\Core\Component\Referencer\Reference;
+
 /**
  * RoutePrefixes collects all RoutePrefix statements
  *
@@ -86,7 +88,8 @@ class RouteSetup
             $filter    = $routeprefix->getFilter();
 
             foreach($this->routecollections as $routecollection) {
-                $routematch = $routecollection->matchReference($filter,$reference);
+                //$routematch = $routecollection->matchReference($filter,$reference);
+                $routematch = $routecollection->matchReference($reference);
                 if (!is_null($routematch)) {
                     break;
                 }

@@ -8,6 +8,8 @@
 
 namespace PivotX\Core\Component\Routing;
 
+use PivotX\Core\Component\Referencer\Reference;
+
 /**
  * RoutePrefixes collects all RoutePrefix statements
  *

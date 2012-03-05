@@ -8,6 +8,8 @@
 
 namespace PivotX\Core\Component\Routing;
 
+use PivotX\Core\Component\Referencer\Reference;
+
 /**
  * RoutePrefix is a base url, used for the highest level of routing
  *
@@ -166,7 +168,7 @@ class RoutePrefix
     {
         $filter = $reference->getRouteFilter();
 
-        return $this->filterMatch($filter);
+        return $this->matchFilter($filter);
     }
 
     /**

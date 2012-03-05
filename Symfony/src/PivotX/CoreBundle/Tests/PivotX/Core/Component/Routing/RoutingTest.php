@@ -24,11 +24,13 @@ use PivotX\Core\Component\Referencer\Reference;
  */
 class RoutingTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAdding()
-    {
-        $routesetup = new RouteSetup();
+    private $routesetup;
 
-        $routeprefixes = new RoutePrefixes($routesetup);
+    public function setUp()
+    {
+        $this->routesetup = new RouteSetup();
+
+        $routeprefixes = new RoutePrefixes($this->routesetup);
         $routeprefixes
             ->add(
                 array( 'language' => 'en', 'site' => 'main', 'target' => false ),
@@ -40,7 +42,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 )
             ;
 
-        $routecollection = new RouteCollection($routesetup);
+        $routecollection = new RouteCollection($this->routesetup);
         $routecollection
             ->add(
                 array( 'language' => 'en', 'site' => 'main', 'target' => false ),
@@ -87,13 +89,30 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                     array('controller' => 'PivotXFrontend:Controller:showEntity')
                 ))
             ;
+    }
 
-        $this->assertNotNull($routematch = $routesetup->matchUrl('http://pivotx.com/latest-news'));
+    public function tearDown()
+    {
+        unset($this->routesetup);
+        $this->routesetup = null;
+    }
 
-        $this->assertNull($routematch = $routesetup->matchUrl('http://pivotx.com/newsitem/{publicid}'));
-        $this->assertNotNull($routematch = $routesetup->matchUrl('http://pivotx.com/newsitem/this-is-all-about-the-kittens'));
-        $this->assertNotNull($routematch = $routesetup->matchUrl('http://pivotx.nl/nieuwsbericht/allemaal-over-de-poesjes'));
-        $this->assertNotNull($routematch = $routesetup->matchUrl('http://pivotx.nl/archief/2012-01'));
+    public function testUrlToRoute()
+    {
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/latest-news'));
+
+        $this->assertNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/newsitem/{publicid}'));
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/newsitem/this-is-all-about-the-kittens'));
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.nl/nieuwsbericht/allemaal-over-de-poesjes'));
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.nl/archief/2012-01'));
+        //var_dump($routematch);
+    }
+
+    public function testReferenceToUrl()
+    {
+        $reference = new Reference(null,'main/(nl)@archive/2012-01');
+        var_dump($reference);
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
         var_dump($routematch);
     }
 }
