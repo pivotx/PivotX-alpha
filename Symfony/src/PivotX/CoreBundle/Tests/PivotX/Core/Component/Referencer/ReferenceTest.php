@@ -106,8 +106,8 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
         $reference = new Reference(null,'entry/234#?comments');
         $this->assertTrue($reference->getEntity() === 'entry');
         $this->assertTrue($reference->getFilter() === '234');
-        $this->assertTrue($reference->getAnchorEntity() === 'entry');
-        $this->assertTrue($reference->getAnchorFilter() === '234');
+        $this->assertTrue($reference->getAnchorEntity() === false);
+        $this->assertTrue($reference->getAnchorFilter() === false);
         $this->assertTrue($reference->getAnchorQuery() === 'comments');
     }
 

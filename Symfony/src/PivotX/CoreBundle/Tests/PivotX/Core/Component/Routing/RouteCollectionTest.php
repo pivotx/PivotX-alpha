@@ -37,28 +37,28 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
                 new Route(
                     '_page/latest-news', 'latest-news',
                     array(),
-                    array('rewrite' => new Reference(null,'(en)@archive/'.date('Y-m')))
+                    array('_rewrite' => new Reference(null,'(en)@archive/'.date('Y-m')))
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main' ),
                 new Route(
                     '_page/latest-news', 'laatste-nieuws',
                     array(),
-                    array('rewrite' => new Reference(null,'(nl)@archive/'.date('Y-m')))
+                    array('_rewrite' => new Reference(null,'(nl)@archive/'.date('Y-m')))
                 ))
 
             ->add(
                 array( 'language' => 'en', 'site' => 'main' ),
                 new Route(
                     'archive/{yearmonth}', 'archive/{yearmonth}',
-                    array('{yearmonth}' => '[0-9]{4}-[0-9]{2}'),
+                    array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
                     array('controller' => 'PivotXFrontend:Controller:showArchive')
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main' ),
                 new Route(
                     'archive/{yearmonth}', 'archief/{yearmonth}',
-                    array('{yearmonth}' => '[0-9]{4}-[0-9]{2}'),
+                    array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
                     array('controller' => 'PivotXFrontend:Controller:showArchive')
                 ))
 
@@ -68,14 +68,14 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
                 new Route(
                     '', 'belasting',
                     array(),
-                    array('redirect' => new Reference(null,'(en)@category/taxes'))
+                    array('_redirect' => new Reference(null,'(en)@category/taxes'))
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main' ),
                 new Route(
                     '', 'belasting',
                     array(),
-                    array('redirect' => new Reference(null,'(nl)@category/taxes'))
+                    array('_redirect' => new Reference(null,'(nl)@category/taxes'))
                 ))
             ;
     }
@@ -98,7 +98,7 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
     
         $filter = array('site' => 'main','language' => 'en', 'target' => false);
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'latest-news'));
-        $this->assertArrayHasKey('rewrite',$routematch->getRoute()->getOptions());
+        $this->assertArrayHasKey('_rewrite',$routematch->getRoute()->getDefaults());
         $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'not-found'));
         $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'laatste-nieuws'));
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'belasting'));
@@ -107,13 +107,13 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'laatste-nieuws'));
         $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'latest-news'));
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'belasting'));
-        $this->assertArrayHasKey('redirect',$routematch->getRoute()->getOptions());
+        $this->assertArrayHasKey('_redirect',$routematch->getRoute()->getDefaults());
 
         $filter = array('site' => 'main','language' => 'nl', 'target' => false);
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'laatste-nieuws'));
         $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'latest-news'));
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'belasting'));
-        $this->assertArrayHasKey('redirect',$routematch->getRoute()->getOptions());
+        $this->assertArrayHasKey('_redirect',$routematch->getRoute()->getDefaults());
     }
 
     public function testReferenceToRoute()

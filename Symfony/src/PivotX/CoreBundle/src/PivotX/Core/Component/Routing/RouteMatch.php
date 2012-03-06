@@ -8,6 +8,8 @@
 
 namespace PivotX\Core\Component\Routing;
 
+use PivotX\Core\Component\Referencer\Reference;
+
 /**
  * RouteMatch contains a Route that matched
  *
@@ -17,6 +19,16 @@ namespace PivotX\Core\Component\Routing;
  */
 class RouteMatch
 {
+    /**
+     * RouteSetup
+     */
+    private $routesetup = null;
+
+    /**
+     * RoutePrefix
+     */
+    private $routeprefix = null;
+
     /**
      * Route
      */
@@ -37,6 +49,44 @@ class RouteMatch
     {
         $this->setRoute($route);
         $this->setArguments($arguments);
+    }
+
+    /**
+     * Set the routesetup
+     *
+     * This method implements a fluent interface.
+     *
+     * @param RouteSetup $routesetup The routesetup
+     */
+    public function setRouteSetup(RouteSetup $routesetup)
+    {
+        $this->routesetup = $routesetup;
+
+        return $this;
+    }
+
+    /**
+     * Set the routeprefix
+     *
+     * This method implements a fluent interface.
+     *
+     * @param RoutePrefix $routeprefix The routeprefix
+     */
+    public function setRoutePrefix(RoutePrefix $routeprefix)
+    {
+        $this->routeprefix = $routeprefix;
+
+        return $this;
+    }
+
+    /**
+     * Get the routeprefix
+     *
+     * @return RoutePrefix The routeprefix
+     */
+    public function getRoutePrefix()
+    {
+        return $this->routeprefix;
     }
 
     /**
@@ -75,5 +125,58 @@ class RouteMatch
         $this->arguments = $arguments;
 
         return $this;
+    }
+
+    /**
+     * Build the Reference for this match
+     *
+     * Return the Reference for this match.
+     *
+     * @param Reference $relative if set to a Reference return the relative Reference, otherwise absolute
+     * @return Reference          Build Reference
+     */
+    public function buildReference(Reference $relative = null)
+    {
+        $ref_array = array();
+
+        $filter = $this->routeprefix->getFilter();
+
+        $ref_array = array_merge($ref_array, $this->routesetup->simplifyFilter($filter));
+
+        $ref_array['entity'] = $this->route->getEntity();
+        $ref_array['filter'] = $this->route->buildEFilter($this->arguments);
+
+        return new Reference($relative, $ref_array);
+    }
+
+    /**
+     * Build the URL of this match
+     *
+     * Return the URL for this match.
+     *
+     * @param Reference $relative      if set to a Reference return the relative URL, otherwise absolute
+     * @param boolean reevaluate_route if true, the best route/url is returned, if false it returns the matched route
+     * @return string                  The build URL or null if there is no URL
+     */
+    public function buildUrl(Reference $relative = null, $reevaluate_route = true)
+    {
+        if (is_null($this->routeprefix)) {
+            // @todo should we throw an exception here?
+            return null;
+        }
+
+        if ($reevaluate_route) {
+            $reference = $this->buildReference($relative);
+
+            $routematch = $this->routesetup->matchReference($reference,true);
+            if (!is_null($routematch)) {
+                return $routematch->buildUrl($relative,false);
+            }
+        }
+
+        $url  = $this->routeprefix->buildUrl();
+        $url .= $this->route->buildUrl($this->arguments);
+
+        return $url;
     }
 }

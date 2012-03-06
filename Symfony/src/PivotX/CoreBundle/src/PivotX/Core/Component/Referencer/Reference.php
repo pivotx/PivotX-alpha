@@ -226,7 +226,9 @@ class Reference
             $value_site = false;
             $pos = strpos($value_site_target,'/');
             if ($pos === false) {
-                $values['value'] = $value_site_target;
+                if ($value_site_target != '') {
+                    $values['value'] = $value_site_target;
+                }
             }
             else {
                 $value_site = substr($value_site_target,0,$pos);
@@ -313,7 +315,7 @@ class Reference
      */
     public function getSite()
     {
-        return $this->getBestValue('site','link');
+        return $this->getBestValue('site',false);
     }
 
     /**
@@ -374,7 +376,7 @@ class Reference
     public function getAnchorEntity()
     {
         if ($this->anchor_entity === false) {
-            return $this->getBestValue('entity',false);
+            return $this->getBestValue('anchor_entity',false);
         }
         return $this->anchor_entity;
     }
@@ -387,7 +389,7 @@ class Reference
     public function getAnchorFilter()
     {
         if ($this->anchor_filter === false) {
-            return $this->getBestValue('filter',false);
+            return $this->getBestValue('anchor_filter',false);
         }
         return $this->anchor_filter;
     }
@@ -414,5 +416,53 @@ class Reference
             'target' => $this->getTarget(),
             'language' => $this->getLanguage(),
         );
+    }
+
+    /**
+     * 
+     */
+    public function buildTextReference()
+    {
+        $text = '';
+
+        if ($this->getValue() != 'link') {
+            $text .= $this->getValue() . ':';
+        }
+
+        if (($this->getSite() !== false) && ($this->getTarget() !== false)) {
+            $text .= $this->getSite() . '/' . $this->getTarget();
+        }
+        else if ($this->getSite() !== false) {
+            $text .= $this->getSite() . '/';
+        }
+        else if ($this->getTarget() !== false) {
+            $text .= '/' . $this->getTarget();
+        }
+
+        if ($this->getLanguage() !== false) {
+            $text .= '('.$this->getLanguage().')';
+        }
+        
+        if ($text != '') {
+            $text .= '@';
+        }
+
+        $text .= $this->getEntity() . '/' . $this->getFilter();
+
+        if ($this->getQuery() !== false) {
+            $text .= '?' . $this->getQuery();
+        }
+
+        if (($this->getAnchorEntity() !== false) && ($this->getAnchorQuery() !== false)) {
+            $text .= '#' . $this->getAnchorEntity() . '/' . $this->getAnchorFilter() . '?' . $this->getAnchorQuery();
+        }
+        else if ($this->getAnchorEntity() !== false) {
+            $text .= '#' . $this->getAnchorEntity() . '/' . $this->getAnchorFilter();
+        }
+        else if ($this->getAnchorQuery() !== false) {
+            $text .= '#?' . $this->getAnchorQuery();
+        }
+
+        return $text;
     }
 }

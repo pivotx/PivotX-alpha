@@ -78,7 +78,7 @@ class RouteCollection
      *
      * @param array $filter Simplified filter to match
      * @param string $url   Url to match
-     * @return RouteMatch   Route that matched or null if none found
+     * @return RouteMatch   RouteMatch with Route that matched or null if none found
      */
     public function matchUrl($filter, $url)
     {
@@ -96,13 +96,17 @@ class RouteCollection
 
     /**
      * Try to find a route that matches this Reference
+     *
+     * @param Reference $reference    Reference to find
+     * @param boolean $check_rewrites if true also allows rewrites to match (used for URL building), false don't
+     * @return RouteMatch             RouteMatch with Route that matched or null if none found
      */
-    public function matchReference(Reference $reference)
+    public function matchReference(Reference $reference, $check_rewrites = false)
     {
         $filter = $reference->getRouteFilter();
 
         foreach($this->routes as $route) {
-            $routematch = $route->matchReference($filter, $reference);
+            $routematch = $route->matchReference($filter, $reference, $check_rewrites);
             if ($routematch !== false) {
                 return $routematch;
             }

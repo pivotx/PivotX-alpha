@@ -138,6 +138,29 @@ class RoutePrefix
     }
 
     /**
+     * Return the Route part of the full URL
+     *
+     * Only works if the URL is matched by this RoutePrefix
+     *
+     * @param string $url URL to match against
+     * @return string     stripped URL, or false if not found
+     */
+    public function getRouteUrl($url)
+    {
+        if (strpos($url,$this->prefix) === 0) {
+            return str_replace($this->prefix,'',$url);
+        }
+
+        foreach($this->aliases as $alias) {
+            if (strpos($url,$alias) === 0) {
+                return str_replace($alias,'',$url);
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Try to match an URL to this prefix
      *
      * @param string $url URL to match against
@@ -192,5 +215,17 @@ class RoutePrefix
         }
 
         return true;
+    }
+
+    /**
+     * Build the URL prefix
+     *
+     * Return the URL prefix.
+     *
+     * @return string the URL part
+     */
+    public function buildUrl()
+    {
+        return $this->getPrefix();
     }
 }

@@ -64,14 +64,33 @@ class RouteSetup
     }
 
     /**
+     * Find the best RoutePrefix for a filter
+     *
+     * @param array $filter Filter to find.
+     * @return RoutePrefix  Best RoutePrefix or null if none
+     */
+    public function findRoutePrefixOnFilter(array $filter)
+    {
+        foreach($this->routeprefixeses as $routeprefixes) {
+            $routeprefix = $routeprefixes->matchFilter($filter);
+            if (!is_null($routeprefix)) {
+                return $routeprefix;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Search for a Reference
      *
      * @todo brute-force method used now, should be optimised
      *
-     * @param Reference $reference   Reference to search for
-     * @return RouteMatch RouteMatch if found, otherwise null
+     * @param Reference $reference    Reference to search for
+     * @param boolean $check_rewrites if true also allows rewrites to match (used for URL building), false don't
+     * @return RouteMatch RouteMatch  if found, otherwise null
      */
-    public function matchReference(Reference $reference)
+    public function matchReference(Reference $reference, $check_rewrites = false)
     {
         $routeprefix = null;
         $routematch  = null;
@@ -84,13 +103,13 @@ class RouteSetup
         }
 
         if (!is_null($routeprefix)) {
-            //$route_url = str_replace($routeprefix->getPrefix(),'',$url);
-            $filter    = $routeprefix->getFilter();
+            $filter = $routeprefix->getFilter();
 
             foreach($this->routecollections as $routecollection) {
-                //$routematch = $routecollection->matchReference($filter,$reference);
-                $routematch = $routecollection->matchReference($reference);
+                $routematch = $routecollection->matchReference($reference, $check_rewrites);
                 if (!is_null($routematch)) {
+                    $routematch->setRouteSetup($this);
+                    $routematch->setRoutePrefix($routeprefix);
                     break;
                 }
             }
@@ -111,21 +130,24 @@ class RouteSetup
     {
         $routeprefix = null;
         $routematch  = null;
+        $route_url   = false;
 
         foreach($this->routeprefixeses as $routeprefixes) {
             $routeprefix = $routeprefixes->matchUrl($url);
             if (!is_null($routeprefix)) {
+                $route_url = $routeprefix->getRouteUrl($url);
                 break;
             }
         }
 
         if (!is_null($routeprefix)) {
-            $route_url = str_replace($routeprefix->getPrefix(),'',$url);
             $filter    = $routeprefix->getFilter();
 
             foreach($this->routecollections as $routecollection) {
                 $routematch = $routecollection->matchUrl($filter,$route_url);
                 if (!is_null($routematch)) {
+                    $routematch->setRouteSetup($this);
+                    $routematch->setRoutePrefix($routeprefix);
                     break;
                 }
             }

@@ -9,7 +9,7 @@
 namespace PivotX\Core\Component\Routing;
 
 /**
- * Entity definition
+ * Entity route definition
  *
  * @author Marcel Wouters <marcel@twokings.nl>
  *

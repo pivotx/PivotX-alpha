@@ -49,44 +49,52 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 $route = new Route(
                     '_page/latest-news', 'latest-news',
                     array(),
-                    array('rewrite' => new Reference(null,'(en)@archive/'.date('Y-m')))
+                    array('_rewrite' => new Reference(null,'main/(en)@archive/'.date('Y-m')))
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 $route = new Route(
                     '_page/latest-news', 'laatste-nieuws',
                     array(),
-                    array('rewrite' => new Reference(null,'(nl)@archive/'.date('Y-m')))
+                    array('_rewrite' => new Reference(null,'main/(nl)@archive/'.date('Y-m')))
                 ))
 
             ->add(
                 array( 'language' => 'en', 'site' => 'main', 'target' => false ),
                 $route = new Route(
                     'archive/{yearmonth}', 'archive/{yearmonth}',
-                    array('{yearmonth}' => '[0-9]{4}-[0-9]{2}'),
-                    array('controller' => 'PivotXFrontend:Controller:showArchive' )
+                    array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
+                    array('_controller' => 'PivotXFrontend:Controller:showArchive' )
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 $route = new Route(
                     'archive/{yearmonth}', 'archief/{yearmonth}',
-                    array('{yearmonth}' => '[0-9]{4}-[0-9]{2}'),
-                    array('controller' => 'PivotXFrontend:Controller:showArchive' )
+                    array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
+                    array('_controller' => 'PivotXFrontend:Controller:showArchive' )
                 ))
 
             ->add(
                 array( 'language' => 'en', 'site' => 'main', 'target' => false ),
                 $route = new Route(
                     'entry/{id}', 'newsitem/{publicid}',
-                    array('{publicid}' => '[a-z0-9-]+', '{id}' => '([0-9]+|[a-z0-9-]+)'),
-                    array('controller' => 'PivotXFrontend:Controller:showEntity')
+                    array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
+                    array('_controller' => 'PivotXFrontend:Controller:showEntity')
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 $route = new Route(
                     'entry/{id}', 'nieuwsbericht/{publicid}',
-                    array('{publicid}' => '[a-z0-9-]+', '{id}' => '([0-9]+|[a-z0-9-]+)'),
-                    array('controller' => 'PivotXFrontend:Controller:showEntity')
+                    array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
+                    array('_controller' => 'PivotXCore:DebugController:showEntity')
+                ))
+
+            ->add(
+                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
+                $route = new Route(
+                    'entry/{id}', 'old-site-link/{publicid}',
+                    array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
+                    array('_controller' => 'PivotXFrontend:Controller:showEntity')
                 ))
             ;
     }
@@ -105,14 +113,25 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/newsitem/this-is-all-about-the-kittens'));
         $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.nl/nieuwsbericht/allemaal-over-de-poesjes'));
         $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.nl/archief/2012-01'));
-        //var_dump($routematch);
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://www.pivotx.nl/archief/2012-01'));
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/archief/2012-01');
+
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://www.pivotx.com/latest-news'));
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.com/latest-news');
+
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://www.pivotx.com/archive/'.date('Y-m')));
+        $reference = $routematch->buildReference(null);
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.com/latest-news');
     }
 
     public function testReferenceToUrl()
     {
         $reference = new Reference(null,'main/(nl)@archive/2012-01');
-        var_dump($reference);
         $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
-        var_dump($routematch);
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/archief/2012-01');
+
+        $reference = new Reference(null,'main/(nl)@archive/'.date('Y-m'));
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/laatste-nieuws');
     }
 }

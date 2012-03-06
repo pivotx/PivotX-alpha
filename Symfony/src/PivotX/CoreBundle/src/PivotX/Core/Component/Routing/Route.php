@@ -13,6 +13,17 @@ use PivotX\Core\Component\Referencer\Reference;
 /**
  * Route describes a PivotX route.
  *
+ * A Route consists of the following elements:
+ * - entity/filter     The entity/filter of the route (including macros/requirements)
+ * - url               The public url of the route (including macros/requirements)
+ * - requirements      The macros/requirements
+ * - defaults          Defaults for this Route
+ *   - _rewrite        - do an internal rewrite of this Route to another Reference
+ *   - _rewrite_reference_text
+ *                     - the textual version of the 'rewrite' reference
+ *   - _redirect       - do an external redirect of this Route to another Reference
+ *   - _controller     - the Symfony-style controller
+ *
  * @author Marcel Wouters <marcel@twokings.nl>
  *
  * @api
@@ -65,11 +76,6 @@ class Route
     private $defaults = array();
 
     /**
-     * Set the options
-     */
-    private $options = array();
-
-    /**
      * Route filter
      */
     private $filter = false;
@@ -80,12 +86,12 @@ class Route
      * @param string $name          name of the target
      * @param string $description   friendly description
      */
-    public function __construct($entity_filter, $url, array $requirements = array(), array $options = array())
+    public function __construct($entity_filter, $url, array $requirements = array(), array $defaults = array())
     {
         $this->setEntityAndFilter($entity_filter);
         $this->setUrl($url);
         $this->setRequirements($requirements);
-        $this->setOptions($options);
+        $this->setDefaults($defaults);
     }
 
     /**
@@ -158,7 +164,7 @@ class Route
     {
         $reqs = array();
         foreach($this->requirements as $k => $v) {
-            $reqs[$k] = '(?P<' . substr($k,1,-1) . '>' . $v . ')';
+            $reqs['{'.$k.'}'] = '(?P<' . $k . '>' . $v . ')';
         }
 
         $efilter_pattern = strtr($this->efilter,$reqs);
@@ -182,7 +188,7 @@ class Route
     {
         $reqs = array();
         foreach($this->requirements as $k => $v) {
-            $reqs[$k] = '(?P<' . substr($k,1,-1) . '>' . $v . ')';
+            $reqs['{'.$k.'}'] = '(?P<' . $k . '>' . $v . ')';
         }
 
         $url_pattern = strtr($this->url,$reqs);
@@ -212,27 +218,27 @@ class Route
     }
 
     /**
-     * Set options
+     * Set defaults
      *
      * This method implements a fluent interface.
      *
-     * @param array $options The options
+     * @param array $defaults The defaults
      */
-    public function setOptions(array $options = array())
+    public function setDefaults(array $defaults = array())
     {
-        $this->options = $options;
+        $this->defaults = $defaults;
 
         return $this;
     }
 
     /**
-     * Get options
+     * Get defaults
      *
-     * @return array The options
+     * @return array The defaults
      */
-    public function getOptions()
+    public function getDefaults()
     {
-        return $this->options;
+        return $this->defaults;
     }
 
     /**
@@ -298,17 +304,16 @@ class Route
             if ($this->url_pattern !== false) {
                 //echo 'pattern['.$this->url_pattern.']'."\n";
                 if (preg_match($this->url_pattern,$url,$matches)) {
+                    // @todo swap requirements and defaults, Symfony-style
                     $arguments = array();
                     foreach($this->requirements as $k => $v) {
-                        $k2 = substr($k,1,-1);
-                        if (isset($matches[$k2])) {
-                            $arguments[$k2] = $matches[$k2];
+                        if (isset($matches[$k])) {
+                            $arguments[$k] = $matches[$k];
                         }
                     }
                     foreach($this->defaults as $k => $v) {
-                        $k2 = substr($k,1,-1);
-                        if (!isset($arguments[$k2])) {
-                            $arguments[$k2] = $v;
+                        if (!isset($arguments[$k])) {
+                            $arguments[$k] = $v;
                         }
                     }
                     return new RouteMatch($this,$arguments);
@@ -325,11 +330,12 @@ class Route
     /**
      * Match Reference
      *
-     * @param array $filter        File to match
-     * @param Reference $reference Reference to match
-     * @return RouteMatch          A RouteMatch object or null if not matched
+     * @param array $filter           Filter to match
+     * @param Reference $reference    Reference to match
+     * @param boolean $check_rewrites if true also allows rewrites to match (used for URL building), false don't
+     * @return RouteMatch             A RouteMatch object or null if not matched
      */
-    public function matchReference($filter, Reference $reference)
+    public function matchReference($filter, Reference $reference, $check_rewrites = false)
     {
         if ($this->efilter_compiled === false) {
             $this->compileEFilter();
@@ -339,19 +345,17 @@ class Route
 
         if ($this->matchFilter($filter)) {
             if ($this->efilter_pattern !== false) {
-                //echo 'pattern['.$this->efilter_pattern.']'."\n";
+                //echo 'pattern['.$this->efilter_pattern.']'." - ".$efilter."\n";
                 if (preg_match($this->efilter_pattern,$efilter,$matches)) {
                     $arguments = array();
                     foreach($this->requirements as $k => $v) {
-                        $k2 = substr($k,1,-1);
-                        if (isset($matches[$k2])) {
-                            $arguments[$k2] = $matches[$k2];
+                        if (isset($matches[$k])) {
+                            $arguments[$k] = $matches[$k];
                         }
                     }
                     foreach($this->defaults as $k => $v) {
-                        $k2 = substr($k,1,-1);
-                        if (!isset($arguments[$k2])) {
-                            $arguments[$k2] = $v;
+                        if (!isset($arguments[$k])) {
+                            $arguments[$k] = $v;
                         }
                     }
                     return new RouteMatch($this,$arguments);
@@ -361,7 +365,57 @@ class Route
                 return new RouteMatch($this);
             }
         }
+        
+        if ($check_rewrites === true) {
+            if (isset($this->defaults['_rewrite'])) {
+                if (!isset($this->defaults['_rewrite_reference_text'])) {
+                    $this->defaults['_rewrite_reference_text'] = $this->defaults['_rewrite']->buildTextReference();
+                }
+
+                if ($reference->buildTextReference() === $this->defaults['_rewrite_reference_text']) {
+                    return new RouteMatch($this);
+                }
+            }
+        }
 
         return false;
+    }
+
+    /**
+     * Build the entity filter
+     *
+     * @param array $arguments Arguments for this route
+     * @return string          Entity/filter that matches this route
+     */
+    public function buildEFilter(array $arguments)
+    {
+        $replacements = array();
+        foreach($arguments as $k => $v) {
+            $replacements['{'.$k.'}'] = $v;
+        }
+
+        $efilter = $this->efilter;
+        $efilter = strtr($efilter,$replacements);
+
+        return $efilter;
+    }
+
+    /**
+     * Build the URL
+     *
+     * @param array $arguments Arguments for this route
+     * @return string          Url that matches this route
+     */
+    public function buildUrl(array $arguments)
+    {
+        $replacements = array();
+        foreach($arguments as $k => $v) {
+            $replacements['{'.$k.'}'] = $v;
+        }
+
+        $url = $this->url;
+        $url = strtr($url,$replacements);
+
+        return $url;
     }
 }
