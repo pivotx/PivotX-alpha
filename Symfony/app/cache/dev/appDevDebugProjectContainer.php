@@ -307,6 +307,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addListenerService('kernel.view', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onKernelView'), 0);
         $instance->addListenerService('kernel.response', array(0 => 'sensio_framework_extra.cache.listener', 1 => 'onKernelResponse'), 0);
         $instance->addListenerService('kernel.controller', array(0 => 'security.extra.controller_listener', 1 => 'onCoreController'), -255);
+        $instance->addListenerService('kernel.request', array(0 => 'pivotx_route_listener', 1 => 'onKernelRequest'), 255);
         $instance->addListenerService('kernel.controller', array(0 => 'acme.demo.listener', 1 => 'onKernelController'), 0);
         $instance->addListenerService('kernel.response', array(0 => 'web_profiler.debug_toolbar', 1 => 'onKernelResponse'), -128);
 
@@ -1022,6 +1023,32 @@ class appDevDebugProjectContainer extends Container
         $instance->pushHandler($this->get('monolog.handler.debug'));
 
         return $instance;
+    }
+
+    /**
+     * Gets the 'pivotx_route_listener' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return PivotX\CoreBundle\RequestListener A PivotX\CoreBundle\RequestListener instance.
+     */
+    protected function getPivotxRouteListenerService()
+    {
+        return $this->services['pivotx_route_listener'] = new \PivotX\CoreBundle\RequestListener($this->get('router'), 80, 443, $this->get('logger'), $this->get('pivotxrouting'));
+    }
+
+    /**
+     * Gets the 'pivotxrouting' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return PivotX\Core\Component\Routing\RouteService A PivotX\Core\Component\Routing\RouteService instance.
+     */
+    protected function getPivotxroutingService()
+    {
+        return $this->services['pivotxrouting'] = new \PivotX\Core\Component\Routing\RouteService($this->get('logger'));
     }
 
     /**
@@ -2485,6 +2512,8 @@ class appDevDebugProjectContainer extends Container
             'security.extra.controller_listener.class' => 'JMS\\SecurityExtraBundle\\Controller\\ControllerListener',
             'security.access.iddqd_voter.class' => 'JMS\\SecurityExtraBundle\\Security\\Authorization\\Voter\\IddqdVoter',
             'security.extra.secure_all_services' => false,
+            'route_listener.class' => 'PivotX\\CoreBundle\\RequestListener',
+            'pivotxrouting.class' => 'PivotX\\Core\\Component\\Routing\\RouteService',
             'web_profiler.debug_toolbar.class' => 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
             'web_profiler.debug_toolbar.mode' => 2,

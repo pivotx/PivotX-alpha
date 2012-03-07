@@ -344,25 +344,27 @@ class Route
         $efilter = $reference->getFilter();
 
         if ($this->matchFilter($filter)) {
-            if ($this->efilter_pattern !== false) {
-                //echo 'pattern['.$this->efilter_pattern.']'." - ".$efilter."\n";
-                if (preg_match($this->efilter_pattern,$efilter,$matches)) {
-                    $arguments = array();
-                    foreach($this->requirements as $k => $v) {
-                        if (isset($matches[$k])) {
-                            $arguments[$k] = $matches[$k];
+            if ($this->entity == $reference->getEntity()) {
+                if ($this->efilter_pattern !== false) {
+                    // echo 'pattern['.$this->efilter_pattern.']'." - ".$efilter."\n";
+                    if (preg_match($this->efilter_pattern,$efilter,$matches)) {
+                        $arguments = array();
+                        foreach($this->requirements as $k => $v) {
+                            if (isset($matches[$k])) {
+                                $arguments[$k] = $matches[$k];
+                            }
                         }
-                    }
-                    foreach($this->defaults as $k => $v) {
-                        if (!isset($arguments[$k])) {
-                            $arguments[$k] = $v;
+                        foreach($this->defaults as $k => $v) {
+                            if (!isset($arguments[$k])) {
+                                $arguments[$k] = $v;
+                            }
                         }
+                        return new RouteMatch($this,$arguments);
                     }
-                    return new RouteMatch($this,$arguments);
                 }
-            }
-            else if ($this->efilter == $efilter) {
-                return new RouteMatch($this);
+                else if ($this->efilter == $efilter) {
+                    return new RouteMatch($this);
+                }
             }
         }
         
@@ -378,7 +380,7 @@ class Route
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

@@ -367,6 +367,8 @@
     <parameter key="security.extra.controller_listener.class">JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
     <parameter key="security.access.iddqd_voter.class">JMS\SecurityExtraBundle\Security\Authorization\Voter\IddqdVoter</parameter>
     <parameter key="security.extra.secure_all_services">false</parameter>
+    <parameter key="route_listener.class">PivotX\CoreBundle\RequestListener</parameter>
+    <parameter key="pivotxrouting.class">PivotX\Core\Component\Routing\RouteService</parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -587,6 +589,14 @@
           <argument>onCoreController</argument>
         </argument>
         <argument>-255</argument>
+      </call>
+      <call method="addListenerService">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument>pivotx_route_listener</argument>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>255</argument>
       </call>
       <call method="addListenerService">
         <argument>kernel.controller</argument>
@@ -2178,6 +2188,17 @@
       <tag name="kernel.event_listener" event="kernel.controller" method="onCoreController" priority="-255"/>
       <argument type="service" id="service_container"/>
       <argument type="service" id="annotation_reader"/>
+    </service>
+    <service id="pivotx_route_listener" class="PivotX\CoreBundle\RequestListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255"/>
+      <argument type="service" id="router"/>
+      <argument>80</argument>
+      <argument>443</argument>
+      <argument type="service" id="logger"/>
+      <argument type="service" id="pivotxrouting"/>
+    </service>
+    <service id="pivotxrouting" class="PivotX\Core\Component\Routing\RouteService">
+      <argument type="service" id="logger"/>
     </service>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>

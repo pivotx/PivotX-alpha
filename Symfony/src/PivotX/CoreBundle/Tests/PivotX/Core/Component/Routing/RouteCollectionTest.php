@@ -33,14 +33,14 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
 
         $this->routecollection
             ->add(
-                array( 'language' => 'en', 'site' => 'main' ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
                 new Route(
                     '_page/latest-news', 'latest-news',
                     array(),
                     array('_rewrite' => new Reference(null,'(en)@archive/'.date('Y-m')))
                 ))
             ->add(
-                array( 'language' => 'nl', 'site' => 'main' ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 new Route(
                     '_page/latest-news', 'laatste-nieuws',
                     array(),
@@ -48,30 +48,30 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
                 ))
 
             ->add(
-                array( 'language' => 'en', 'site' => 'main' ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
                 new Route(
                     'archive/{yearmonth}', 'archive/{yearmonth}',
                     array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
-                    array('controller' => 'PivotXFrontend:Controller:showArchive')
+                    array('_controller' => 'PivotXFrontend:Controller:showArchive')
                 ))
             ->add(
-                array( 'language' => 'nl', 'site' => 'main' ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 new Route(
                     'archive/{yearmonth}', 'archief/{yearmonth}',
                     array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
-                    array('controller' => 'PivotXFrontend:Controller:showArchive')
+                    array('_controller' => 'PivotXFrontend:Controller:showArchive')
                 ))
 
             // URL 'belasting' should be redirect to either the English or Dutch site
             ->add(
-                array( 'language' => 'en', 'site' => 'main' ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
                 new Route(
                     '', 'belasting',
                     array(),
                     array('_redirect' => new Reference(null,'(en)@category/taxes'))
                 ))
             ->add(
-                array( 'language' => 'nl', 'site' => 'main' ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 new Route(
                     '', 'belasting',
                     array(),
@@ -114,6 +114,10 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'latest-news'));
         $this->assertNotNull($routematch = $this->routecollection->matchUrl($filter,'belasting'));
         $this->assertArrayHasKey('_redirect',$routematch->getRoute()->getDefaults());
+
+        $filter = array('site' => 'main','language' => 'en', 'target' => false);
+        $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'last-news'));
+        $this->assertNull($routematch = $this->routecollection->matchUrl($filter,'archive/201201'));
     }
 
     public function testReferenceToRoute()
@@ -121,5 +125,8 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@_page/latest-news')));
         // @todo should test the value of routematch
         $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@archive/2012-01')));
+
+        $this->assertNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@_page/last-news')));
+        $this->assertNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@archive/201201')));
     }
 }

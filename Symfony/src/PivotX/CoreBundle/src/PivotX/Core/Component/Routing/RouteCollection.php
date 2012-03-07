@@ -107,7 +107,7 @@ class RouteCollection
 
         foreach($this->routes as $route) {
             $routematch = $route->matchReference($filter, $reference, $check_rewrites);
-            if ($routematch !== false) {
+            if (!is_null($routematch)) {
                 return $routematch;
             }
         }

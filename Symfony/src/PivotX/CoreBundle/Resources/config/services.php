@@ -5,7 +5,6 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Parameter;
 
 /*
-
 $container->setDefinition(
     'pivot_x_core.example',
     new Definition(
@@ -17,5 +16,4 @@ $container->setDefinition(
         )
     )
 );
-
 */

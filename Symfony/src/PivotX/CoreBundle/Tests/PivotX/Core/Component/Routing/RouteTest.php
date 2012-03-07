@@ -22,13 +22,10 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     public function testIt()
     {
         $route = new Route('about','about');
-        $this->assertNotNull($route);
         $this->assertEquals($route->getEntity(),'about');
         $this->assertFalse($route->getEntityFilter());
         
-
         $route = new Route('page/about','about');
-        $this->assertNotNull($route);
         $this->assertEquals($route->getEntity(),'page');
         $this->assertEquals($route->getEntityFilter(),'about');
     }

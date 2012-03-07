@@ -23,6 +23,8 @@ class LanguageTest extends \PHPUnit_Framework_TestCase
     {
         $language = new Language('nl','Dutch','nl_NL.utf-8');
 
-        $this->assertNotNull($language);
+        //$this->assertEquals($language->getName(),'nl');
+        //$this->assertEquals($language->getDescription(),'Dutch');
+        //$this->assertEquals($language->getLocale(),'nl_NL.utf-8');
     }
 }

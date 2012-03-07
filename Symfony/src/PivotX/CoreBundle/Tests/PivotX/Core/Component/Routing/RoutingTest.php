@@ -96,6 +96,14 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                     array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
                     array('_controller' => 'PivotXFrontend:Controller:showEntity')
                 ))
+
+            ->add(
+                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                $route = new Route(
+                    '_page/to-internal-invalid', 'to-internal-invalid',
+                    array(),
+                    array('_rewrite' => new Reference(null,'main/(en)@false-internal-route'))
+                ))
             ;
     }
 
@@ -133,5 +141,9 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $reference = new Reference(null,'main/(nl)@archive/'.date('Y-m'));
         $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
         $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/laatste-nieuws');
+
+        $reference = new Reference(null,'main/(en)@_page/to-internal-invalid');
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
+        $this->assertNotEquals($routematch->buildUrl(),'http://pivotx.nl/to-internal-invalid');
     }
 }

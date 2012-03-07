@@ -128,6 +128,16 @@ class RouteMatch
     }
 
     /**
+     * Get the arguments
+     *
+     * @return array The arguments
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
+
+    /**
      * Build the Reference for this match
      *
      * Return the Reference for this match.

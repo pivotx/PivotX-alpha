@@ -23,6 +23,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     {
         $target = new Target('desktop','Regular version');
 
-        $this->assertNotNull($target);
+        //$this->assertEquals($target->getName(),'desktop');
+        //$this->assertEquals($target->getDescription(),'Regular version');
     }
 }

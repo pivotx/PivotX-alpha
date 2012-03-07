@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="route_listener.class">PivotX\CoreBundle\RequestListener</parameter>
+        <parameter key="pivotxrouting.class">PivotX\Core\Component\Routing\RouteService</parameter>
+    </parameters>
+
+    <services>
+        <service id="pivotx_route_listener" class="%route_listener.class%">
+            <!-- @todo priority should be tuned -->
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255" />
+            <argument type="service" id="router" />
+            <argument>%request_listener.http_port%</argument>
+            <argument>%request_listener.https_port%</argument>
+            <argument type="service" id="logger" on-invalid="ignore" />
+            <argument type="service" id="pivotxrouting" />
+        </service>
+
+        <service id="pivotxrouting" class="%pivotxrouting.class%">
+            <argument type="service" id="logger" on-invalid="ignore" />
+        </service>
+    </services>
+</container>

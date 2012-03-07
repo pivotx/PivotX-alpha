@@ -23,6 +23,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     {
         $site = new Site('main','Main site');
 
-        $this->assertNotNull($site);
+        //$this->assertEquals($site->getName(),'main');
+        //$this->assertEquals($site->getDescription(),'Main site');
     }
 }

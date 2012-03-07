@@ -58,3 +58,8 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+
+# pivot_x_core
+pivot_x_core:
+    # doesn't do anything yet
+    routing: true
