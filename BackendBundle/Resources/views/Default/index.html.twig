@@ -12,3 +12,13 @@ Hallo!
 </p>
 
 {% endblock %}
+
+
+{% block widgets %}
+
+    {% for type, widget in widgets %}
+        {% render "PivotXBackendBundle:Elements:dashboardwidget" with { "type": type } %}
+    {% endfor %}
+
+
+{% endblock %}

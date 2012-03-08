@@ -16,9 +16,9 @@ page:
   options: ""
 
 # Snippet / Widget
-widget:
-  name: "Widget"
-  description: "This is where we store the widgets and snippets."
+Recipe:
+  name: "Recipe"
+  description: "This is where we store the Recipes and Snippets."
   extrafields: ""
   options: ""
 

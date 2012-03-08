@@ -26,6 +26,7 @@ class CMS
         $this->contenttypes = Yaml::parse($path."contenttypes.yml");
         $this->configuration = Yaml::parse($path."config.yml");
         $this->taxonomies = Yaml::parse($path."taxonomies.yml");
+        $this->widgets = Yaml::parse($path."widgets.yml");
 
     }
 
@@ -36,7 +37,17 @@ class CMS
     public function getContentTypes(){
 
         return $this->contenttypes;
-        
+
+    }
+
+
+    /**
+     * Get all widgets as an array..
+     */
+    public function getWidgets(){
+
+        return $this->widgets;
+
     }
 
 

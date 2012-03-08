@@ -1,0 +1,20 @@
+
+dashboard-latest-entries:
+    type: dashboard
+    controller: ...
+    name: "Latest Entries"
+    columns:
+        1: id
+        2: title, excerpt
+        3: date_created, date_modified
+        
+
+dashboard-latest-pages:
+    type: dashboard
+    controller: ...
+    name: "Latest Pages"
+    columns:
+        1: id
+        2: title, excerpt
+        3: date_created, date_modified
+                

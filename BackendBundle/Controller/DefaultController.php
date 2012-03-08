@@ -37,9 +37,11 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $configuration = $this->get('configuration');
+        $cms = $this->get('cms');
 
-        return array();
+        $widgets = $cms->getWidgets();
+
+        return array('widgets' => $widgets);
 
     }
 
@@ -96,6 +98,8 @@ class DefaultController extends Controller
 
 
     }
+
+
 
 
 }

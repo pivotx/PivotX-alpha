@@ -26,6 +26,7 @@ class Configuration
         $this->contenttypes = Yaml::parse($path."contenttypes.yml");
         $this->configuration = Yaml::parse($path."config.yml");
         $this->taxonomies = Yaml::parse($path."taxonomies.yml");
+        $this->widgets = Yaml::parse($path."widgets.yml");
 
         /*
         echo "<pre>\n";
@@ -41,15 +42,6 @@ class Configuration
         echo "</pre>\n";
         */
     }
-
-
-    public function joe(){
-
-        echo "joe!";
-
-    }
-
-
 
 
 
