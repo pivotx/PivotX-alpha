@@ -20,11 +20,27 @@ use PivotX\Core\Component\Referencer\Reference;
 class RouteSetup
 {
     /**
+     * All the targets
+     */
+    private $targets = array();
+
+    /**
+     * All the sites
+     */
+    private $sites = array();
+
+    /**
+     * All the languages
+     */
+    private $languages = array();
+
+    /**
      * All the routeprefixeses
      */
     private $routeprefixeses = array();
 
     /**
+     * All the routecollections
      */
     private $routecollections = array();
 
@@ -33,6 +49,58 @@ class RouteSetup
      */
     public function __construct()
     {
+    }
+
+    /**
+     * Add target
+     *
+     * This method implements a fluent interface.
+     *
+     * @param Target $target Target to add
+     */
+    public function addTarget(Target $target)
+    {
+        $this->targets[] = $target;
+
+        return $this;
+    }
+
+    /**
+     * Add site
+     *
+     * This method implements a fluent interface.
+     *
+     * @param Site $site Site to add
+     */
+    public function addSite(Site $site)
+    {
+        $this->sites[] = $site;
+
+        return $this;
+    }
+
+    /**
+     * Add language
+     *
+     * This method implements a fluent interface.
+     *
+     * @param Language $language Language to add
+     */
+    public function addLanguage(Language $language)
+    {
+        $this->languages[] = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get languages
+     *
+     * @return array Array of languages
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
     }
 
     /**

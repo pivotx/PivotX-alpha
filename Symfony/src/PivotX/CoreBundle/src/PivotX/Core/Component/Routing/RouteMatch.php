@@ -138,6 +138,43 @@ class RouteMatch
     }
 
     /**
+     * Get Symfony-style request attributes
+     *
+     * @return array Attributes
+     */
+    public function getAttributes()
+    {
+        $attributes = array();
+        $attributes = array_merge($attributes,$this->route->getDefaults());
+        $attributes = array_merge($attributes,$this->getArguments());
+
+        $filter    = $this->routeprefix->getFilter();
+        $languages = $this->routesetup->getLanguages();
+        $language  = false;
+        foreach($filter['language'] as $filter_language) {
+            foreach($languages as $setup_language) {
+                if ($setup_language->getName() == $filter_language) {
+                    $language = $setup_language;
+                    break;
+                }
+            }
+
+            if ($language !== false) {
+                break;
+            }
+        }
+
+        if ($language !== false) {
+            $attributes['_locale'] = $language->getLocale();
+            var_dump($attributes);
+        }
+
+        $attributes['_routematch'] = $this;
+
+        return $attributes;
+    }
+
+    /**
      * Build the Reference for this match
      *
      * Return the Reference for this match.

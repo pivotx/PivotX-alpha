@@ -26,10 +26,6 @@ class RouteService
 {
     private $logger;
 
-    private $targets;
-    private $sites;
-    private $languages;
-
     private $routesetup;
 
     public function __construct(LoggerInterface $logger = null)
@@ -54,6 +50,8 @@ class RouteService
 
     private function processArrayConfig($config)
     {
+        $routesetup = new RouteSetup();
+
         if (!isset($config['targets']) || !is_array($config['targets'])) {
             // @todo throw exception
             return;
@@ -73,7 +71,7 @@ class RouteService
                 return;
             }
 
-            $this->targets[] = new Target($targeta['name'],$targeta['description']);
+            $routesetup->addTarget(new Target($targeta['name'],$targeta['description']));
         }
         foreach($config['sites'] as $sitea) {
             if (!isset($sitea['name']) || !isset($sitea['description'])) {
@@ -81,7 +79,7 @@ class RouteService
                 return;
             }
 
-            $this->sites[] = new Site($sitea['name'],$sitea['description']);
+            $routesetup->addSite(new Site($sitea['name'],$sitea['description']));
         }
         foreach($config['languages'] as $languagea) {
             if (!isset($languagea['name']) || !isset($languagea['description']) || !isset($languagea['locale'])) {
@@ -89,13 +87,10 @@ class RouteService
                 return;
             }
 
-            $this->languages[] = new Language($languagea['name'],$languagea['description'],$languagea['locale']);
+            $routesetup->addLanguage(new Language($languagea['name'],$languagea['description'],$languagea['locale']));
         }
 
-
-        $this->routesetup = new RouteSetup();
-
-        $this->routeprefixes = new RoutePrefixes($this->routesetup);
+        $routeprefixes = new RoutePrefixes($routesetup);
         foreach($config['routeprefixes'] as $routeprefixa) {
             if (!isset($routeprefixa['target']) || !isset($routeprefixa['site']) || !isset($routeprefixa['language'])) {
                 // @todo throw exception
@@ -109,10 +104,10 @@ class RouteService
             $filter      = array ( 'target' => $routeprefixa['target'], 'site' => $routeprefixa['site'], 'language' => $routeprefixa['language'] );
             $routeprefix = new RoutePrefix($routeprefixa['prefix'],$routeprefixa['aliases']);
 
-            $this->routeprefixes->add($filter,$routeprefix);
+            $routeprefixes->add($filter,$routeprefix);
         }
 
-        $this->routecollection = new RouteCollection($this->routesetup);
+        $routecollection = new RouteCollection($routesetup);
         foreach($config['routes'] as $routea) {
             if (!isset($routea['filter']) || !isset($routea['filter']['target']) || !isset($routea['filter']['site']) || !isset($routea['filter']['language'])) {
                 // @todo throw exception
@@ -143,11 +138,13 @@ class RouteService
                 $defaults
             );
 
-            $this->routecollection->add(
+            $routecollection->add(
                 $routea['filter'],
                 $route
             );
         }
+
+        $this->routesetup = $routesetup;
 
         $this->logger->debug('pivotxrouting configuration read');
     }

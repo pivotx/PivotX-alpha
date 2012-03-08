@@ -95,49 +95,23 @@ class RequestListener
             }
             */
 
-            $parameters = array();
-            
-            $parameters = array_merge($parameters,$routematch->getRoute()->getDefaults());
-            $parameters = array_merge($parameters,$routematch->getArguments());
-
-            $parameters['_routematch'] = $routematch;
+            $parameters = $routematch->getAttributes();
 
             $request->attributes->add($parameters);
-        }
 
-        // add attributes based on the path info (routing)
-        /*
-        try {
-            $parameters = $this->router->match($request->getPathInfo());
-
-            if (null !== $this->logger) {
-                $this->logger->info(sprintf('Matched route "%s" (parameters: %s)', $parameters['_route'], $this->parametersToString($parameters)));
-            }
-
-            $request->attributes->add($parameters);
-        } catch (ResourceNotFoundException $e) {
-            $message = sprintf('No route found for "%s %s"', $request->getMethod(), $request->getPathInfo());
-
-            throw new NotFoundHttpException($message, $e);
-        } catch (MethodNotAllowedException $e) {
-            $message = sprintf('No route found for "%s %s": Method Not Allowed (Allow: %s)', $request->getMethod(), $request->getPathInfo(), strtoupper(implode(', ', $e->getAllowedMethods())));
-
-            throw new MethodNotAllowedHttpException($e->getAllowedMethods(), $message, $e);
-        }
-
-        if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
-            $context = $this->router->getContext();
-            $session = $request->getSession();
-            if ($locale = $request->attributes->get('_locale')) {
-                if ($session) {
-                    $session->setLocale($locale);
+            if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
+                $context = $this->router->getContext();
+                $session = $request->getSession();
+                if ($locale = $request->attributes->get('_locale')) {
+                    if ($session) {
+                        $session->setLocale($locale);
+                    }
+                    $context->setParameter('_locale', $locale);
+                } elseif ($session) {
+                    $context->setParameter('_locale', $session->getLocale());
                 }
-                $context->setParameter('_locale', $locale);
-            } elseif ($session) {
-                $context->setParameter('_locale', $session->getLocale());
             }
         }
-        */
     }
 
     private function parametersToString(array $parameters)
