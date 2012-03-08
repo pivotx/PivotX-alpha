@@ -66,6 +66,16 @@ class RouteSetup
     }
 
     /**
+     * Get targets
+     *
+     * @return array Array of targets
+     */
+    public function getTargets()
+    {
+        return $this->targets;
+    }
+
+    /**
      * Add site
      *
      * This method implements a fluent interface.

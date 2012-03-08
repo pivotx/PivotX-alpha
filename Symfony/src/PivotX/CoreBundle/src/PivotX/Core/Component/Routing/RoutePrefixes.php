@@ -63,7 +63,8 @@ class RoutePrefixes
      */
     public function add(array $filter, RoutePrefix $routeprefix)
     {
-        $n_filter = $this->routesetup->normalizeFilter($filter);
+        // @todo throw error if not already simplifyFilter
+        $n_filter = $this->routesetup->simplifyFilter($filter);
 
         $routeprefix->setFilter($n_filter);
 

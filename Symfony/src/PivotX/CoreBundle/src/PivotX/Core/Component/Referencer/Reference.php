@@ -349,6 +349,20 @@ class Reference
     }
 
     /**
+     * Set the target argument
+     *
+     * This method implements a fluent interface.
+     *
+     * @param string $target The target
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+        
+        return $this;
+    }
+
+    /**
      * Get the target argument
      *
      * @return string target value
@@ -356,6 +370,20 @@ class Reference
     public function getTarget()
     {
         return $this->getBestValue('target',false);
+    }
+
+    /**
+     * Set the language argument
+     *
+     * This method implements a fluent interface.
+     *
+     * @param string $language The language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+        
+        return $this;
     }
 
     /**

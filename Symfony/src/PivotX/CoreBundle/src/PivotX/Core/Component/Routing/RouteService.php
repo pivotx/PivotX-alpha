@@ -32,8 +32,6 @@ class RouteService
     {
         $this->logger = $logger;
 
-        $this->logger->debug('service has started');
-
         $this->load();
     }
 
@@ -43,9 +41,6 @@ class RouteService
         $config = Yaml::parse('/home/marcel/public_html/px4b/Symfony/app/config/pivotxrouting.yml');
 
         $this->processArrayConfig($config);
-        /*
-{ targets: [{ name: desktop, description: 'Desktop or tablet' }, { name: mobile, description: Mobile }], sites: [{ name: main, description: 'Main site' }], languages: [{ name: nl, description: Dutch, locale: nl_NL.utf-8 }, { name: en, description: English, locale: en_GB.utf-8 }], routeprefixes: [{ prefix: 'http://pivotx.com/', language: en, site: desktop, target: false, aliases: ['http://www.pivotx.com/', 'http://www.pivotx.eu/'] }, { prefix: 'http://pivotx.nl/', language: nl, site: desktop, target: false, aliases: ['http://www.pivotx.nl/'] }] } 
-        */
     }
 
     private function processArrayConfig($config)
@@ -92,7 +87,7 @@ class RouteService
 
         $routeprefixes = new RoutePrefixes($routesetup);
         foreach($config['routeprefixes'] as $routeprefixa) {
-            if (!isset($routeprefixa['target']) || !isset($routeprefixa['site']) || !isset($routeprefixa['language'])) {
+            if (!isset($routeprefixa['filter']) || !isset($routeprefixa['filter']['target']) || !isset($routeprefixa['filter']['site']) || !isset($routeprefixa['filter']['language'])) {
                 // @todo throw exception
                 return;
             }
@@ -100,9 +95,15 @@ class RouteService
                 // @todo throw exception
                 return;
             }
-            $this->logger->debug('aliases',$routeprefixa['aliases']);
-            $filter      = array ( 'target' => $routeprefixa['target'], 'site' => $routeprefixa['site'], 'language' => $routeprefixa['language'] );
-            $routeprefix = new RoutePrefix($routeprefixa['prefix'],$routeprefixa['aliases']);
+            $filter      = array ( 'target' => $routeprefixa['filter']['target'], 'site' => $routeprefixa['filter']['site'], 'language' => $routeprefixa['filter']['language'] );
+            $aliases     = array();
+            if (isset($routeprefixa['aliases'])) {
+                $aliases = $routeprefixa['aliases'];
+                if (!is_array($aliases)) {
+                    $aliases = array($aliases);
+                }
+            }
+            $routeprefix = new RoutePrefix($routeprefixa['prefix'],$aliases);
 
             $routeprefixes->add($filter,$routeprefix);
         }
@@ -124,13 +125,6 @@ class RouteService
             }
             if (isset($routea['defaults']) && is_array($routea['defaults'])) {
                 $defaults = $routea['defaults'];
-
-                if (isset($defaults['_rewrite'])) {
-                    $defaults['_rewrite'] = new Reference(null,$defaults['_rewrite']);
-                }
-                if (isset($defaults['_redirect'])) {
-                    $defaults['_redirect'] = new Reference(null,$defaults['_redirect']);
-                }
             }
             $route = new Route(
                 $routea['pattern'], $routea['public'],
@@ -145,8 +139,6 @@ class RouteService
         }
 
         $this->routesetup = $routesetup;
-
-        $this->logger->debug('pivotxrouting configuration read');
     }
 
     public function getRouteSetup()

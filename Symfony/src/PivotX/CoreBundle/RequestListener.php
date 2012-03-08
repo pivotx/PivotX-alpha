@@ -1,12 +1,9 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
+/**
+ * This file is part of the PivotX Core bundle
  *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
 namespace PivotX\CoreBundle;
@@ -16,15 +13,17 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
 use PivotX\Core\Component\Routing\RouteService;
+use PivotX\Core\Component\Routing\Exception\RouteNotFoundHttpException;
 
 /**
  * Initializes request attributes based on a matching route.
  *
- * @author Fabien Potencier <fabien@symfony.com>
+ * @author Marcel Wouters <marcel@twokings.nl>
  */
 class RequestListener
 {
@@ -43,15 +42,8 @@ class RequestListener
         $this->httpsPort = $httpsPort;
         $this->logger = $logger;
 
-        if (!is_null($logger)) {
-            $logger->debug('RequestListener constructor have logger');
-        }
-        if (!is_null($routeservice)) {
-            $logger->debug('RequestListener constructor have setup');
-
-            $this->routeservice = $routeservice;
-            $this->routesetup   = $routeservice->getRouteSetup();
-        }
+        $this->routeservice = $routeservice;
+        $this->routesetup   = $routeservice->getRouteSetup();
     }
 
     public function onEarlyKernelRequest(GetResponseEvent $event)
@@ -83,17 +75,40 @@ class RequestListener
         }
 
         $uri = $request->getUri();
-        $uri = preg_replace('|app(_dev)[.]php/|','',$uri);
-        $this->logger->debug('in['.$request->getUri().'] out['.$uri.']');
+        $uri = preg_replace('|app(_dev)?[.]php/|','',$uri);
 
         $routematch = $this->routesetup->matchUrl($uri);
 
         if (!is_null($routematch)) {
-            /*
-            if ($uri = $routematch->getRedirectUri()) {
-                // @todo do something
+            $protector  = 10;
+            while (($routematch->isRewrite()) && ($protector > 0)) {
+                $protector--;
+                $routematch = $routematch->getRewrite();
             }
-            */
+
+            if ($protector == 0) {
+                $message = sprintf('Routing rewrite loop for "%s %s"', $request->getMethod(), $uri);
+                throw new RouteNotFoundHttpException($message);
+            }
+        }
+
+        if (!is_null($routematch)) {
+            if ($routematch->isRedirect()) {
+                list($redirect_routematch,$redirect_status) = $routematch->getRedirect();
+                if (is_null($redirect_routematch)) {
+                    $message = sprintf('Routing redirect not found for "%s %s"', $request->getMethod(), $uri);
+                    throw new RouteNotFoundHttpException($message);
+                }
+                $redirect_uri = $redirect_routematch->buildUrl(null,false);
+
+                if ($redirect_uri == $uri) {
+                    $message = sprintf('Routing redirect loop for "%s %s"', $request->getMethod(), $uri);
+                    throw new RouteNotFoundHttpException($message);
+                }
+
+                $event->setResponse(new RedirectResponse($redirect_uri,$redirect_status));
+                return;
+            }
 
             $parameters = $routematch->getAttributes();
 
@@ -112,15 +127,5 @@ class RequestListener
                 }
             }
         }
-    }
-
-    private function parametersToString(array $parameters)
-    {
-        $pieces = array();
-        foreach ($parameters as $key => $val) {
-            $pieces[] = sprintf('"%s": "%s"', $key, (is_string($val) ? $val : json_encode($val)));
-        }
-
-        return implode(', ', $pieces);
     }
 }

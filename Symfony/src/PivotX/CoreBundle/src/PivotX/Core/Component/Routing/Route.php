@@ -316,6 +316,10 @@ class Route
                             $arguments[$k] = $v;
                         }
                     }
+                    if (isset($arguments['_conversion'])) {
+                        $new_args = call_user_func($arguments['_conversion'],$arguments,false);
+                        $arguments = array_merge($arguments,$new_args);
+                    }
                     return new RouteMatch($this,$arguments);
                 }
             }
@@ -359,6 +363,10 @@ class Route
                                 $arguments[$k] = $v;
                             }
                         }
+                        if (isset($arguments['_conversion'])) {
+                            $new_args = call_user_func($arguments['_conversion'],$arguments,true);
+                            $arguments = array_merge($arguments,$new_args);
+                        }
                         return new RouteMatch($this,$arguments);
                     }
                 }
@@ -370,11 +378,7 @@ class Route
         
         if ($check_rewrites === true) {
             if (isset($this->defaults['_rewrite'])) {
-                if (!isset($this->defaults['_rewrite_reference_text'])) {
-                    $this->defaults['_rewrite_reference_text'] = $this->defaults['_rewrite']->buildTextReference();
-                }
-
-                if ($reference->buildTextReference() === $this->defaults['_rewrite_reference_text']) {
+                if ($reference->buildTextReference() === $this->defaults['_rewrite']) {
                     return new RouteMatch($this);
                 }
             }
@@ -419,5 +423,77 @@ class Route
         $url = strtr($url,$replacements);
 
         return $url;
+    }
+
+    /**
+     * Check if the route is a rewrite
+     */
+    public function isRewrite()
+    {
+        return isset($this->defaults['_rewrite']);
+    }
+
+    /**
+     * Get the rewrite reference
+     *
+     * @param Reference $parent_reference The parent reference
+     * @return Reference                  The rewritten reference
+     */
+    public function getRewrite($parent_reference = null)
+    {
+        return new Reference($parent_reference,$this->defaults['_rewrite']);
+    }
+
+    /**
+     * Check if the route is supposed to redirect
+     *
+     * @return boolean true if route is supposed to redirect, false if not
+     */
+    public function isRedirect()
+    {
+        foreach($this->defaults as $k => $v) {
+            if (substr($k,0,9) == '_redirect') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the redirect reference
+     *
+     * @param Reference $parent_reference           The parent reference
+     * @return array(Reference $reference, $status) The reference to redirect to and the status to use
+     */
+    public function getRedirect(Reference $parent_reference = null)
+    {
+        $reference = false;
+        $status    = 302;
+
+        foreach($this->defaults as $k => $v) {
+            if (substr($k,0,9) == '_redirect') {
+                $_status = substr($k,9);
+                switch ($_status) {
+                    case '_permanent':
+                        $status = 301;
+                        break;
+                    case '_found':
+                        $status = 302;
+                        break;
+                    case '_seeother':
+                        $status = 303;
+                        break;
+                    case '_temporary':
+                        $status = 307;
+                        break;
+                }
+
+                $reference = new Reference($parent_reference,$v);
+                break;
+            }
+        }
+
+        return array($reference,$status);
     }
 }

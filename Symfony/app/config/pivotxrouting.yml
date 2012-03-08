@@ -23,17 +23,19 @@ languages:
 
 
 routeprefixes:
-    - prefix:       "http://px4bmfw.twokings.eu/nl/"
-      language:     "nl"
-      site:         "main"
-      target:       "desktop"
+    - filter:       { target: "desktop", site: "main", language: "nl" }
+      prefix:       "http://px4bmfw.twokings.eu/nl/"
       aliases:
           - "http://www.pivotx.nl/"
 
-    - prefix:       "http://px4bmfw.twokings.eu/"
-      language:     "en"
-      site:         "main"
-      target:       "desktop"
+    - filter:       { target: "mobile", site: "main", language: "nl" }
+      prefix:       "http://px4bmfw.twokings.eu/mobile-nl/"
+
+    - filter:       { target: "mobile", site: "main", language: "en" }
+      prefix:       "http://px4bmfw.twokings.eu/mobile-en/"
+
+    - filter:       { target: "desktop", site: "main", language: "en" }
+      prefix:       "http://px4bmfw.twokings.eu/"
       aliases:
           - "http://pivotx.com/"
           - "http://www.pivotx.com/"
@@ -64,3 +66,48 @@ routes:
       requirements: 
           yearmonth:  "[0-9]{4}-[0-9]{2}"
 
+    - filter:       { target: "desktop", site: "main", language: "en" }
+      pattern:      "_page/contact"
+      public:       "conference"
+      defaults:     { _redirect: "main/(en)@entry/1" }
+
+    - filter:       { target: [ "desktop", "mobile" ], site: "main", language: "nl" }
+      pattern:      "entry/{id}"
+      public:       "nieuws/{publicid}"
+      defaults:     { _controller: "PivotXCoreBundle:Debug:showEntity", _conversion: "PivotX\\CoreBundle\\Controller\\DebugController::convertArguments" }
+      requirements:
+        id:         "\d+"
+        publicid:   "(\d+|[a-z0-9_-]+)"
+
+    - filter:       { target: [ "desktop", "mobile" ], site: "main", language: "en" }
+      pattern:      "entry/{id}"
+      public:       "news/{publicid}"
+      defaults:     { _controller: "PivotXCoreBundle:Debug:showEntity", _conversion: "PivotX\\CoreBundle\\Controller\\DebugController::convertArguments" }
+      requirements:
+        id:         "\d+"
+        publicid:   "(\d+|[a-z0-9_-]+)"
+
+    - filter:       { target: "desktop", site: "main", language: [ "nl","en" ] }
+      pattern:      "_page/agenda"
+      public:       "agenda"
+      defaults:     { _rewrite: "archive/0000-01" }
+
+    - filter:       { target: "desktop", site: "main", language: "en" }
+      pattern:      "_page/infinite-self"
+      public:       "infinite-self"
+      defaults:     { _redirect: "_page/infinite-self" }
+
+    - filter:       { target: "desktop", site: "main", language: "en" }
+      pattern:      "_page/infinite-loop"
+      public:       "infinite-loop"
+      defaults:     { _rewrite: "_page/infinite-loop2" }
+
+    - filter:       { target: "desktop", site: "main", language: "en" }
+      pattern:      "_page/infinite-loop2"
+      public:       "infinite-loop2"
+      defaults:     { _rewrite: "_page/infinite-loop" }
+
+    - filter:       { target: "desktop", site: "main", language: "en" }
+      pattern:      "_page/route-not-found"
+      public:       "route-not-found"
+      defaults:     { _redirect: "_page/not-found" }

@@ -65,6 +65,16 @@ class Language
     }
 
     /**
+     * Get the name
+     *
+     * @return string The name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the locale
      *
      * This method implements a fluent interface.
@@ -79,6 +89,16 @@ class Language
     }
 
     /**
+     * Get the locale
+     *
+     * @return string The locale
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
      * Set the description
      *
      * This method implements a fluent interface.
@@ -90,6 +110,16 @@ class Language
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Get the description
+     *
+     * @return string The description
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
 

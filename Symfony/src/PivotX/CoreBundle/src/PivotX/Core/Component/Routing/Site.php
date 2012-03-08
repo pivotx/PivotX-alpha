@@ -56,6 +56,16 @@ class Site
     }
 
     /**
+     * Get the name
+     *
+     * @return string The name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the description
      *
      * This method implements a fluent interface.
@@ -67,5 +77,15 @@ class Site
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Get the description
+     *
+     * @return string The description
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

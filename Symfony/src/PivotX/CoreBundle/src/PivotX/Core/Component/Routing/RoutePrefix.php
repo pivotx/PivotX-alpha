@@ -207,11 +207,16 @@ class RoutePrefix
         $keys = array('site', 'target', 'language');
 
         foreach($keys as $key) {
+            if (($filter[$key] !== false)  && ($filter[$key] != $this->filter[$key])) {
+                return false;
+            }
+            /*
             if ($filter[$key] !== false) {
                 if (!in_array($filter[$key],$this->filter[$key])) {
                     return false;
                 }
             }
+            */
         }
 
         return true;

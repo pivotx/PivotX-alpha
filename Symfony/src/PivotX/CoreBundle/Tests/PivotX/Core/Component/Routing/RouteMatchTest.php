@@ -26,9 +26,18 @@ class RouteMatchTest extends \PHPUnit_Framework_TestCase
 
         $routematch = new RouteMatch($route);
 
-        // @todo worthless test, other than to make the report show 100%
         $this->assertNull($routematch->getRoutePrefix());
+    }
+
+    /**
+     * @expectedException PivotX\Core\Component\Routing\Exception\RouteErrorHttpException
+     */
+    public function testMissingPrefixWhenBuildingUrl()
+    {
+        $route = new Route('page','about');
+
+        $routematch = new RouteMatch($route);
+
         $this->assertNull($routematch->buildUrl());
-        
     }
 }

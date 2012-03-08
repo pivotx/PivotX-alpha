@@ -33,11 +33,11 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $routeprefixes = new RoutePrefixes($this->routesetup);
         $routeprefixes
             ->add(
-                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => 'desktop' ),
                 new RoutePrefix('http://pivotx.com/', array('http://www.pivotx.com/'))
                 )
             ->add(
-                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => 'desktop' ),
                 new RoutePrefix('http://pivotx.nl/', array('http://www.pivotx.nl/'))
                 )
             ;
@@ -45,29 +45,29 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $routecollection = new RouteCollection($this->routesetup);
         $routecollection
             ->add(
-                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     '_page/latest-news', 'latest-news',
                     array(),
-                    array('_rewrite' => new Reference(null,'main/(en)@archive/'.date('Y-m')))
+                    array('_rewrite' => 'main/desktop(en)@archive/'.date('Y-m'))
                 ))
             ->add(
-                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     '_page/latest-news', 'laatste-nieuws',
                     array(),
-                    array('_rewrite' => new Reference(null,'main/(nl)@archive/'.date('Y-m')))
+                    array('_rewrite' => 'main/desktop(nl)@archive/'.date('Y-m'))
                 ))
 
             ->add(
-                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     'archive/{yearmonth}', 'archive/{yearmonth}',
                     array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
                     array('_controller' => 'PivotXFrontend:Controller:showArchive' )
                 ))
             ->add(
-                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     'archive/{yearmonth}', 'archief/{yearmonth}',
                     array('yearmonth' => '[0-9]{4}-[0-9]{2}'),
@@ -75,14 +75,14 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 ))
 
             ->add(
-                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     'entry/{id}', 'newsitem/{publicid}',
                     array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
                     array('_controller' => 'PivotXFrontend:Controller:showEntity')
                 ))
             ->add(
-                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     'entry/{id}', 'nieuwsbericht/{publicid}',
                     array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
@@ -90,7 +90,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 ))
 
             ->add(
-                array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'nl', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     'entry/{id}', 'old-site-link/{publicid}',
                     array('publicid' => '[a-z0-9-]+', 'id' => '([0-9]+|[a-z0-9-]+)'),
@@ -98,11 +98,11 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 ))
 
             ->add(
-                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                array( 'language' => 'en', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     '_page/to-internal-invalid', 'to-internal-invalid',
                     array(),
-                    array('_rewrite' => new Reference(null,'main/(en)@false-internal-route'))
+                    array('_rewrite' => 'main/desktop(en)@false-internal-route')
                 ))
             ;
     }

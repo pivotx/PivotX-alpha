@@ -8,6 +8,7 @@
 
 namespace PivotX\Core\Component\Routing;
 
+use PivotX\Core\Component\Routing\Exception\RouteErrorHttpException;
 use PivotX\Core\Component\Referencer\Reference;
 
 /**
@@ -151,24 +152,20 @@ class RouteMatch
         $filter    = $this->routeprefix->getFilter();
         $languages = $this->routesetup->getLanguages();
         $language  = false;
-        foreach($filter['language'] as $filter_language) {
-            foreach($languages as $setup_language) {
-                if ($setup_language->getName() == $filter_language) {
-                    $language = $setup_language;
-                    break;
-                }
-            }
-
-            if ($language !== false) {
+        foreach($languages as $setup_language) {
+            if ($setup_language->getName() == $filter['language']) {
+                $language = $setup_language;
                 break;
             }
         }
 
         if ($language !== false) {
             $attributes['_locale'] = $language->getLocale();
-            var_dump($attributes);
         }
 
+        $attributes['_site']       = $filter['site'];
+        $attributes['_target']     = $filter['target'];
+        $attributes['_language']   = $filter['language'];
         $attributes['_routematch'] = $this;
 
         return $attributes;
@@ -208,8 +205,9 @@ class RouteMatch
     public function buildUrl(Reference $relative = null, $reevaluate_route = true)
     {
         if (is_null($this->routeprefix)) {
-            // @todo should we throw an exception here?
-            return null;
+            // @todo should be better
+            $message = sprintf('RouteMatch is missing a RoutePrefix');
+            throw new RouteErrorHttpException($message);
         }
 
         if ($reevaluate_route) {
@@ -225,5 +223,109 @@ class RouteMatch
         $url .= $this->route->buildUrl($this->arguments);
 
         return $url;
+    }
+
+    /**
+     * Check if the route is a rewrite
+     *
+     * @return boolean true if route is a rewrite, false if not
+     */
+    public function isRewrite()
+    {
+        return $this->route->isRewrite();
+    }
+
+    /**
+     * Return the new RouteMatch
+     *
+     * @return RouteMatch The RouteMatch record of the rewrite, return null if no route is found
+     */
+    public function getRewrite()
+    {
+        $parent_reference = $this->buildReference(null);
+
+        $reference = $this->route->getRewrite($parent_reference);
+
+        $routematch = $this->routesetup->matchReference($reference,true);
+
+        return $routematch;
+    }
+
+    /**
+     * Check if the route is supposed to redirect
+     *
+     * @return boolean true if route is supposed to redirect, false if not
+     */
+    public function isRedirect()
+    {
+        return $this->route->isRedirect();
+    }
+
+    /**
+     * Get the redirect reference
+     *
+     * @return array(RouteMatch $routematch, $status) The RouteMatch to redirect to and the status to use
+     *                                                The $routematch is null if nothing matched
+     */
+    public function getRedirect()
+    {
+        $routematch = null;
+        $status     = 302;
+
+        $parent_reference = $this->buildReference(null);
+
+        list($reference,$status) = $this->route->getRedirect($parent_reference);
+
+        $routematch = $this->routesetup->matchReference($reference,true);
+
+        return array($routematch,$status);
+    }
+
+    /**
+     * Get all the language variants of this RouteMatch
+     *
+     * @return array($language_name=>$url) ALl the variants
+     */
+    public function getLanguageUrls()
+    {
+        $urls      = array();
+        $reference = $this->buildReference(null);
+
+        $languages = $this->routesetup->getLanguages();
+        foreach($languages as $language) {
+            $reference->setLanguage($language->getName());
+
+            $routematch = $this->routesetup->matchReference($reference,true);
+
+            if (!is_null($routematch)) {
+                $urls[$language->getName()] = $routematch->buildUrl();
+            }
+        }
+
+        return $urls;
+    }
+
+    /**
+     * Get all the target variants of this RouteMatch
+     *
+     * @return array($target_name => $url) ALl the variants
+     */
+    public function getTargetUrls()
+    {
+        $urls      = array();
+        $reference = $this->buildReference(null);
+
+        $targets = $this->routesetup->getTargets();
+        foreach($targets as $target) {
+            $reference->setTarget($target->getName());
+
+            $routematch = $this->routesetup->matchReference($reference,true);
+
+            if (!is_null($routematch)) {
+                $urls[$target->getName()] = $routematch->buildUrl();
+            }
+        }
+
+        return $urls;
     }
 }
