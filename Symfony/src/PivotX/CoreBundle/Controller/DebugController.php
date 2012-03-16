@@ -58,12 +58,18 @@ class DebugController extends Controller
         $routematch = $request->attributes->get('_routematch');
 
         $urls = $routematch->getLanguageUrls();
-        $html .= '<br/><strong>Language URLs</strong><br/>';
-        $html .= var_export($urls,true);
+        $html .= '<br/><strong>Language URLs</strong><ul>';
+        foreach($urls as $name => $href) {
+            $html .= '<li><a href="'.$href.'">'.$name.'</a> ('.$href.')</li>';
+        }
+        $html .= '</ul>';
 
         $urls = $routematch->getTargetUrls();
-        $html .= '<br/><strong>Target URLs</strong><br/>';
-        $html .= var_export($urls,true);
+        $html .= '<br/><strong>Target URLs</strong><ul>';
+        foreach($urls as $name => $href) {
+            $html .= '<li><a href="'.$href.'">'.$name.'</a> ('.$href.')</li>';
+        }
+        $html .= '</ul>';
 
         return $html;
     }

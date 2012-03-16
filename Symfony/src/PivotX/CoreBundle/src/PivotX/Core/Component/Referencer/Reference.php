@@ -17,8 +17,8 @@ namespace PivotX\Core\Component\Referencer;
  *
  * Complete reference:
  * value:site/target(language)@entity/filter?query#entity/filter?query
- * ----- --------------------- --------------- ---------------
- * A     B                     C               D
+ * ----- --------------------- ------------------- ------------------
+ * A     B                     C                   D
  *
  * A = denotes what to return for the reference
  * B = defines the return environment
@@ -26,17 +26,23 @@ namespace PivotX\Core\Component\Referencer;
  * D = where to set the focus on the return page
  *
  * Example partial references:
+
  * page/contact
  * title@page/contact
- * example.org/@page/contact
- * subtitle:example.org/@page/contact
+ * main/@page/contact
+ * title:main/@page/contact
+ * title:s=main@page/contact
  * /desktop@page/contact
- * (nl)@page/contact#?comments
+ * main/desktop(nl)@page/contact#?comments
+
  *
  * New style - Complete reference:
- * value:s=site&d=device&l=language@entity/filter?query#entity/filter?query
- * ----- -------------------------- ------------------- ---------------
+ * value:s=site&t=target&l=language@entity/filter?query#entity/filter?query
+ * ----- -------------------------- ------------------- -------------------
  * A     B                          C                   D
+ *
+ * Voorkeur Derk:
+ * value:site=main&target=desktop&lang=nl@entity/filter?query#entity/filter?query
  * 
  *
  * @author Marcel Wouters <marcel@twokings.nl>

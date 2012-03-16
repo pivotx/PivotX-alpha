@@ -25,8 +25,16 @@ class RouteMatchTest extends \PHPUnit_Framework_TestCase
         $route = new Route('page','about');
 
         $routematch = new RouteMatch($route);
-
         $this->assertNull($routematch->getRoutePrefix());
+
+        $arguments = array(
+            'a' => 'value a'
+        );
+        $routematch->setArguments($arguments);
+
+        $args = $routematch->getArguments();
+        $this->assertInternalType('array',$args);
+        $this->assertArrayHasKey('a',$args);
     }
 
     /**

@@ -28,17 +28,26 @@ class RouteService
 
     private $routesetup;
 
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct(LoggerInterface $logger = null, $file = false)
     {
         $this->logger = $logger;
 
-        $this->load();
+        if ($file === false) {
+            $this->load();
+        }
     }
 
     public function load()
     {
         // @todo this is really wrong
         $config = Yaml::parse('/home/marcel/public_html/px4b/Symfony/app/config/pivotxrouting.yml');
+
+        $this->processArrayConfig($config);
+    }
+
+    public function processTextConfig($text)
+    {
+        $config = Yaml::parse($text);
 
         $this->processArrayConfig($config);
     }

@@ -218,6 +218,7 @@ class RouteSetup
             }
         }
 
+
         if (!is_null($routeprefix)) {
             $filter    = $routeprefix->getFilter();
 
@@ -251,6 +252,9 @@ class RouteSetup
 
         foreach($keys as $key) {
             if (!isset($_filter[$key])) {
+                $filter[$key] = array();
+            }
+            else if ((!is_array($_filter[$key]) && $_filter[$key] === false)) {
                 $filter[$key] = array();
             }
             else if (!is_array($_filter[$key])) {

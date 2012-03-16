@@ -9,6 +9,7 @@
 namespace PivotX\CoreBundle\Component\Routing;
 
 use PivotX\Core\Component\Routing\RouteSetup;
+use PivotX\Core\Component\Routing\Language;
 use PivotX\Core\Component\Routing\RoutePrefixes;
 use PivotX\Core\Component\Routing\RouteCollection;
 use PivotX\Core\Component\Routing\RoutePrefix;
@@ -30,6 +31,9 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
     {
         $this->routesetup = new RouteSetup();
 
+        $this->routesetup->addLanguage(new Language('en','English','en_GB.utf-8'));
+        $this->routesetup->addLanguage(new Language('nl','Dutch','nl_NL.utf-8'));
+
         $routeprefixes = new RoutePrefixes($this->routesetup);
         $routeprefixes
             ->add(
@@ -44,6 +48,14 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
 
         $routecollection = new RouteCollection($this->routesetup);
         $routecollection
+            ->add(
+                array( 'language' => 'en', 'site' => 'main', 'target' => false ),
+                $route = new Route(
+                    '_page/frontpage', '',
+                    array(),
+                    array('_template' => 'frontpage.html.twig')
+                ))
+
             ->add(
                 array( 'language' => 'en', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
@@ -113,6 +125,16 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $this->routesetup = null;
     }
 
+    public function testRouteMatch()
+    {
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/latest-news'));
+
+        $attributes = $routematch->getAttributes();
+        $this->assertInternalType('array',$attributes);
+        $this->assertArrayHasKey('_site',$attributes);
+        $this->assertEquals('main',$attributes['_site']);
+    }
+
     public function testUrlToRoute()
     {
         $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/latest-news'));
@@ -145,5 +167,10 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $reference = new Reference(null,'main/(en)@_page/to-internal-invalid');
         $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
         $this->assertNotEquals($routematch->buildUrl(),'http://pivotx.nl/to-internal-invalid');
+    }
+
+    public function testFrontpageUrl()
+    {
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/'));
     }
 }

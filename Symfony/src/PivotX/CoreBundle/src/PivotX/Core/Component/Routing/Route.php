@@ -271,13 +271,14 @@ class Route
      * Filter to match is always a simplified filter.
      *
      * @param array $filter  Simplified filter to match against
+     * @return boolean       True if filter matched
      */
     public function matchFilter(array $filter)
     {
         $keys = array('site', 'target', 'language');
 
         foreach($keys as $key) {
-            if ($filter[$key] !== false) {
+            if (($filter[$key] !== false) && (count($this->filter[$key]) > 0)) {
                 if (!in_array($filter[$key],$this->filter[$key])) {
                     return false;
                 }
