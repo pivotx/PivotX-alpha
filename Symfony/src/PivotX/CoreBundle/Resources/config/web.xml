@@ -6,7 +6,10 @@
 
     <parameters>
         <parameter key="route_listener.class">PivotX\CoreBundle\RequestListener</parameter>
-        <parameter key="pivotxrouting.class">PivotX\Core\Component\Routing\RouteService</parameter>
+        <parameter key="pivotxrouting.class">PivotX\Component\Routing\RouteService</parameter>
+
+        <!-- cache warmer -->
+        <parameter key="pivotx.entity_cache_warmer.class">PivotX\Doctrine\CacheWarmer\EntityCacheWarmer</parameter>
     </parameters>
 
     <services>

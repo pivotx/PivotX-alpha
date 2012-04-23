@@ -1,0 +1,126 @@
+<?php
+
+namespace PivotX\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use PivotX\CoreBundle\EntryLanguage;
+use PivotX\Doctrine\Entity\BaseEntity;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="entry", indexes={@ORM\index(name="resource_index", columns={"resource_id"})})
+ */
+class Entry extends BaseEntity
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var integer $resource_id
+     *
+     * @ORM\Column(name="resource_id", type="integer", nullable=true)
+     */
+    protected $resource_id = null;
+
+    /**
+     * @var string $publicid
+     *
+     * @ORM\Column(name="publicid", type="string", length=64, nullable=true)
+     */
+    protected $publicid = null;
+
+    /**
+     * @var datetime $date_created
+     *
+     * @ORM\Column(name="date_created", type="datetime")
+     */
+    protected $date_created;
+
+    /**
+     * @var datetime $date_modified
+     *
+     * @ORM\Column(name="date_modified", type="datetime")
+     */
+    protected $date_modified;
+
+    /**
+     * @var integer $viewable
+     *
+     * @ORM\Column(name="viewable", type="integer")
+     */
+    protected $viewable = 1;
+
+    /**
+     * @var string $publish_state
+     *
+     * @ORM\Column(name="publish_state", type="string", length=32)
+     */
+    protected $publish_state = 'show';
+
+    /**
+     * @var datetime $publish_on
+     *
+     * @ORM\Column(name="publish_on", type="datetime", nullable=true)
+     */
+    protected $publish_on;
+
+    /**
+     * @var datetime $depublish_on
+     *
+     * @ORM\Column(name="depublish_on", type="datetime", nullable=true)
+     */
+    protected $depublish_on;
+
+    /**
+     * @var string $version
+     *
+     * @ORM\Column(name="version", type="string", length=32)
+     */
+    protected $version = 'head';
+
+    /**
+     * ORM\OneToMany(targetEntity="EntryLanguage", orphanRemoval=true, mappedBy="EntryLanguage", fetch="EXTRA_LAZY")
+     * ORM\JoinTable(name="entry_language",
+     *      joinColumns={@ORM\JoinColumn(name="resource_id", referencedColumnName="resource_id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="resource_id", referencedColumnName="resource_id")}
+     *      )
+     */
+
+    /**
+     * @ORM\OneToMany(targetEntity="EntryLanguage", orphanRemoval=true, mappedBy="entry", fetch="EXTRA_LAZY")
+     * ORM\JoinTable(name="entry_language",
+     *      joinColumns={@ORM\JoinColumn(name="resource_id", referencedColumnName="resource_id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="resource_id", referencedColumnName="resource_id")}
+     *      )
+     */
+    protected $languages;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Admin")
+     */
+    //protected $admin;
+
+    /**
+     */
+    protected $active_language;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->languages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addLanguage($language)
+    {
+        $this->languages->add($language);
+    }
+}

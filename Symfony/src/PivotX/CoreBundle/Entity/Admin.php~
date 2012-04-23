@@ -1,0 +1,11 @@
+<?php
+
+namespace PivotX\CoreBundle\Entity;
+
+/**
+ */
+class Admin
+{
+    protected $id;
+    protected $name;
+}

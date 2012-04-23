@@ -1,0 +1,58 @@
+<?php
+
+namespace PivotX\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use PivotX\Doctrine\Entity\BaseEntity;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="entry_language")
+ */
+class EntryLanguage extends BaseEntity
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Entry", inversedBy="languages")
+     */
+    protected $entry;
+
+    /**
+     * @var integer $enabled
+     *
+     * @ORM\Column(name="enabled", type="integer")
+     */
+    protected $enabled;
+
+    /**
+     * @var string $language
+     *
+     * @ORM\Column(name="language", type="string", length="8")
+     */
+    protected $language;
+
+    /**
+     * @var string $slug
+     *
+     * @ORM\Column(name="slug", type="string", length="64")
+     */
+    protected $slug;
+
+    /**
+     * @var string $title
+     *
+     * @ORM\Column(name="title", type="string", length="256")
+     */
+    protected $title;
+
+}

@@ -1,0 +1,91 @@
+PivotX\CoreBundle\Entity\Entry:
+  type: entity
+  table: entry
+  indexes:
+    resource_index:
+      columns:
+        - resource_id
+  fields:
+    id:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      id: true
+      generator:
+        strategy: IDENTITY
+    resource_id:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+    publicid:
+      type: string
+      length: 64
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+    date_created:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    date_modified:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    viewable:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    publish_state:
+      type: string
+      length: 32
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    publish_on:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+    depublish_on:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+    version:
+      type: string
+      length: 32
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+  oneToMany:
+    languages:
+      targetEntity: EntryLanguage
+      cascade:
+        - remove
+      mappedBy: entry
+      inversedBy: null
+      orphanRemoval: true
+      orderBy: null
+  lifecycleCallbacks: {  }

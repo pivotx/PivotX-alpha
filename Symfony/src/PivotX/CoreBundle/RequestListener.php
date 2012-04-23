@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
-use PivotX\Core\Component\Routing\RouteService;
-use PivotX\Core\Component\Routing\Exception\RouteNotFoundHttpException;
+use PivotX\Component\Routing\RouteService;
+use PivotX\Component\Routing\Exception\RouteNotFoundHttpException;
 
 /**
  * Initializes request attributes based on a matching route.

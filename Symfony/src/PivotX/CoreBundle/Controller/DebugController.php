@@ -5,7 +5,7 @@ namespace PivotX\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PivotX\Core\Component\Routing\RouteMatch;
+use PivotX\Component\Routing\RouteMatch;
 
 
 

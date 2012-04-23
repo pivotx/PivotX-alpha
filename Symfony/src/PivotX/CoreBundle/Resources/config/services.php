@@ -17,3 +17,15 @@ $container->setDefinition(
     )
 );
 */
+
+/*
+$definition = new Definition('Acme\HelloBundle\Extension\FooExtension');
+$definition->addTag('twig.extension');
+$container->setDefinition('foo.twig.extension', $definition);
+*/
+
+// @todo clean this
+//echo 'Services in CoreBundle'."\n";
+$definition = new Definition('PivotX\Doctrine\Extension\Definition');
+$definition->addTag('kernel.cache_warmer');
+$container->setDefinition('pivotx.kernel.cache_warmer', $definition);
