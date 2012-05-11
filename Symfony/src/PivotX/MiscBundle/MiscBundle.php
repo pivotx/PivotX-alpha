@@ -4,6 +4,6 @@ namespace PivotX\MiscBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PivotXMiscBundle extends Bundle
+class MiscBundle extends Bundle
 {
 }

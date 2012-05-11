@@ -6,19 +6,46 @@ namespace PivotX\Doctrine\Entity;
 class GenerateEntity
 {
     private $entity;
+    private $metaclassdata;
+    private $feature_configuration;
 
     private $property_classes;
 
-    public function __construct($entity)
+    public function __construct($entity, $metaclassdata, $feature_configuration)
     {
-        $this->entity           = $entity;
-        $this->property_classes = array();
+        $this->entity                = $entity;
+        $this->metaclassdata         = $metaclassdata;
+        $this->feature_configuration = $feature_configuration;
+        $this->property_classes      = array();
     }
 
     protected function getOneFields($entity)
     {
+        $fields = array();
+
+        foreach($this->metaclassdata->fieldMappings as $fieldname => $info) {
+            if (!isset($info['id']) || ($info['id'] === false)) {
+                $fields[] = $fieldname;
+            }
+        }
+
+        /*
+        // find the manytoone relations
+        foreach($this->metaclassdata->associationMappings as $fieldname => $info) {
+            if (!isset($info['id']) || ($info['id'] === false)) {
+                $fields[] = $fieldname;
+            }
+        }
+        */
+
+        echo $entity.': '.implode(', ',$fields)."\n";
+//        var_dump($this->metaclassdata);
+
+        return $fields;
+
         switch ($entity) {
             case 'Entry':
+                var_dump($this->metaclassdata);
                 return array(
                     'resource_id',
                     'publicid',
@@ -48,6 +75,16 @@ class GenerateEntity
 
     protected function getToManyFields($entity)
     {
+        $fields = array();
+
+        foreach($this->metaclassdata->associationMappings as $fieldname => $info) {
+            if (!isset($info['id']) || ($info['id'] === false)) {
+                $fields[] = $fieldname;
+            }
+        }
+
+        return $fields;
+
         switch ($entity) {
             case 'Entry':
                 return array(
@@ -59,6 +96,7 @@ class GenerateEntity
         return array();
     }
 
+    // @todo not used anymore
     protected function generateClassProperties()
     {
         $code = '';

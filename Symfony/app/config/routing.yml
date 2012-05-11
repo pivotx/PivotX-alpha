@@ -1,14 +1,14 @@
 PivotXMiscBundle:
-    resource: "@PivotXMiscBundle/Controller/"
+    resource: "@MiscBundle/Controller/"
     type:     annotation
     prefix:   /
 
 PivotXBackendBundle:
-    resource: "@PivotXBackendBundle/Resources/config/routing.php"
+    resource: "@BackendBundle/Resources/config/routing.php"
     prefix:   /pivotx
 
 PivotXCoreBundle:
-    resource: "@PivotXCoreBundle/Resources/config/routing.php"
+    resource: "@CoreBundle/Resources/config/routing.php"
     prefix:   /pivotx_core
 
 # Internal routing configuration to handle ESI

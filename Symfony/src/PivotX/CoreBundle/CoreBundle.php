@@ -5,7 +5,7 @@ namespace PivotX\CoreBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class PivotXCoreBundle extends Bundle
+class CoreBundle extends Bundle
 {
     public function boot()
     {
@@ -34,7 +34,10 @@ class PivotXCoreBundle extends Bundle
             foreach($files as $file) {
                 $fname = $entityDir . '/' . $file;
                 if (is_file($fname) && (substr($file,-4) == '.php')) {
-                    include_once $fname;
+                    $name = '\\PivotX\\Doctrine\\AutoEntity\\'.substr($file,0,-4);
+                    if (!class_exists($name)) {
+                        include_once $fname;
+                    }
                 }
             }
         }
@@ -80,10 +83,10 @@ class PivotXCoreBundle extends Bundle
 //        $em = $container->get('doctrine')->getEntityManager();
 
         //*
-        static $once = true;
+        static $once = false;
 
-        echo 'once'."\n";
         if ($once) {
+            echo 'Once'."\n";
             var_dump($container);
             var_dump($this);
             $once = false;

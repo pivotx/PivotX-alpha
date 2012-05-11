@@ -17,9 +17,9 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new PivotX\CoreBundle\PivotXCoreBundle(),
-            new PivotX\BackendBundle\PivotXBackendBundle(),
-            new PivotX\MiscBundle\PivotXMiscBundle(),
+            new PivotX\CoreBundle\CoreBundle(),
+            new PivotX\BackendBundle\BackendBundle(),
+            new PivotX\MiscBundle\MiscBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

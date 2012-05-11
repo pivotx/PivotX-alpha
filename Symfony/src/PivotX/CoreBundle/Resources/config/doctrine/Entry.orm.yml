@@ -37,6 +37,9 @@ PivotX\CoreBundle\Entity\Entry:
       scale: 0
       nullable: false
       unique: false
+      auto_entity:
+        timestampable:
+          on: create
     date_modified:
       type: datetime
       length: null
@@ -44,6 +47,9 @@ PivotX\CoreBundle\Entity\Entry:
       scale: 0
       nullable: false
       unique: false
+      auto_entity:
+        timestampable:
+          on: update
     viewable:
       type: integer
       length: null
@@ -58,6 +64,9 @@ PivotX\CoreBundle\Entity\Entry:
       scale: 0
       nullable: false
       unique: false
+      auto_entity:
+        publishable:
+          type: state
     publish_on:
       type: datetime
       length: null
@@ -65,6 +74,9 @@ PivotX\CoreBundle\Entity\Entry:
       scale: 0
       nullable: true
       unique: false
+      auto_entity:
+        publishable:
+          type: publish
     depublish_on:
       type: datetime
       length: null
@@ -72,6 +84,9 @@ PivotX\CoreBundle\Entity\Entry:
       scale: 0
       nullable: true
       unique: false
+      auto_entity:
+        publishable:
+          type: depublish
     version:
       type: string
       length: 32
@@ -88,4 +103,7 @@ PivotX\CoreBundle\Entity\Entry:
       inversedBy: null
       orphanRemoval: true
       orderBy: null
+      pivotx:
+        multilingual:
+          field: language
   lifecycleCallbacks: {  }

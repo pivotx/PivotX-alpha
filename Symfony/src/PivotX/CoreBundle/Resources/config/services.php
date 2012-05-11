@@ -26,6 +26,16 @@ $container->setDefinition('foo.twig.extension', $definition);
 
 // @todo clean this
 //echo 'Services in CoreBundle'."\n";
+/* OLD VERSION
 $definition = new Definition('PivotX\Doctrine\Extension\Definition');
 $definition->addTag('kernel.cache_warmer');
 $container->setDefinition('pivotx.kernel.cache_warmer', $definition);
+*/
+
+// new version
+// this could be in an XML too
+$definition = new Definition('PivotX\Doctrine\CacheWarmer\EntityCacheWarmer');
+$definition->addTag('kernel.cache_warmer');
+$definition->addArgument('');
+$container->setDefinition('pivotx.kernel.cache_warmer', $definition);
+// <argument type="service" id="doctrine" />
