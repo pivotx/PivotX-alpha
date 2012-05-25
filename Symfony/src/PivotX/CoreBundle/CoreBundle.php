@@ -9,18 +9,45 @@ class CoreBundle extends Bundle
 {
     public function boot()
     {
-        echo "Boot bundle..\n";
+        //echo "Boot bundle..\n";
 
-        $this->loadEntities();
+        try {
+            $views_service = $this->container->get('pivotx_views');
+
+            //$service->load($fname);
 
 
-        // @todo look here: vendor/symfony/src/Symfony/Bundle/DoctrineBundle/DoctrineBundle.php
-        // @todo and here: vendor/symfony/src/Symfony/Bundle/DoctrineBundle/Resources/config/orm.xml
+            $this->loadEntities();
+
+            // loop all entities
+
+            $doctrine_service = $this->container->get('doctrine');
+            foreach ($doctrine_service->getEntityManagers() as $em) {
+                $classes = $em->getMetadataFactory()->getAllMetadata();
+                foreach($classes as $class) {
+                    //echo "Class: ".$class->name."<br/>\n";
+
+                    $parts = explode('\\',$class->name);
+                    $name  = $parts[count($parts)-1];
+
+                    $repository = $doctrine_service->getRepository($class->name);
+                    if (is_object($repository)) {
+                        //echo 'Repository: '.get_class($repository)."<br/>\n";
+                        if (method_exists($repository,'addDefaultViews')) {
+                            //echo "Adding defaults<br/>\n";
+                            $repository->addDefaultViews($views_service,$name);
+                        }
+                    }
+                }
+            }
+        }
+        catch (\InvalidArgumentException $e) {
+        }
     }
 
     public function shutdown()
     {
-        echo "Shutdown bundle..\n";
+        //echo "Shutdown bundle..\n";
     }
 
     protected function loadEntities()
@@ -30,7 +57,6 @@ class CoreBundle extends Bundle
         $entityDir = $this->container->getParameter('kernel.cache_dir').'/PivotX';
         if (is_dir($entityDir)) {
             $files = scandir($entityDir);
-
             foreach($files as $file) {
                 $fname = $entityDir . '/' . $file;
                 if (is_file($fname) && (substr($file,-4) == '.php')) {
@@ -41,63 +67,5 @@ class CoreBundle extends Bundle
                 }
             }
         }
-    }
-
-    // @todo currently doubled in PivotXCoreBundle
-    protected function getEntityCode($name)
-    {
-        $entity = new \PivotX\Doctrine\Entity\GenerateEntity($name);
-
-        switch ($name) {
-            case 'Entry':
-                $entity->addPropertyClass('\\PivotX\\Doctrine\\Feature\\Identifiable\\ObjectProperty');
-                $entity->addPropertyClass('\\PivotX\\Doctrine\\Feature\\Publishable\\ObjectProperty');
-                $entity->addPropertyClass('\\PivotX\\Doctrine\\Feature\\Timestampable\\ObjectProperty');
-                $entity->addPropertyClass('\\PivotX\\Doctrine\\Feature\\Multilingual\\ObjectProperty');
-                break;
-            case 'EntryLanguage':
-                $entity->addPropertyClass('\\PivotX\\Doctrine\\Feature\\Sluggable\\ObjectProperty');
-                break;
-        }
-
-        $code  = '<'.'?php'."\n";
-        $code .= "namespace PivotX\Doctrine\Entity\n{\n\n";
-        $code .= $entity->generateCode();
-        $code .= "\n}\n";
-
-        return $code;
-    }
-
-
-    // @todo cache generation should not be here
-    public function build(ContainerBuilder $container)
-    {
-        echo "Build bundle..\n";
-
-        $cacheDir = $container->getParameter('kernel.cache_dir');
-
-        if (!is_dir($cacheDir.'/PivotX')) {
-            mkdir($cacheDir.'/PivotX');
-        }
-
-//        $em = $container->get('doctrine')->getEntityManager();
-
-        //*
-        static $once = false;
-
-        if ($once) {
-            echo 'Once'."\n";
-            var_dump($container);
-            var_dump($this);
-            $once = false;
-        }
-        //*/
-        
-        //echo get_class($em);
-
-        // @todo this shouldn't be hardcoded
-        // @todo removed already
-        //file_put_contents($cacheDir.'/PivotX/Entry.php', $this->getEntityCode('Entry'));
-        //file_put_contents($cacheDir.'/PivotX/EntryLanguage.php', $this->getEntityCode('EntryLanguage'));
     }
 }

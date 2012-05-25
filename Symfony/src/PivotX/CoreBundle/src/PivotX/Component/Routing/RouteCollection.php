@@ -86,7 +86,7 @@ class RouteCollection
 
         foreach($this->routes as $route) {
             $routematch = $route->matchUrl($n_filter, $url);
-            if ($routematch !== false) {
+            if (!is_null($routematch)) {
                 return $routematch;
             }
         }

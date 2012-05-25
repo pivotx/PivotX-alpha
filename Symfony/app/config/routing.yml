@@ -1,3 +1,7 @@
+TwoKingsEBikeBundle:
+    resource: "@TwoKingsEBikeBundle/Resources/config/routing.yml"
+    prefix:   /
+
 PivotXMiscBundle:
     resource: "@MiscBundle/Controller/"
     type:     annotation

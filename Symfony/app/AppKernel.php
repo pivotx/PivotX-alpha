@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new PivotX\CoreBundle\CoreBundle(),
             new PivotX\BackendBundle\BackendBundle(),
             new PivotX\MiscBundle\MiscBundle(),
+            new TwoKings\Bundle\EBikeBundle\TwoKingsEBikeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

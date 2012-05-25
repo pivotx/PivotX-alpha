@@ -197,6 +197,32 @@ class RouteSetup
     }
 
     /**
+     * Try to match a route using a specific RoutePrefix
+     *
+     * @param string $url          Url to search for
+     * @param RoutePrefix *$prefix Specific RoutePrefix to use for searching
+     * @return RouteMatch          RouteMatch if found, otherwise null
+     */
+    protected function matchUrlWithRoutePrefix($url, $routeprefix)
+    {
+        $route_url = $routeprefix->getRouteUrl($url);
+
+        $filter    = $routeprefix->getFilter();
+
+        $routematch = null;
+        foreach($this->routecollections as $routecollection) {
+            $routematch = $routecollection->matchUrl($filter,$route_url);
+            if (!is_null($routematch)) {
+                $routematch->setRouteSetup($this);
+                $routematch->setRoutePrefix($routeprefix);
+                break;
+            }
+        }
+
+        return $routematch;
+    }
+
+    /**
      * Search for an URL
      *
      * @todo brute-force method used now, should be optimised
@@ -213,26 +239,14 @@ class RouteSetup
         foreach($this->routeprefixeses as $routeprefixes) {
             $routeprefix = $routeprefixes->matchUrl($url);
             if (!is_null($routeprefix)) {
-                $route_url = $routeprefix->getRouteUrl($url);
-                break;
-            }
-        }
-
-
-        if (!is_null($routeprefix)) {
-            $filter    = $routeprefix->getFilter();
-
-            foreach($this->routecollections as $routecollection) {
-                $routematch = $routecollection->matchUrl($filter,$route_url);
+                $routematch = $this->matchUrlWithRoutePrefix($url,$routeprefix);
                 if (!is_null($routematch)) {
-                    $routematch->setRouteSetup($this);
-                    $routematch->setRoutePrefix($routeprefix);
-                    break;
+                    return $routematch;
                 }
             }
         }
 
-        return $routematch;
+        return null;
     }
 
     /**

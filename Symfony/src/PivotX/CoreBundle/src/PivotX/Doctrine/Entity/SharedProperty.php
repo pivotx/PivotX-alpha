@@ -8,8 +8,8 @@ class SharedProperty implements EntityProperty
     public function getPropertyMethods()
     {
         return array(
-            'getId' => 'generateGetId',
             /*
+            'getId' => 'generateGetId',
             '__call' => 'generate__Call',
             '__get' => 'generate__Get',
             '__set' => 'generate__Set'

@@ -26,12 +26,13 @@ class EntityCacheWarmer implements CacheWarmerInterface
      */
     public function __construct(RegistryInterface $registry)
     {
-        echo 'PivotX Doctrine Warmer'."\n";
+        //echo 'PivotX Doctrine Warmer'."\n";
 
         $this->registry = $registry;
     }
 
-    // @todo currently doubled in PivotXCoreBundle
+    /**
+     */
     public function getEntityCode($name, $metaclassdata, $feature_configuration)
     {
         $entity = new \PivotX\Doctrine\Entity\GenerateEntity($name, $metaclassdata, $feature_configuration);
@@ -60,7 +61,7 @@ class EntityCacheWarmer implements CacheWarmerInterface
 
     public function warmUp($cacheDir)
     {
-        echo 'entity.warmUp: Cache dir is '.$cacheDir."\n";
+        //echo 'entity.warmUp: Cache dir is '.$cacheDir."\n";
 
         if (!is_dir($cacheDir.'/PivotX')) {
             mkdir($cacheDir.'/PivotX');
@@ -91,7 +92,7 @@ class EntityCacheWarmer implements CacheWarmerInterface
 
             $classes = $em->getMetadataFactory()->getAllMetadata();
             foreach($classes as $class) {
-                echo "Class: ".$class->name."\n";
+                //echo "Class: ".$class->name."\n";
                 //var_dump($class);
 
                 $_p = explode('\\',$class->name);
@@ -105,7 +106,7 @@ class EntityCacheWarmer implements CacheWarmerInterface
             }
         }
 
-        echo "entity.warmUp done\n";
+        //echo "entity.warmUp done\n";
     }
 
     public function isOptional()

@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pivot_x_core');
+        $rootNode = $treeBuilder->root('pivot_x');
 
         $rootNode
             ->children()

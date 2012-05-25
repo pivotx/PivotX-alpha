@@ -24,7 +24,7 @@
     {{'{{'}} entryLoadAll('filter=head,recent;size=10') {{'}}'}}
 
     {# werkt niet omdat een function() geen assignment in de huidige context kan doen #}
-    <br/>{{ entryLoadAll('filter=head,recent;size=10') }}
+    <br/>output = [{{ entryLoadAll('filter=head,recent;size=10') }}]
 
 
     <h2>dynamically loaded records through a function</h2>
@@ -32,6 +32,7 @@
 
     {# dit werkt, nu nog mooie syntax uitzoeken... #}
 
+    <!-- cut -->
     {% set testrecords = entryLoadAll('filter=head,recent;size=10') %}
     <ul>
     {% for record in testrecords %}
@@ -42,6 +43,11 @@
         No records.
     {% endfor %}
     </ul>
+    <!-- /cut -->
+
+    {# eigenlijk moet het dit worden:
+        {% set testrecords = loadAll('latest-news','filter=head,recent;size=10') %}
+    #}
 
 
 
@@ -71,16 +77,75 @@
     {% set a = "abc" %}
     {% set b = "def" %}
 
-    {{ a }} / {{ b }} / {{ a~b }}
 
-    <h2>something with a new tag</h2>
-    {{'{%'}} loadAll testtag = 'test' {{'%}'}}
-
-    {# dit werkt ook, is heel veel mee mogelijk, ook uitzoeken wat handig is #}
-    {% loadAll testtag = 'test' %}
+    <h2>Definite style?</h2>
+	
+{#    {% loadView latest-entries as pages with category = General %} #}
+    {% loadView 'Bike/findAll' as bikes %}
 
     <ul>
-    {% for record in testtag %}
+    {% for bike in bikes %}
+        <li>{{ bike.DateCreated|date('Y-m-d H:i:s') }} {{ bike.Brand.Title }} - {{ bike.Title }}</li>
+    {% else %}
+        <li>No entries</li>
+    {% endfor %}
+    </ul>
+
+    {#
+    {% loadView 'latest-entries' as entries %}
+
+    <ul>
+    {% for entry in entries %}
+        <li>{{ entry.title }}</li>
+    {% else %}
+        <li>No news</li>
+    {% endfor %}
+    </ul>
+
+
+    <br/>
+
+    {% loadView 'get-page' as page %}
+
+    {{ page.title }}
+    #}
+
+    <br/><br/><br/><br/>
+
+
+{#
+	{% loadview pages type = 'contact' %}
+	{% loop pages %}
+		{% before %}
+		<ul>
+		{% each 3rd page %}
+		 <li> {{ page.title }} </li>
+		{% each default %}
+		 <li> {{ default.title }} </li>
+		{% after %}
+		</ul>
+	{% else %}
+		<p>no pages</p>
+	{% endloop %}
+#}
+
+
+
+    {{ a }} / {{ b }} / {{ a~b }}
+
+
+
+
+    <h2>something with a new tag</h2>
+
+    {{'{%'}} loadAll latestentries {{'%}'}}
+
+    {# dit werkt ook, is heel veel mee mogelijk, ook uitzoeken wat handig is #}
+
+    <!-- cut -->
+    {% loadAll latestentries %}
+    <ul>
+    {% for record in latestentries %}
         <li>
             {{ record.title }}
         </li>
@@ -88,6 +153,47 @@
         No records.
     {% endfor %}
     </ul>
+    <!-- /cut -->
+
+
+    {# eigen FOR maken #}
+    {#
+    <!-- cut -->
+    {% load promoted-entries %}
+    {% xfor record in testrecords %}
+        {% before %}
+            <ul>
+        {% after %}
+            </ul>
+        {% loop %>
+                <li class="{{ record.classes }}">
+                    {{ record.title }}
+                </li>
+    {% else %}
+        No records.
+    {% endxfor %}
+    </ul>
+    <!-- /cut -->
+    #}
+
+
+
+    <h2>something with a new block-tag</h2>
+
+    {# dit werkt nog niet #}
+    {#
+
+    <!-- cut -->
+    <ul>
+    {% forView LatestEntries 'entry' %}
+        <li>
+            {{ entry.title }}
+        </li>
+    {% endView %}
+    </ul>
+    <!-- /cut -->
+
+    #}
 
 
 
@@ -95,6 +201,7 @@
     <h2>statically loaded records</h2>
 
     {# uiteraard kan dit, maar niet handig vanuit template-bouwer gezien #}
+    {# behalve voor pagina pagina's of een nieuwspagina met nieuwsitems  #}
 
     <ul>
     {% for record in records %}

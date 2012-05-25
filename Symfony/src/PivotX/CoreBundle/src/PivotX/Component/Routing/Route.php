@@ -293,7 +293,7 @@ class Route
      *
      * @param array $filter File to match
      * @param string $url   URL to match
-     * @return array        array with matching arguments if matched, false if not matched
+     * @return RouteMatch   RouteMatch with Route that matched or null if none found
      */
     public function matchUrl($filter, $url)
     {
@@ -329,7 +329,7 @@ class Route
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

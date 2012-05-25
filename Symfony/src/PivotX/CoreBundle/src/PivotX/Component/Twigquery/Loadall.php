@@ -6,7 +6,7 @@
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
-namespace PivotX\Core\Component\Twigquery;
+namespace PivotX\Component\Twigquery;
 
 /**
  * Twig Loadall experiment
@@ -23,13 +23,13 @@ class Loadall extends \Twig_TokenParser
 
         //*
         $name = $this->parser->getStream()->expect(\Twig_Token::NAME_TYPE)->getValue();
-        $this->parser->getStream()->expect(\Twig_Token::OPERATOR_TYPE, '=');
-        $value = $this->parser->getExpressionParser()->parseExpression();
+        //$this->parser->getStream()->expect(\Twig_Token::OPERATOR_TYPE, '=');
+        //$value = $this->parser->getExpressionParser()->parseExpression();
 
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
         //*/
 
-        return new Loadallnode($name, $value, $lineno, $this->getTag());
+        return new Loadallnode($name, $lineno, $this->getTag());
     }
 
     public function getTag()

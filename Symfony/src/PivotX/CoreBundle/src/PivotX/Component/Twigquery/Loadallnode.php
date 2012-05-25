@@ -6,7 +6,7 @@
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
-namespace PivotX\Core\Component\Twigquery;
+namespace PivotX\Component\Twigquery;
 
 /**
  * Twig Query interface
@@ -18,9 +18,10 @@ namespace PivotX\Core\Component\Twigquery;
 class Loadallnode extends \Twig_Node
 {
     //public function __construct($name, \Twig_Node_Expression $value, $lineno, $tag = null)
-    public function __construct($name, \Twig_Node_Expression $value, $lineno, $tag = null)
+    public function __construct($name, $lineno, $tag = null)
     {
-        parent::__construct(array('value' => $value), array('name' => $name), $lineno, $tag);
+        //parent::__construct(array('value' => $value), array('name' => $name), $lineno, $tag);
+        parent::__construct(array(), array('name' => $name), $lineno, $tag);
     }
 
     public function compile(\Twig_Compiler $compiler)

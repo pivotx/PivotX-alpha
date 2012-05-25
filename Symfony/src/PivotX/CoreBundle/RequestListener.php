@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
-use PivotX\Component\Routing\RouteService;
+use PivotX\Component\Routing\Service;
 use PivotX\Component\Routing\Exception\RouteNotFoundHttpException;
 
 /**
@@ -35,7 +35,7 @@ class RequestListener
     private $routeservice;
     private $routesetup;
 
-    public function __construct(RouterInterface $router, $httpPort = 80, $httpsPort = 443, LoggerInterface $logger = null, RouteService $routeservice = null)
+    public function __construct(RouterInterface $router, $httpPort = 80, $httpsPort = 443, LoggerInterface $logger = null, Service $routeservice = null)
     {
         $this->router = $router;
         $this->httpPort = $httpPort;
@@ -81,14 +81,17 @@ class RequestListener
 
         if (!is_null($routematch)) {
             $protector  = 10;
-            while (($routematch->isRewrite()) && ($protector > 0)) {
+            while (!is_null($routematch) && ($routematch->isRewrite()) && ($protector > 0)) {
                 $protector--;
                 $routematch = $routematch->getRewrite();
             }
 
-            if ($protector == 0) {
+
+            if (($protector == 0) || is_null($routematch)) {
+                // @todo we should be more explicit on showing the routing issue here
                 $message = sprintf('Routing rewrite loop for "%s %s"', $request->getMethod(), $uri);
-                throw new RouteNotFoundHttpException($message);
+                throw new NotFoundHttpException($message);
+                //throw new RouteNotFoundHttpException($message);
             }
         }
 
@@ -97,7 +100,8 @@ class RequestListener
                 list($redirect_routematch,$redirect_status) = $routematch->getRedirect();
                 if (is_null($redirect_routematch)) {
                     $message = sprintf('Routing redirect not found for "%s %s"', $request->getMethod(), $uri);
-                    throw new RouteNotFoundHttpException($message);
+                    throw new NotFoundHttpException($message);
+                    //throw new RouteNotFoundHttpException($message);
                 }
                 $redirect_uri = $redirect_routematch->buildUrl(null,false);
 

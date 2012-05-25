@@ -7,12 +7,37 @@
     <parameters>
         <!-- cache warmer -->
         <parameter key="pivotx.doctrine.entity_cache_warmer.class">PivotX\Doctrine\CacheWarmer\EntityCacheWarmer</parameter>
+        
+        <!-- routing -->
+        <parameter key="route_listener.class">PivotX\CoreBundle\RequestListener</parameter>
+        <parameter key="pivotx_routing.class">PivotX\Component\Routing\Service</parameter>
+
+        <!-- views -->
+        <parameter key="pivotx_views.class">PivotX\Component\Views\Service</parameter>
     </parameters>
 
     <services>
         <service id="pivotx.doctrine.entity_cache_warmer" class="%pivotx.doctrine.entity_cache_warmer.class%" public="false">
             <tag name="kernel.cache_warmer" />
             <argument type="service" id="doctrine" />
+        </service>
+
+        <service id="pivotx_route_listener" class="%route_listener.class%">
+            <!-- @todo priority should be tuned -->
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255" />
+            <argument type="service" id="router" />
+            <argument>%request_listener.http_port%</argument>
+            <argument>%request_listener.https_port%</argument>
+            <argument type="service" id="logger" on-invalid="ignore" />
+            <argument type="service" id="pivotx_routing" />
+        </service>
+
+        <service id="pivotx_routing" class="%pivotx_routing.class%">
+            <argument type="service" id="logger" on-invalid="ignore" />
+        </service>
+
+        <service id="pivotx_views" class="%pivotx_views.class%">
+            <argument type="service" id="logger" on-invalid="ignore" />
         </service>
     </services>
 

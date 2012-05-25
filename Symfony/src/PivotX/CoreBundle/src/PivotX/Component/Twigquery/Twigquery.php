@@ -6,7 +6,7 @@
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
-namespace PivotX\Core\Component\Twigquery;
+namespace PivotX\Component\Twigquery;
 
 /**
  * Twig Query interface
@@ -42,6 +42,7 @@ class Twigquery extends \Twig_Extension
     public function getTokenParsers()
     {
         return array(
+            new Loadview(),
             new Loadall()
         );
     }
@@ -70,5 +71,10 @@ class Twigquery extends \Twig_Extension
             return null;
         }
         return $records[0];
+    }
+
+    public function getData($name, $arguments=null)
+    {
+        return $name;
     }
 }
