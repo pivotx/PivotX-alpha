@@ -1,0 +1,59 @@
+TwoKings\Bundle\EBikeBundle\Entity\Brand:
+  type: entity
+  table: brand
+  repositoryClass: TwoKings\Bundle\EBikeBundle\Model\BrandRepository
+  fields:
+    id:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      id: true
+      generator:
+        strategy: IDENTITY
+    publicid:
+      type: string
+      length: 64
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+    date_created:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: create
+    date_modified:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: update
+    title:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+  oneToMany:
+    bikes:
+      targetEntity: Bike
+      cascade:
+        - remove
+      mappedBy: brand
+      inversedBy: null
+      orphanRemoval: true
+      orderBy: null
+  lifecycleCallbacks: {  }

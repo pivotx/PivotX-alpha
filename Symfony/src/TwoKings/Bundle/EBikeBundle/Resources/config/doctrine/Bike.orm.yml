@@ -1,0 +1,106 @@
+TwoKings\Bundle\EBikeBundle\Entity\Bike:
+  type: entity
+  table: bike
+  repositoryClass: TwoKings\Bundle\EBikeBundle\Model\BikeRepository
+  fields:
+    id:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      id: true
+      generator:
+        strategy: IDENTITY
+    publicid:
+      type: string
+      length: 64
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+    date_created:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: create
+    date_modified:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: update
+    viewable:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    publish_state:
+      type: string
+      length: 32
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        publishable:
+          type: state
+    publish_on:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+      auto_entity:
+        publishable:
+          type: publish
+    depublish_on:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: true
+      unique: false
+      auto_entity:
+        publishable:
+          type: depublish
+    title:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+  oneToMany:
+    reviews:
+      targetEntity: BikeReview
+      cascade:
+        - remove
+      mappedBy: bike
+      inversedBy: null
+      orphanRemoval: true
+      orderBy: null
+  manyToOne:
+    brand:
+      targetEntity: Brand
+      cascade: {  }
+      mappedBy: null
+      inversedBy: bikes
+      joinColumns:
+        brand_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

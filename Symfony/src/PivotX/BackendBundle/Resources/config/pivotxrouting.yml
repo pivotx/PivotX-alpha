@@ -1,0 +1,63 @@
+
+# Site configuration
+
+targets:
+    - name:         "desktop"
+      description:  "Desktop or tablet"
+
+sites:
+    - name:         "pivotx-backend"
+      description:  "PivotX back-end"
+
+languages:
+    - name:         "nl"
+      description:  "Dutch"
+      locale:       "nl_NL.utf-8"
+
+    - name:         "en"
+      description:  "English"
+      locale:       "en_GB.utf-8"
+
+
+routeprefixes:
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "nl" }
+      prefix:       "http://px4bmfw.twokings.eu/pivotx/nl/"
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      prefix:       "http://px4bmfw.twokings.eu/pivotx/en/"
+
+routes:
+    - filter:       { target: "desktop", site: "pivotx-backend", language: false }
+      pattern:      ""
+      public:       ""
+      defaults:     { _rewrite: "_page/dashboard" }
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: false }
+      pattern:      "_page/dashboard"
+      public:       "dashboard"
+      defaults:     { _controller: "BackendBundle:Backend:showDashboard" }
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: false }
+      pattern:      "_page/test"
+      public:       "test"
+      defaults:     { _controller: "BackendBundle:Backend:showTest" }
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_table/{entity}"
+      public:       "table/{entity}"
+      defaults:     { _controller: "BackendBundle:Backend:showTable" }
+      requirements:
+          entity: "[A-Za-z_]+[A-Za-z0-9]+"
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_table/{entity}/{id}"
+      public:       "table/{entity}/{id}"
+      defaults:     { _controller: "BackendBundle:Backend:showRecord" }
+      requirements:
+          entity:   "[A-Za-z_]+[A-Za-z0-9]+"
+          id:       "[0-9]+"
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_page/page-not-found"
+      public:       "page-not-found"
+      defaults:     { _redirect: "_page/not-found" }

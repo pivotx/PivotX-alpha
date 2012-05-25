@@ -1,0 +1,31 @@
+{% extends "BackendBundle:Base:base.html.twig" %}
+
+{% block body %}
+
+Table template<br/>
+
+crud-entity = "{{ crud.entity }}"<br/>
+
+<table>
+    <tbody>
+{% for item in items %}
+        <tr>
+            <td>{{ item.record.id }}</td>
+            <td>{{ item.record.title }}</td>
+            <td>
+                <a href="{{ item.link }}">Edit</a>
+            </td>
+        </tr>
+{% else %}
+    <tbody>
+        <tr>
+            <td>
+    No items in table.
+            </trd>
+        </tr>
+    </tbody>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

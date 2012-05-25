@@ -1,0 +1,60 @@
+TwoKings\Bundle\EBikeBundle\Entity\BikeReview:
+  type: entity
+  table: bikereview
+  repositoryClass: TwoKings\Bundle\EBikeBundle\Model\BikeReviewRepository
+  fields:
+    id:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      id: true
+      generator:
+        strategy: IDENTITY
+    date_created:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: create
+    date_modified:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: update
+    viewable:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    comment:
+      type: text
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+  manyToOne:
+    reviews:
+      targetEntity: Bike
+      cascade: {  }
+      mappedBy: null
+      inversedBy: reviews
+      joinColumns:
+        bike_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  lifecycleCallbacks: {  }

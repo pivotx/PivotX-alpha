@@ -1,0 +1,13 @@
+<?php
+
+namespace TwoKings\Bundle\EBikeBundle\Entity;
+
+/**
+ */
+class Page extends \PivotX\Doctrine\Entity\AutoEntity
+{
+    /**
+     * @var integer $id
+     */
+    protected $id;
+}
