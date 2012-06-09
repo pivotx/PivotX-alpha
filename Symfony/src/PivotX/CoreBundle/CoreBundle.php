@@ -12,7 +12,7 @@ class CoreBundle extends Bundle
         //echo "Boot bundle..\n";
 
         try {
-            $views_service = $this->container->get('pivotx_views');
+            $views_service = $this->container->get('pivotx.views');
 
             //$service->load($fname);
 

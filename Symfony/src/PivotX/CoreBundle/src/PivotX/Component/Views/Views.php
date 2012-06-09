@@ -24,7 +24,12 @@ class Views
 
     public static function loadView($name, $arguments = null)
     {
-        self::$logger->info('loadView "'.$name.'" called');
+        if (self::$logger === false) {
+            // @todo should never be here, and should do something else if here anyway
+            return;
+        }
+
+        //self::$logger->info('loadView "'.$name.'" called');
 
         $view = self::$views_service->findView($name);
 
@@ -34,6 +39,19 @@ class Views
             return false;
         }
 
-        return $view->run($arguments);
+
+        // pagination, should it be here?
+
+        $limit  = null;
+        $offset = null;
+
+        $limit = 15;
+
+        if (!is_null($arguments)) {
+            $view->setArguments($arguments);
+        }
+        $view->setRange($limit, $offset);
+
+        return $view;
     }
 }

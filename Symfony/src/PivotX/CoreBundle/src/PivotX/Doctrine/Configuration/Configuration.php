@@ -15,15 +15,15 @@ namespace PivotX\Doctrine\Configuration;
  */
 class Configuration
 {
-    protected $feature_classes;
+    protected $features;
     protected $fields;
 
     /**
      */
     protected function clearConfiguration()
     {
-        $this->feature_classes = array();
-        $this->fields          = array();
+        $this->features = array();
+        $this->fields   = array();
     }
 
     /**
@@ -45,6 +45,7 @@ class Configuration
      */
     public function getFeatures()
     {
+        return $this->features;
     }
 
     /**

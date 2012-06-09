@@ -32,6 +32,7 @@ class YamlConfiguration extends Configuration
         //var_dump($array);
 
         // read auto_entity definitions and parse them into ->fields
+        $instance = null;
         foreach($array as $entity) {
             foreach($entity['fields'] as $field => $definition) {
                 if (isset($definition['auto_entity'])) {
@@ -45,6 +46,10 @@ class YamlConfiguration extends Configuration
                                 $this->fields[$field] = array();
                             }
                             $this->fields[$field][] = $instance;
+
+                            if (!in_array($feature,$this->features)) {
+                                $this->features[] = $feature;
+                            }
                         }
                     }
                 }

@@ -52,6 +52,81 @@ class Bike extends \PivotX\Doctrine\Entity\AutoEntity
     private $title;
 
     /**
+     * @var boolean $available
+     */
+    private $available;
+
+    /**
+     * @var integer $price
+     */
+    private $price;
+
+    /**
+     * @var integer $weight
+     */
+    private $weight;
+
+    /**
+     * @var integer $weight_battery
+     */
+    private $weight_battery;
+
+    /**
+     * @var integer $year_built
+     */
+    private $year_built;
+
+    /**
+     * @var integer $range_min
+     */
+    private $range_min;
+
+    /**
+     * @var integer $range_avg
+     */
+    private $range_avg;
+
+    /**
+     * @var integer $range_max
+     */
+    private $range_max;
+
+    /**
+     * @var integer $battery_voltage
+     */
+    private $battery_voltage;
+
+    /**
+     * @var integer $battery_amps
+     */
+    private $battery_amps;
+
+    /**
+     * @var string $engine_location
+     */
+    private $engine_location;
+
+    /**
+     * @var string $image_file
+     */
+    private $image_file;
+
+    /**
+     * @var string $brochure_file
+     */
+    private $brochure_file;
+
+    /**
+     * @var string $product_uri;
+     */
+    private $product_uri;
+
+    /**
+     * @var text $info;
+     */
+    private $info;
+
+    /**
      * @var TwoKings\Bundle\EBikeBundle\Entity\BikeReview
      */
     private $reviews;

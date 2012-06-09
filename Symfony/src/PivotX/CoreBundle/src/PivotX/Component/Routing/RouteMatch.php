@@ -190,6 +190,13 @@ class RouteMatch
         $ref_array['entity'] = $this->route->getEntity();
         $ref_array['filter'] = $this->route->buildEFilter($this->arguments);
 
+        if (isset($this->arguments['_query'])) {
+            $ref_array['query']  = $this->arguments['_query'];
+        }
+        if (isset($this->arguments['_anchor_query'])) {
+            $ref_array['anchor_query']  = $this->arguments['_anchor_query'];
+        }
+
         return new Reference($relative, $ref_array);
     }
 
@@ -212,10 +219,11 @@ class RouteMatch
 
         if ($reevaluate_route) {
             $reference = $this->buildReference($relative);
+            //echo '<pre>reference:'; var_dump($reference); echo '</pre>';
 
-            $routematch = $this->routesetup->matchReference($reference,true);
+            $routematch = $this->routesetup->matchReference($reference, true);
             if (!is_null($routematch)) {
-                return $routematch->buildUrl($relative,false);
+                return $routematch->buildUrl($relative, false);
             }
         }
 
@@ -327,5 +335,31 @@ class RouteMatch
         }
 
         return $urls;
+    }
+
+    /**
+     * Build another URL
+     *
+     * Used to easily create url's relative to the this RouteMatch
+     *
+     * @param mixed $link     Reference to link to, in string or associative array format
+     * @param string $default Link to return when no match found
+     * @return string         URL
+     */
+    public function buildOtherUrl($link, $default = null)
+    {
+        $reference = new \PivotX\Component\Referencer\Reference($this->buildReference(), $link);
+
+        $routematch = $this->routesetup->matchReference($reference);
+
+        if (!is_null($routematch)) {
+            return $routematch->buildUrl();
+        }
+
+        if (!is_null($default)) {
+            return $default;
+        }
+
+        return null;
     }
 }

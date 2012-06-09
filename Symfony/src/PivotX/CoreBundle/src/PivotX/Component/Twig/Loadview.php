@@ -6,7 +6,7 @@
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
-namespace PivotX\Component\Twigquery;
+namespace PivotX\Component\Twig;
 
 /**
  * Twig PivotX Loadview
@@ -40,10 +40,7 @@ class Loadview extends \Twig_TokenParser
             $name = $asexpr->getAttribute('name');
         }
 
-        echo '<pre>';
-        var_dump($name);
-        var_dump($view);
-        echo '</pre>';
+        //echo '<pre>'; var_dump($name); var_dump($view); echo '</pre>';
 
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
 

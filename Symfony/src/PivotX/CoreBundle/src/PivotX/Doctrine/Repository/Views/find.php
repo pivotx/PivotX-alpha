@@ -10,20 +10,46 @@ class find implements ViewInterface
     private $name;
     private $group;
 
+    private $arguments;
+    private $range_limit;
+    private $range_offset;
+
     public function __construct($repository,$name)
     {
         $this->repository = $repository;
         $this->name       = $name;
         $this->group      = 'PivotX/Core';
+        
+        $this->arguments    = array();
+        $this->range_limit  = null;
+        $this->range_offset = null;
     }
 
-    public function run($arguments = array())
+    public function setArguments(array $arguments = null)
     {
-        //echo "running findAll, or supposed to\n";
+        $this->arguments = $arguments;
 
-        $data = $this->repository->findAll();
+        return $this;
+    }
+
+    public function setRange($limit = null, $offset = null)
+    {
+        $this->range_limit  = $limit;
+        $this->range_offset = $offset;
+
+        return $this;
+    }
+
+    public function getResults()
+    {
+        $data = $this->repository->find($this->arguments, null, $this->range_limit, $this->range_offset);
 
         return $data;
+    }
+
+    public function countTotalResults()
+    {
+        return 1;
     }
 
     public function getName()

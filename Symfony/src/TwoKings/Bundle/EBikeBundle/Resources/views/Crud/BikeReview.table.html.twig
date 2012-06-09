@@ -1,0 +1,57 @@
+    <table class="crud table table-striped table-bordered" data-crud-table="{{ crud.htmlid }}">
+        <thead>
+            <tr>
+                <th class="select-checkbox">
+                    <input type="checkbox" name="id-toggle" data-id="id-toggle">
+                </th>
+                <th>Id</th>
+                <th>Date</th>
+                <th>User</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for item in items.Results %}
+            <tr class="{{ item.crudGetRowClass() }}">
+                <td class="select-checkbox">
+                    <input type="checkbox" name="id{{ item.id }}" data-id="{{ item.id }}">
+                </td>
+                <td>
+                    № {{ item.id }}
+                </td>
+                <td>
+                    <span>
+                        {{ item.DateCreated|date('Y-m-d H:i:s') }}
+                    </span>
+
+                    <div class="btn-group on-row-hover">
+                        <a class="btn btn-mini" href="{{ ref(['_table/',crud.entity,'/',item.id]|join) }}"><i class="icon-pencil icon-white"></i> edit</a>
+                        <a class="btn btn-mini btn-danger" href="{{ ref(['_table/',crud.entity,'/',item.id,'?action=delete']|join) }}"><i class="icon-trash icon-white"></i> delete</a>
+                    </div>
+                </td>
+                <td>
+                    {# @todo find out why get* is necessary #}
+                    <strong>{{ item.getName }}</strong><br/>
+                    from <em>{{ item.getRemoteAddr }}</em> using <em>{{ item.getHttpUserAgent }}</em>
+                </td>
+                <td>
+                    <span>{{ item.comment|striptags|slice(0, 30) }}
+                    
+                    {# publish block review show hide #}
+
+                    {% if item.getCommentStatus == 'publish' %}
+                        <div class="btn-group on-row-hover">
+                            <button class="btn btn-mini btn-warning"><i class="icon-thumbs-down icon-white"></i> block</button>
+                        </div>
+                    {% else %}
+                        <div class="btn-group on-row-hover">
+                            <button class="btn btn-mini btn-success"><i class="icon-thumbs-up icon-white"></i> unblock</button>
+                        </div>
+                    {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>

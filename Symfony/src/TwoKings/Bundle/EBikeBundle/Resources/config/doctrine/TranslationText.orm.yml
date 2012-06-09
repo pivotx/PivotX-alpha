@@ -1,0 +1,78 @@
+TwoKings\Bundle\EBikeBundle\Entity\TranslationText:
+  type: entity
+  table: translationtext
+  repositoryClass: TwoKings\Bundle\EBikeBundle\Model\TranslationTextRepository
+  fields:
+    id:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      id: true
+      generator:
+        strategy: IDENTITY
+    sitename:
+      type: string
+      length: 128
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    groupname:
+      type: string
+      length: 128
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    name:
+      type: string
+      length: 128
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    date_created:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: create
+    date_modified:
+      type: datetime
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+      auto_entity:
+        timestampable:
+          on: update
+    encoding:
+      type: string
+      length: 32
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    text_nl:
+      type: text
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    text_en:
+      type: text
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+  lifecycleCallbacks: {  }

@@ -1,0 +1,8 @@
+
+.on-row-hover {
+    visibility: hidden;
+}
+
+tr:hover .on-row-hover {
+    visibility: visible;
+}

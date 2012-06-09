@@ -1,0 +1,17 @@
+        <ul class="nav nav-list">
+            <li class="nav-header">General information</li>
+            <li>
+            {% if items.counttotalresults == 0 %}
+                <p>There are no items.</p>
+            {% elseif items.counttotalresults == 1 %}
+                <p>There is {{ items.counttotalresults }} item.</p>
+            {% else %}
+                <p>There are {{ items.counttotalresults }} items.</p>
+            {% endif %}
+            </li>
+            <li>
+                <p>
+                    <a class="btn" href="{{ ref(['_table/',crud.entity,'/0']|join) }}">Add a new item</a>
+                </p>
+            </li>
+        </ul>

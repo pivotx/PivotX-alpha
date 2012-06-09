@@ -1,0 +1,14 @@
+{% extends "BackendBundle:Base:base.html.twig" %}
+
+{#
+    This is the regular template to extend.
+    Contains regular header and footer.
+#}
+
+{% block header %}
+    {% include "BackendBundle:Include:main_navigation.html.twig" %}
+{% endblock %}
+
+{% block footer %}
+    {% include "BackendBundle:Include:footer.html.twig" %}
+{% endblock %}

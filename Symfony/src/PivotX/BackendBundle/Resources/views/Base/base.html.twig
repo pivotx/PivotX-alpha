@@ -1,17 +1,53 @@
+{#
+    This is base template for every page in our back-end.
+
+    This should rarely be used directly. Usually you should include main.html.twig
+#}
 <!DOCTYPE html>
 <html lang="{{ app.request.get('_language') }}">
     <head>
         <meta charset="{{ html.meta.charset }}">
         <title>{{ html.title }}</title>
+
+{# '@BackendBundle/Resources/lib/bootstrap/css/*' #}
+{# '../src/PivotX/BackendBundle/Resources/lib/bootstrap/css/bootstrap.min.css' #}
+{% stylesheets
+    '@BackendBundle/Resources/lib/bootstrap/css/bootstrap.min.css'
+    '@BackendBundle/Resources/public/css/*'
+    '@BackendBundle/Resources/lib/bootstrap/css/bootstrap-responsive.min.css'
+%}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% javascripts
+    '@BackendBundle/Resources/lib/jquery/js/*'
+    '@BackendBundle/Resources/lib/bootstrap/js/*'
+    '@BackendBundle/Resources/public/js/*'
+    output='js/*.js'
+%}
+        <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
     </head>
 
     <body>
 
-    {% block body %}
+        <div class="header">
+        {% block header %}
+            Header
+        {% endblock %}
+        </div>
 
-    Base body
+        <div class="body">
+        {% block body %}
+            Base body
+        {% endblock %}
+        </div>
 
-    {% endblock %}
+        <div class="footer">
+        {% block footer %}
+            Footer
+        {% endblock %}
+        </div>
 
     </body>
 

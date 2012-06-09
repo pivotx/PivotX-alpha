@@ -206,6 +206,15 @@ class RouteSetup
     protected function matchUrlWithRoutePrefix($url, $routeprefix)
     {
         $route_url = $routeprefix->getRouteUrl($url);
+        $route_arg = array();
+
+        if (($pos = strpos($route_url,'?')) !== false) {
+            $route_arg = array();
+            parse_str(substr($route_url,$pos+1), $route_arg);
+            $route_url = substr($route_url,0,$pos);
+
+            // @todo do something with $route_arg!
+        }
 
         $filter    = $routeprefix->getFilter();
 
@@ -312,5 +321,31 @@ class RouteSetup
         }
 
         return $filter;
+    }
+
+    /**
+     * Build an URL
+     *
+     * Used to easily create url's
+     *
+     * @param mixed $link     Reference to link to, in string or associative array format
+     * @param string $default Link to return when no match found
+     * @return string         URL
+     */
+    public function buildUrl($link, $default = null)
+    {
+        $reference = new \PivotX\Component\Referencer\Reference(null, $link);
+
+        $routematch = $this->matchReference($reference, true);
+
+        if (!is_null($routematch)) {
+            return $routematch->buildUrl();
+        }
+
+        if (!is_null($default)) {
+            return $default;
+        }
+
+        return null;
     }
 }

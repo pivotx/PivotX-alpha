@@ -5,8 +5,8 @@ namespace PivotX\Doctrine\Feature\Publishable;
 
 class ObjectProperty implements \PivotX\Doctrine\Entity\EntityProperty
 {
-    private $field_publish_date = 'publish_date';
-    private $field_depublish_date = 'publish_undate';
+    private $field_publish_date = 'publish_on';
+    private $field_depublish_date = 'depublish_on';
     private $field_publish_state = 'publish_state';
 
     public function __construct()
@@ -17,6 +17,11 @@ class ObjectProperty implements \PivotX\Doctrine\Entity\EntityProperty
     {
         return array(
             'evaluateViewable' => 'generateEvaluateViewable',
+            'getCrudIgnore_'.$this->field_publish_date => 'generateGetCrudIgnorePublishDate',
+            'getCrudIgnore_'.$this->field_depublish_date => 'generateGetCrudIgnoreDePublishDate',
+            //'getCrudType_'.$this->field_publish_state => 'generateGetCrudType',
+            'getCrudChoices_'.$this->field_publish_state => 'generateGetCrudChoices',
+            'isPublished' => 'generateIsPublished',
             'setPublishState' => 'generateSetPublishState',
             'getPublishState' => 'generateGetPublishState',
             'setPublishDateTime' => 'generateSetPublishDateTime',
@@ -34,7 +39,8 @@ class ObjectProperty implements \PivotX\Doctrine\Entity\EntityProperty
     {
         \$viewable = false;
 
-        switch (\$this->$this->field_publish_state) {
+//        switch (\$this->$this->field_publish_state) {
+        switch (\$this->getPublishState()) {
             case 'published':
                 \$viewable = true;
                 break;
@@ -50,6 +56,66 @@ class ObjectProperty implements \PivotX\Doctrine\Entity\EntityProperty
         }
 
         return \$viewable;
+    }
+
+THEEND;
+    }
+
+    public function generateGetCrudIgnorePublishDate()
+    {
+        $field = $this->field_publish_date;
+        return <<<THEEND
+    /**
+     */
+    public function getCrudIgnore_$field()
+    {
+        return true;
+    }
+THEEND;
+    }
+
+    public function generateGetCrudIgnoreDePublishDate()
+    {
+        $field = $this->field_depublish_date;
+        return <<<THEEND
+    /**
+     */
+    public function getCrudIgnore_$field()
+    {
+        return true;
+    }
+THEEND;
+    }
+
+    public function generateGetCrudChoices()
+    {
+        $statefield = $this->field_publish_state;
+        return <<<THEEND
+    /**
+     * Return all the CRUD choices
+     *
+     * @return array Array of choices
+     */
+    public function getCrudChoices_$statefield()
+    {
+        return array(
+            'published',
+            'depublished'
+
+            // these two are not options you should be able to select here
+            // 'timed-publish',
+            // 'timed-depublish'
+        );
+    }
+THEEND;
+    }
+
+    public function generateIsPublished($entity)
+    {
+        return <<<THEEND
+    public function isPublished()
+    {
+        return in_array(\$this->getPublishState(), array('published', 'timed-depublish'));
     }
 
 THEEND;

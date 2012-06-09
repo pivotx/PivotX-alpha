@@ -40,6 +40,41 @@ TwoKings\Bundle\EBikeBundle\Entity\BikeReview:
       scale: 0
       nullable: false
       unique: false
+    comment_status:
+      type: string
+      length: 32
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    remote_addr:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    http_user_agent:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    name:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    email:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
     comment:
       type: text
       length: null
@@ -48,7 +83,7 @@ TwoKings\Bundle\EBikeBundle\Entity\BikeReview:
       nullable: false
       unique: false
   manyToOne:
-    reviews:
+    bike:
       targetEntity: Bike
       cascade: {  }
       mappedBy: null

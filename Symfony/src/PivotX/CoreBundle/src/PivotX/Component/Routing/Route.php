@@ -368,6 +368,13 @@ class Route
                             $new_args = call_user_func($arguments['_conversion'],$arguments,true);
                             $arguments = array_merge($arguments,$new_args);
                         }
+                        // @todo is this the good way?
+                        if ($reference->getQuery() !== false) {
+                            $arguments['_query'] = $reference->getQuery();
+                        }
+                        if ($reference->getAnchorQuery() !== false) {
+                            $arguments['_anchor_query'] = $reference->getAnchorQuery();
+                        }
                         return new RouteMatch($this,$arguments);
                     }
                 }
@@ -379,8 +386,16 @@ class Route
         
         if ($check_rewrites === true) {
             if (isset($this->defaults['_rewrite'])) {
-                if ($reference->buildTextReference() === $this->defaults['_rewrite']) {
-                    return new RouteMatch($this);
+                if ($reference->buildTextReference(false) === $this->defaults['_rewrite']) {
+                    // @todo see above (is this the good way?)
+                    $arguments = array();
+                    if ($reference->getQuery() !== false) {
+                        $arguments['_query'] = $reference->getQuery();
+                    }
+                    if ($reference->getAnchorQuery() !== false) {
+                        $arguments['_anchor_query'] = $reference->getAnchorQuery();
+                    }
+                    return new RouteMatch($this,$arguments);
                 }
             }
         }
@@ -422,6 +437,10 @@ class Route
 
         $url = $this->url;
         $url = strtr($url,$replacements);
+
+        if (isset($arguments['_query'])) {
+            $url .= '?' . $arguments['_query'];
+        }
 
         return $url;
     }

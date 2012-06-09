@@ -7,9 +7,26 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 
 /**
  */
-class AutoEntity
+class AutoEntity implements \ArrayAccess
 {
     protected $redirect_instance = false;
+
+    /**
+     * Check for the existance of a method
+     *
+     * Checks the instance itself but also the redirected instance 
+     */
+    public function hasMethod($name)
+    {
+        if (method_exists($this,$name)) {
+            return true;
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$name)) {
+            return true;
+        }
+        return false;
+    }
 
     protected function getRedirectInstance()
     {
@@ -65,5 +82,112 @@ class AutoEntity
         // @todo should throw error
 
         return null;
+    }
+
+    /**
+     * Camelize a name
+     */
+    protected function camelize($name)
+    {
+        return preg_replace_callback('/(^|_|\.)+(.)/', function ($match) { return ('.' === $match[1] ? '_' : '').strtoupper($match[2]); }, $name);
+    }
+
+    /**
+     * Easy access for properties
+     *
+     * This has only been added to properly fool the Forms component
+     */
+    public function __get($name)
+    {
+        $getname = 'get'.$this->camelize($name);
+        if (method_exists($this,$getname)) {
+            return $this->$getname();
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$getname)) {
+            return $instance->$getname();
+        }
+        return null;
+    }
+
+    /**
+     * Easy access for properties
+     *
+     * This has only been added to properly fool the Forms component
+     */
+    public function __set($name,$value)
+    {
+        $setname = 'set'.$this->camelize($name);
+        if (method_exists($this,$setname)) {
+            return $this->$setname($value);
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$setname)) {
+            return $instance->$setname($value);
+        }
+        return null;
+    }
+
+
+    /**
+     * ArrayAccess Implementation
+     */
+    public function offsetExists($offset)
+    {
+        $getname = 'get'.$this->camelize($offset);
+        if (method_exists($this,$getname)) {
+            return true;
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$getname)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * ArrayAccess Implementation
+     */
+    public function offsetGet($offset)
+    {
+        $getname = 'get'.$this->camelize($offset);
+        if (method_exists($this,$getname)) {
+            return $this->$getname();
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$getname)) {
+            return $instance->$getname();
+        }
+        return null;
+    }
+
+    /**
+     * ArrayAccess Implementation
+     */
+    public function offsetSet($offset, $value)
+    {
+        $setname = 'set'.$this->camelize($offset);
+        if (method_exists($this,$setname)) {
+            $this->$setname($value);
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$setname)) {
+            $instance->$setname($value);
+        }
+    }
+
+    /**
+     * ArrayAccess Implementation
+     */
+    public function offsetUnset($offset)
+    {
+        $setname = 'set'.$this->camelize($offset);
+        if (method_exists($this,$setname)) {
+            $this->$setname(null);
+        }
+        $instance = $this->getRedirectInstance();
+        if (method_exists($instance,$setname)) {
+            $instance->$setname(null);
+        }
     }
 }

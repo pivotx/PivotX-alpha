@@ -1,12 +1,74 @@
-{% extends "BackendBundle:Base:base.html.twig" %}
+{% extends "BackendBundle:Base:content_and_meta.html.twig" %}
 
-{% block body %}
+{% block content %}
 
-Table template<br/>
+<form action="" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
 
-crud-entity = "{{ crud.entity }}"<br/>
-
-id = {{ item.id }}<br/>
-title = {{ item.title }}<br/>
+    <input type="submit" />
+</form>
 
 {% endblock %}
+
+
+{% block meta_content %}
+    
+    <div class="well sidebar-nav crud-meta" data-crud-table="id1">
+        <ul class="nav nav-list">
+            <li class="nav-header">General information</li>
+            <li>
+                <p>
+                    This item has existed since May 20th, 2012.
+                    It was last edited by <strong>marcel</strong> on June 1st, 2012.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#">
+                            Save and go back
+                        </a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Save and continue editing</a></li>
+                            <li><a href="#">Save and go to next item</a></li><!-- default when editing in sequence -->
+                        </ul>
+                    </div>
+                </p>
+                <p>
+                    <a class="btn btn-danger" href="#">Delete</a>
+                </p>
+            </li>
+        </ul>
+
+        <hr/>
+
+        <ul class="nav nav-list">
+            <li class="nav-header">Publishing</li>
+            <li>
+                <p>
+                    This item has been published since May 22nd, 2012.
+                    It has been scheduled to depublish itself on June 30th, 2012.
+                </p>
+                <p>
+                    <div class="btn-group">
+                        <a class="btn btn-warning" href="#">
+                            Depublish now
+                        </a>
+                        <a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Depublish on ...</a></li>
+                            <li class="disabled"><a href="#">Publish</a></li>
+                        </ul>
+                    </div>
+                </p>
+            </li>
+        </ul>
+    </div>
+
+{% endblock %}
+

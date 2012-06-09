@@ -1,31 +1,27 @@
-{% extends "BackendBundle:Base:base.html.twig" %}
+{% extends "BackendBundle:Base:content_and_meta.html.twig" %}
 
-{% block body %}
+{% block content %}
 
-Table template<br/>
-
-crud-entity = "{{ crud.entity }}"<br/>
-
-<table>
-    <tbody>
-{% for item in items %}
-        <tr>
-            <td>{{ item.record.id }}</td>
-            <td>{{ item.record.title }}</td>
-            <td>
-                <a href="{{ item.link }}">Edit</a>
-            </td>
-        </tr>
-{% else %}
-    <tbody>
-        <tr>
-            <td>
-    No items in table.
-            </trd>
-        </tr>
-    </tbody>
-{% endfor %}
-    </tbody>
-</table>
+    {{ table|raw }}
 
 {% endblock %}
+
+
+{% block meta_content %}
+    
+    <div class="well sidebar-nav crud-meta" data-crud-table="{{ crud.htmlid }}">
+
+    {% for widget in widgets %}
+    
+        {% if not loop.first %}
+        <hr />
+        {% endif %}
+
+        {% include widget %}
+
+    {% endfor %}
+
+    </div>
+
+{% endblock %}
+

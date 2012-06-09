@@ -150,6 +150,8 @@ class GenerateEntity
 
         $one_fields = $this->getOneFields($this->entity);
         foreach($one_fields as $f => $info) {
+            $code .= '// '.$f."\n";
+
             $method_get = \Doctrine\Common\Util\Inflector::camelize('get_'.$f);
             $method_set = \Doctrine\Common\Util\Inflector::camelize('set_'.$f);
             $method_isn = \Doctrine\Common\Util\Inflector::camelize('is_null_'.$f);
@@ -305,14 +307,39 @@ THEEND;
         }
     }
 
+    public function getFeatureGeneratorClass($feature)
+    {
+        // @todo this should so some proper lookup
+
+        $class = '\\PivotX\\Doctrine\\Feature\\'.ucfirst($feature).'\\ObjectProperty';
+        if (class_exists($class)) {
+            return $class;
+        }
+
+        return null;
+    }
+
     public function generateCode()
     {
         $classname = $this->entity;
 
         $property_classes   = array();
         //$property_classes[] = 'PivotX\\Doctrine\\Entity\\SharedProperty';
+        $property_classes[] = 'PivotX\\Doctrine\\Feature\\Crudable\ObjectProperty';
+
+        $features = $this->feature_configuration->getFeatures();
+        foreach($features as $feature) {
+            $generator_class = $this->getFeatureGeneratorClass($feature);
+
+            if (!is_null($generator_class)) {
+                $this->addPropertyClass($generator_class);
+                //$property_classes[] = $generator_class;
+            }
+        }
 
         $property_classes = array_merge($property_classes,$this->property_classes);
+
+        //echo '<pre>'; var_dump($property_classes); echo '</pre>';
 
 
         $class_comment_classes = ' * '.implode("\n * ",$property_classes);
@@ -357,13 +384,16 @@ THEEND;
                     $method = $methodcall;
                 }
 
-            
-                $code .= call_user_func_array(array($pobject,$method),$args)."\n";
+                if (!method_exists($this->entity_class,$name)) {
+                    // ignore already existing methods
+                    $code .= call_user_func_array(array($pobject,$method),$args)."\n";
+                }
 
                 $all_methods[] = $name;
             }
         }
 
+        $code .= '// generateClassPropertyMethods'."\n";
         $code .= $this->generateClassPropertyMethods($all_methods);
 
         $code .= $this->generateSourceCall();

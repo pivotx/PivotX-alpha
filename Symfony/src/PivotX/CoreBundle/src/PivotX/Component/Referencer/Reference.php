@@ -15,7 +15,18 @@ namespace PivotX\Component\Referencer;
  * @todo setTextReference is a bit of a mess
  * @todo rewrite to new style reference?
  *
- * Complete reference:
+ * Complete Reference
+ * value(site=.&target=.&language=.)@entity/filter?query#entity/filter?query
+ * ----- --------------------------  ------------------- ------------------
+ * A     B                           C                   D
+ *
+ * A = denotes what to return for the reference
+ * B = defines the return environment
+ * C = represent the specific content where to link to
+ * D = where to set the focus on the return page
+ * 
+ *
+ * Old Complete reference:
  * value:site/target(language)@entity/filter?query#entity/filter?query
  * ----- --------------------- ------------------- ------------------
  * A     B                     C                   D
@@ -202,12 +213,105 @@ class Reference
         return true;
     }
 
+    private function decodeContentLink($cl)
+    {
+        $entity = null;
+        $filter = null;
+        $query  = null;
+
+        if (strpos($cl,'?') !== false) {
+            list($cl,$query) = explode('?',$cl,2);
+        }
+        if (strpos($cl,'/') !== false) {
+            list($entity,$filter) = explode('/',$cl,2);
+        }
+        else {
+            if ($cl != '') {
+                $entity = $cl;
+            }
+        }
+        
+        return array(
+            'entity' => $entity,
+            'filter' => $filter,
+            'query' => $query
+        );
+    }
+
+    /**
+     * Parse a text reference to internal attributes
+     *
+     * @return boolean     true if text link was syntactically ok
+     *
+     * (site=main&media=desktop&lang=nl)@entity/filter?query#entity/filter?query
+     * value(site=main&media=desktop&lang=nl)@entity/filter?query#entity/filter?query
+     * value@entity/filter?query#entity/filter?query
+     *
+     */
+    public function setTextReference($_link)
+    {
+        $values = array();
+
+        // break down the major parts
+        if (strpos($_link,'@') !== false) {
+            list ($return_info,$content_link) = explode('@',$_link,2);
+        }
+        else {
+            $return_info  = false;
+            $content_link = $_link;
+        }
+
+        if ($return_info) {
+            // decode value part
+            if (preg_match('|^(.*)[(](.+)[)]$|',$return_info,$match)) {
+                $values['value'] = $match[1];
+                $return_env      = $match[2];
+
+                // flexible decoding of return environment settings
+                if (preg_match('/(s|site)=([^&]+)/',$return_env,$match)) {
+                    $values['site'] = $match[2];
+                }
+                if (preg_match('/(t|target)=([^&]+)/',$return_env,$match)) {
+                    $values['target'] = $match[2];
+                }
+                if (preg_match('/(l|language)=([^&]+)/',$return_env,$match)) {
+                    $values['language'] = $match[2];
+                }
+            }
+            else {
+                $values['value'] = $return_info;
+            }
+        }
+
+        if ($content_link) {
+            if (strpos($content_link,'#') !== false) {
+                list($content_link,$anchor) = explode('#',$content_link,2);
+
+                $d = $this->decodeContentLink($anchor);
+                foreach($d as $k => $v) {
+                    if (!is_null($v)) {
+                        $values['anchor_'.$k] = $v;
+                    }
+                }
+            }
+
+            $d = $this->decodeContentLink($content_link);
+            foreach($d as $k => $v) {
+                if (!is_null($v)) {
+                    $values[$k] = $v;
+                }
+            }
+        }
+
+        return $this->processReferenceArray($values);
+    }
+
     /**
      * Parse a text reference to internal attributes
      *
      * @return boolean     true if text link was syntactically ok
      */
-    public function setTextReference($_link)
+    public function setTextReference2($_link)
     {
         $link              = $_link;
         $value_site_target = false;
@@ -458,9 +562,64 @@ class Reference
     }
 
     /**
+     *
+     */
+    public function buildTextReference($add_queries = true)
+    {
+        $text = '';
+
+        if ($this->getValue() != 'link') {
+            $text .= $this->getValue();
+        }
+
+        $value      = $this->getValue();
+        $return_env = false;
+
+        $envs = array();
+        if ($this->getSite() !== false) {
+            $envs[] = 'site='.$this->getSite();
+        }
+        if ($this->getTarget() !== false) {
+            $envs[] = 'target='.$this->getTarget();
+        }
+        if ($this->getLanguage() !== false) {
+            $envs[] = 'language='.$this->getLanguage();
+        }
+        if (count($envs) > 0) {
+            $text .= '('.implode('&',$envs).')';
+        }
+
+        if ($text != '') {
+            $text .= '@';
+        }
+        
+        $text .= $this->getEntity() . '/' . $this->getFilter();
+
+        if ($this->getQuery() !== false) {
+            if ($add_queries) {
+                $text .= '?' . $this->getQuery();
+            }
+        }
+
+        if (($this->getAnchorEntity() !== false) && ($this->getAnchorQuery() !== false)) {
+            $text .= '#' . $this->getAnchorEntity() . '/' . $this->getAnchorFilter() . '?' . $this->getAnchorQuery();
+        }
+        else if ($this->getAnchorEntity() !== false) {
+            $text .= '#' . $this->getAnchorEntity() . '/' . $this->getAnchorFilter();
+        }
+        else if ($this->getAnchorQuery() !== false) {
+            if ($add_queries) {
+                $text .= '#?' . $this->getAnchorQuery();
+            }
+        }
+
+        return $text;
+    }
+
+    /**
      * 
      */
-    public function buildTextReference()
+    public function buildTextReference2()
     {
         $text = '';
 

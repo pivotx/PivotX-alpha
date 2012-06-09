@@ -129,6 +129,8 @@ class RequestListener
                 } elseif ($session) {
                     $context->setParameter('_locale', $session->getLocale());
                 }
+
+                $this->routeservice->setLatestRouteMatch($routematch);
             }
         }
     }

@@ -64,17 +64,13 @@ class EntityCacheWarmer implements CacheWarmerInterface
         //echo 'entity.warmUp: Cache dir is '.$cacheDir."\n";
 
         if (!is_dir($cacheDir.'/PivotX')) {
-            mkdir($cacheDir.'/PivotX');
-            if (false === @mkdir($cacheDir, 0777, true)) {
+            if (false === @mkdir($cacheDir.'/PivotX', 0777, true)) {
                 throw new \RuntimeException(sprintf('Unable to create the PivotX Doctrine Entity directory "%s".', $cacheDir));
             }
         }
         elseif (!is_writable($cacheDir)) {
             throw new \RuntimeException(sprintf('The PivotX Doctrine Entity directory "%s" is not writeable for the current system user.', $cacheDir));
         }
-
-//        file_put_contents($cacheDir.'/PivotX/Entry.php', $this->getEntityCode('Entry'));
-//        file_put_contents($cacheDir.'/PivotX/EntryLanguage.php', $this->getEntityCode('EntryLanguage'));
 
         foreach ($this->registry->getEntityManagers() as $em) {
 
@@ -98,7 +94,11 @@ class EntityCacheWarmer implements CacheWarmerInterface
                 $_p = explode('\\',$class->name);
                 $base_class = $_p[count($_p)-1];
 
+                //var_dump($paths,$base_class);
+                //echo 'Base-class: '.$base_class."\n";
+
                 $feature_configuration = $this->getFeatureConfiguration($paths,$base_class);
+                //var_dump($feature_configuration);
 
                 // code generation
                 $file_name = $cacheDir . '/PivotX/' . $base_class . '.php';

@@ -77,12 +77,12 @@ routes:
     - filter:       { target: "desktop", site: "main", language: "en" }
       pattern:      "_page/latest-news"
       public:       "latest-news"
-      defaults:     { _rewrite: "main/(en)@archive/0000-00" }
+      defaults:     { _rewrite: "(site=main&language=en)@archive/0000-00" }
 
     - filter:       { target: "desktop", site: "main", language: "nl" }
       pattern:      "_page/latest-news"
       public:       "laatste-nieuws"
-      defaults:     { _rewrite: "main/(nl)@archive/0000-00" }
+      defaults:     { _rewrite: "(site=main&language=nl)@archive/0000-00" }
 
     - filter:       { target: "desktop", site: "main", language: "en" }
       pattern:      "archive/{yearmonth}"
@@ -101,7 +101,7 @@ routes:
     - filter:       { target: "desktop", site: "main", language: "en" }
       pattern:      "_page/contact"
       public:       "conference"
-      defaults:     { _redirect: "main/(en)@entry/1" }
+      defaults:     { _redirect: "(site=main&language=en)@entry/1" }
 
     - filter:       { target: [ "desktop", "mobile" ], site: "main", language: "nl" }
       pattern:      "entry/{id}"
@@ -158,11 +158,11 @@ THEEND;
 
         $this->assertNotNull($routematch = $routesetup->matchUrl('http://pivotx.com/'));
         $this->assertNotNull($reference = $routematch->buildReference(null));
-        $this->assertEquals($reference->buildTextReference(),'main/desktop(en)@_page/frontpage');
+        $this->assertEquals($reference->buildTextReference(),'(site=main&target=desktop&language=en)@_page/frontpage');
 
         $this->assertNotNull($routematch = $routesetup->matchUrl('http://m.pivotx.com/nl/'));
         $this->assertNotNull($reference = $routematch->buildReference(null));
-        $this->assertEquals($reference->buildTextReference(),'main/mobile(nl)@_page/frontpage');
+        $this->assertEquals($reference->buildTextReference(),'(site=main&target=mobile&language=nl)@_page/frontpage');
 
         $this->assertNotNull($routematch = $routesetup->matchUrl('http://pivotx.com/news/public-id'));
     }

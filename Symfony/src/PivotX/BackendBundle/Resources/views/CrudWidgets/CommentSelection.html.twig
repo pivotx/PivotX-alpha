@@ -1,0 +1,50 @@
+        <ul class="nav nav-list crud-selection">
+            <li class="nav-header">Selection</li>
+            <li>
+                <p>
+                    <span class="triselect">
+                        <span class="tri-0">You have <span class="count">no</span> selected comments.</span>
+                        <span class="tri-1">You have <span class="count">1</span> selected comment.</span>
+                        <span class="tri-x">You have <span class="count">-</span> selected comments.</span>
+                    </span>
+                    <br/>
+                    The following actions are available for your selection:
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a class="btn" href="#">Batch edit</a>
+                    <a class="btn" href="#">Edit in sequence</a>
+                </p>
+                <p>
+                    Published comments are shown to other users. Permanently published means that the comment will always be shown, despite ip-blocks or rating-changes. Temporary means show them unless there is an ip-block or the rating drops.
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#">
+                            Publish permanently
+                        </a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Publish temporary</a></li>
+                        </ul>
+                    </div>
+                </p>
+                <p>
+                    Blocking doesn't delete comments but merely removes them from view, a delete actual deletes the comments.
+                    A permanent block will hide the comments unless you explicitly publish them again. Temporary means they are hidden now, but might be shown again if certain conditions change.
+                    <div class="btn-group">
+                        <a class="btn btn-danger" href="#">
+                            Block permanently
+                        </a>
+                        <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Block temporary</a></li>
+                            <li><a href="#">Delete permanently</a></li>
+                        </ul>
+                    </div>
+                </p>
+            </li>
+        </ul>

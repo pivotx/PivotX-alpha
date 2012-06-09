@@ -1,0 +1,28 @@
+{% extends "BackendBundle:Base:default.html.twig" %}
+
+{#
+    This is the content-meta template to extend.
+    Contains regular header, footer and a content and meta block
+#}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="span9 content">
+        {% block content %}
+            9 columns of freedom
+        {% endblock %}
+        </div><!--/span-->
+
+        <div class="span3 meta-content">
+        {% block meta_content %}
+            3 columns of meta-information
+        {% endblock %}
+        </div><!--/span-->
+
+    </div><!--/row-->
+
+{% endblock %}
+

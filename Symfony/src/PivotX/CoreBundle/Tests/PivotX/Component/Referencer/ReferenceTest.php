@@ -64,7 +64,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     public function testSitePartial()
     {
-        $reference = new Reference(null,'example.com/@entry/234');
+        $reference = new Reference(null,'(site=example.com)@entry/234');
         $this->assertTrue($reference->getSite() === 'example.com');
         $this->assertTrue($reference->getEntity() === 'entry');
         $this->assertTrue($reference->getFilter() === '234');
@@ -72,7 +72,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     public function testTargetPartial()
     {
-        $reference = new Reference(null,'/mobile@entry/234');
+        $reference = new Reference(null,'(target=mobile)@entry/234');
         $this->assertTrue($reference->getTarget() === 'mobile');
         $this->assertTrue($reference->getEntity() === 'entry');
         $this->assertTrue($reference->getFilter() === '234');
@@ -80,13 +80,13 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     public function testMixedPartial()
     {
-        $reference = new Reference(null,'subtitle:/mobile@entry/234');
+        $reference = new Reference(null,'subtitle(target=mobile)@entry/234');
         $this->assertTrue($reference->getValue() === 'subtitle');
         $this->assertTrue($reference->getTarget() === 'mobile');
         $this->assertTrue($reference->getEntity() === 'entry');
         $this->assertTrue($reference->getFilter() === '234');
 
-        $reference = new Reference(null,'subtitle:example.org/@entry/234');
+        $reference = new Reference(null,'subtitle(site=example.org)@entry/234');
         $this->assertTrue($reference->getValue() === 'subtitle');
         $this->assertTrue($reference->getSite() === 'example.org');
         $this->assertTrue($reference->getEntity() === 'entry');
@@ -95,7 +95,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     public function testLanguageExample()
     {
-        $reference = new Reference(null,'(nl)@entry/234');
+        $reference = new Reference(null,'(language=nl)@entry/234');
         $this->assertTrue($reference->getEntity() === 'entry');
         $this->assertTrue($reference->getFilter() === '234');
         $this->assertTrue($reference->getLanguage() === 'nl');
@@ -113,7 +113,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     public function testCompleteExample()
     {
-        $reference = new Reference(null,'title:example.com/mobile(nl)@entry/234?args=233&text=Marcel#page/contact?rest');
+        $reference = new Reference(null,'title(site=example.com&target=mobile&language=nl)@entry/234?args=233&text=Marcel#page/contact?rest');
         $this->assertTrue($reference->getEntity() === 'entry');
         $this->assertTrue($reference->getFilter() === '234');
         $this->assertTrue($reference->getValue() === 'title');
@@ -128,7 +128,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     public function testRelativeReference()
     {
-        $master = new Reference(null,'example.com/desktop(en)@entry/234');
+        $master = new Reference(null,'(site=example.com&target=desktop&language=en)@entry/234');
         $reference = new Reference($master,'page/contact');
 
         $this->assertTrue($reference->getEntity() === 'page');

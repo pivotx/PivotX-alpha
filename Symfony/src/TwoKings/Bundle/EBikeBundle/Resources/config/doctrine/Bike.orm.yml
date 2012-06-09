@@ -41,7 +41,7 @@ TwoKings\Bundle\EBikeBundle\Entity\Bike:
         timestampable:
           on: update
     viewable:
-      type: integer
+      type: boolean
       length: null
       precision: 0
       scale: 0
@@ -80,6 +80,111 @@ TwoKings\Bundle\EBikeBundle\Entity\Bike:
     title:
       type: string
       length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    available:
+      type: boolean
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    price:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    weight:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    weight_battery:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    year_built:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    range_min:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    range_avg:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    range_max:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    battery_voltage:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    battery_amps:
+      type: integer
+      length: null
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    engine_location:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    image_file:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    brochure_file:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    product_uri:
+      type: string
+      length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    info:
+      type: text
+      length: null
       precision: 0
       scale: 0
       nullable: false

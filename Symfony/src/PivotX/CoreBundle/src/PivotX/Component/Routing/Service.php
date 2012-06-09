@@ -27,11 +27,14 @@ class Service
     private $logger;
 
     private $routesetup;
+    private $latest_routematch;
 
     public function __construct(LoggerInterface $logger = null, $file = false)
     {
         $this->logger     = $logger;
         $this->routesetup = new RouteSetup();
+
+        $this->latest_routematch = null;
 
         if ($file === false) {
             // @todo should be removed
@@ -160,6 +163,44 @@ class Service
                 $route
             );
         }
+    }
+
+    public function setLatestRouteMatch(RouteMatch $routematch)
+    {
+        $this->latest_routematch = $routematch;
+    }
+
+    public function getLatestRouteMatch()
+    {
+        return $this->latest_routematch;
+    }
+
+    /**
+     */
+    public function buildUrl($text, $absolute = false)
+    {
+        if (is_null($this->latest_routematch)) {
+            $absolute = true;
+        }
+
+        //echo get_class($this->latest_routematch); var_dump($absolute);
+
+        $url = null;
+        if (!$absolute) {
+            $url = $this->latest_routematch->buildOtherUrl($text);
+        }
+
+        //var_dump($text); var_dump($url);
+
+        if (is_null($url)) {
+            $url = $this->routesetup->buildUrl($text);
+        }
+
+        // @todo we created absolute url's for too easy
+        //       for now we insert app_dev.php and fix it all later
+        $url = str_replace('twokings.eu/','twokings.eu/app_dev.php/',$url);
+
+        return $url;
     }
 
     public function getRouteSetup()

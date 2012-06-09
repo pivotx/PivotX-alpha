@@ -9,7 +9,7 @@ class BackendBundle extends Bundle
     public function boot()
     {
         try {
-            $service = $this->container->get('pivotx_routing');
+            $service = $this->container->get('pivotx.routing');
 
             $fname = dirname(__FILE__).'/Resources/config/pivotxrouting.yml';
             $service->load($fname);

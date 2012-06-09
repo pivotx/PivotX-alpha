@@ -27,6 +27,31 @@ class BikeReview extends \PivotX\Doctrine\Entity\AutoEntity
     private $viewable;
 
     /**
+     * @var text $comment_status
+     */
+    private $comment_status;
+
+    /**
+     * @var text $remote_addr
+     */
+    private $remote_addr;
+
+    /**
+     * @var text $http_user_agent
+     */
+    private $http_user_agent;
+
+    /**
+     * @var text $name
+     */
+    private $name;
+
+    /**
+     * @var text $email
+     */
+    private $email;
+
+    /**
      * @var text $comment
      */
     private $comment;
@@ -34,7 +59,7 @@ class BikeReview extends \PivotX\Doctrine\Entity\AutoEntity
     /**
      * @var TwoKings\Bundle\EBikeBundle\Entity\Bike
      */
-    private $reviews;
+    private $bike;
 
 
     /**

@@ -1,0 +1,49 @@
+    <table class="crud table table-striped table-bordered" data-crud-table="{{ crud.htmlid }}">
+        <thead>
+            <tr>
+                <th class="select-checkbox">
+                    <input type="checkbox" name="id-toggle" data-id="id-toggle">
+                </th>
+                <th>Id</th>
+                <th>Title</th>
+                <th>State</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for item in items.Results %}
+            <tr class="{{ item.crudGetRowClass() }}">
+                <td class="select-checkbox">
+                    <input type="checkbox" name="id{{ item.id }}" data-id="{{ item.id }}">
+                </td>
+                <td>
+                    № {{ item.id }}
+                </td>
+                <td>
+                    <span>
+                        {{ item.title }}
+                    </span>
+
+                    <div class="btn-group on-row-hover">
+                        <a class="btn btn-mini" href="{{ ref(['_table/',crud.entity,'/',item.id]|join) }}"><i class="icon-pencil icon-white"></i> edit</a>
+                        <button class="btn btn-mini btn-danger"><i class="icon-trash icon-white"></i> delete</button>
+                    </div>
+                </td>
+                <td>
+                    <span>{{ item.DateModified|date('Y-m-d') }}</span>
+                    
+                    {% if item.isPublished %}
+                        <div class="btn-group on-row-hover">
+                            <button class="btn btn-mini btn-warning"><i class="icon-thumbs-down icon-white"></i> depublish</button>
+                        </div>
+                    {% else %}
+                        <div class="btn-group on-row-hover">
+                            <button class="btn btn-mini btn-success"><i class="icon-thumbs-up icon-white"></i> publish</button>
+                        </div>
+                    {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>

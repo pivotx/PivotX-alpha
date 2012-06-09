@@ -6,7 +6,7 @@
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
  */
 
-namespace PivotX\Component\Twigquery;
+namespace PivotX\Component\Twig;
 
 /**
  * Twig Loadall experiment

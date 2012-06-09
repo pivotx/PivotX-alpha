@@ -4,6 +4,8 @@
  * This file is part of the PivotX Core bundle
  *
  * (c) Marcel Wouters / Two Kings <marcel@twokings.nl>
+ *
+ * @todo add tests for the anchor reference to URL
  */
 
 namespace PivotX\CoreBundle\Component\Routing;
@@ -61,14 +63,14 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 $route = new Route(
                     '_page/latest-news', 'latest-news',
                     array(),
-                    array('_rewrite' => 'main/desktop(en)@archive/'.date('Y-m'))
+                    array('_rewrite' => '(site=main&target=desktop&language=en)@archive/'.date('Y-m'))
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main', 'target' => 'desktop' ),
                 $route = new Route(
                     '_page/latest-news', 'laatste-nieuws',
                     array(),
-                    array('_rewrite' => 'main/desktop(nl)@archive/'.date('Y-m'))
+                    array('_rewrite' => '(site=main&target=desktop&language=nl)@archive/'.date('Y-m'))
                 ))
 
             ->add(
@@ -114,7 +116,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 $route = new Route(
                     '_page/to-internal-invalid', 'to-internal-invalid',
                     array(),
-                    array('_rewrite' => 'main/desktop(en)@false-internal-route')
+                    array('_rewrite' => '(site=main&target=desktop&language=en)@false-internal-route')
                 ))
             ;
     }
@@ -154,19 +156,31 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($routematch->buildUrl(),'http://pivotx.com/latest-news');
     }
 
+    public function testUrlWithQueryToRoute()
+    {
+        $this->assertNotNull($routematch = $this->routesetup->matchUrl('http://pivotx.com/latest-news?order=reversed'));
+    }
+
     public function testReferenceToUrl()
     {
-        $reference = new Reference(null,'main/(nl)@archive/2012-01');
+        $reference = new Reference(null,'(site=main&language=nl)@archive/2012-01');
         $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
         $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/archief/2012-01');
 
-        $reference = new Reference(null,'main/(nl)@archive/'.date('Y-m'));
+        $reference = new Reference(null,'(site=main&language=nl)@archive/'.date('Y-m'));
         $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
         $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/laatste-nieuws');
 
-        $reference = new Reference(null,'main/(en)@_page/to-internal-invalid');
+        $reference = new Reference(null,'(site=main&language=en)@_page/to-internal-invalid');
         $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
         $this->assertNotEquals($routematch->buildUrl(),'http://pivotx.nl/to-internal-invalid');
+    }
+
+    public function testReferenceQueryToUrl()
+    {
+        $reference = new Reference(null,'(site=main&language=nl)@archive/'.date('Y-m').'?queryargs');
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference,true));
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/laatste-nieuws?queryargs');
     }
 
     public function testFrontpageUrl()

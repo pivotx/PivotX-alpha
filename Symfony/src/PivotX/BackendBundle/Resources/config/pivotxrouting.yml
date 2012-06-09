@@ -45,19 +45,28 @@ routes:
     - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
       pattern:      "_table/{entity}"
       public:       "table/{entity}"
-      defaults:     { _controller: "BackendBundle:Backend:showTable" }
+      defaults:     { _controller: "BackendBundle:Crud:showTable" }
       requirements:
           entity: "[A-Za-z_]+[A-Za-z0-9]+"
 
     - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_table/{entityref}/{id}/{entity}"
+      public:       "table/{entityref}/{id}/{entity}"
+      defaults:     { _controller: "BackendBundle:Crud:showSubTable" }
+      requirements:
+          entity:    "[A-Za-z_]+[A-Za-z0-9]+"
+          entityref: "[A-Za-z_]+[A-Za-z0-9]+"
+          id:        "[0-9]+"
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
       pattern:      "_table/{entity}/{id}"
       public:       "table/{entity}/{id}"
-      defaults:     { _controller: "BackendBundle:Backend:showRecord" }
+      defaults:     { _controller: "BackendBundle:Crud:showRecord" }
       requirements:
           entity:   "[A-Za-z_]+[A-Za-z0-9]+"
           id:       "[0-9]+"
 
     - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
-      pattern:      "_page/page-not-found"
+      pattern:      "_page/not-found"
       public:       "page-not-found"
-      defaults:     { _redirect: "_page/not-found" }
+      defaults:     { _nothing: "not-found" }

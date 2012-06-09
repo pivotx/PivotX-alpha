@@ -1,0 +1,48 @@
+    <table class="crud table table-striped table-bordered" data-crud-table="{{ crud.htmlid }}">
+        <thead>
+            <tr>
+                <th class="select-checkbox">
+                    <input type="checkbox" name="id-toggle" data-id="id-toggle">
+                </th>
+                <th>Id</th>
+                <th>Site</th>
+                <th>Key</th>
+                <th>Text (nl)</th>
+                <th>Text (en)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for item in items.Results %}
+            <tr class="{{ item.crudGetRowClass() }}">
+                <td class="select-checkbox">
+                    <input type="checkbox" name="id{{ item.id }}" data-id="{{ item.id }}">
+                </td>
+                <td>
+                    № {{ item.id }}
+                </td>
+                <td>
+                    <span class="sitename">{{ item.sitename }}</span>
+                </td>
+                <td>
+                    <span class="groupname">{{ item.groupname }}</span>.<span class="name">{{ item.name }}</span>
+
+                    <div class="btn-group on-row-hover">
+                        <a class="btn btn-mini" href="{{ ref(['_table/',crud.entity,'/',item.id]|join) }}"><i class="icon-pencil icon-white"></i> {{ translate('entity.button.edit') }}</a>
+                        <button class="btn btn-mini btn-danger"><i class="icon-trash icon-white"></i> {{ translate('entity.button.delete') }}</button>
+                    </div>
+                </td>
+                <td>
+                    <span>
+                        {{ item.text_nl }}
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        {{ item.text_en }}
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>

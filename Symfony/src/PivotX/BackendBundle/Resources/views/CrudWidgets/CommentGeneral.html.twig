@@ -1,0 +1,19 @@
+        <ul class="nav nav-list">
+            <li class="nav-header">General information</li>
+            <li>
+                <p>
+                    <strong>{{ item.title }}</strong>
+                {% if items.countTotalResults == 0 %}
+                    has no comments.
+                {% elseif items.countTotalResults == 1 %}
+                    has {{ items.countTotalResults }} comment.
+                {% else %}
+                    has {{ items.countTotalResults }} comments.
+                {% endif %}
+                </p>
+
+                <p>
+                    Go <a href="{{ ref(['_table/',crud.entityref]|join) }}">back</a> to {{ translate(['entity.name.plural.',crud.entity]|join) }}.
+                </p>
+            </li>
+        </ul>

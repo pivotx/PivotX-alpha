@@ -1,0 +1,19 @@
+
+body {
+    padding-top: 60px;
+    padding-bottom: 90px;  /* 40+40px */
+}
+
+/* just copied this */
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+/* extra big bottom navbar otherwise our symfony debug bar overrides it */
+.navbar-fixed-bottom .navbar-inner {
+    min-height: 80px;
+}
+
+table.crud td.select-checkbox {
+    width: 15px;
+}
