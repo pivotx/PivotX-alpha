@@ -13,7 +13,7 @@
 
         <tbody>
         {% for item in items.Results %}
-            <tr class="{{ item.crudGetRowClass() }}">
+            <tr class="{# item.crudGetRowClass() #}">
                 <td class="select-checkbox">
                     <input type="checkbox" name="id{{ item.id }}" data-id="{{ item.id }}">
                 </td>
@@ -42,8 +42,8 @@
                 </td>
                 <td>
                     <span>{{ item.DateModified|date('Y-m-d') }}</span>
-                    
-                    {% if item.isPublished %}
+
+                    {% if isPublished(item) %}
                         <div class="btn-group on-row-hover">
                             <button class="btn btn-mini btn-warning"><i class="icon-thumbs-down icon-white"></i> depublish</button>
                         </div>

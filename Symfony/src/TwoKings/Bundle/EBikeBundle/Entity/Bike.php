@@ -4,7 +4,8 @@ namespace TwoKings\Bundle\EBikeBundle\Entity;
 
 /**
  */
-class Bike extends \PivotX\Doctrine\Entity\AutoEntity
+//class Bike extends \PivotX\Doctrine\Entity\AutoEntity
+class Bike 
 {
     /**
      * @var integer $id
@@ -629,5 +630,25 @@ class Bike extends \PivotX\Doctrine\Entity\AutoEntity
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * Set year_built
+     *
+     * @param integer $yearBuilt
+     */
+    public function setYearBuilt($yearBuilt)
+    {
+        $this->year_built = $yearBuilt;
+    }
+
+    /**
+     * Get year_built
+     *
+     * @return integer 
+     */
+    public function getYearBuilt()
+    {
+        return $this->year_built;
     }
 }

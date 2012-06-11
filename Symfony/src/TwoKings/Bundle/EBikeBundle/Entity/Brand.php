@@ -4,7 +4,8 @@ namespace TwoKings\Bundle\EBikeBundle\Entity;
 
 /**
  */
-class Brand extends \PivotX\Doctrine\Entity\AutoEntity
+//class Brand extends \PivotX\Doctrine\Entity\AutoEntity
+class Brand
 {
     /**
      * @var integer $id

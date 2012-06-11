@@ -4,7 +4,8 @@ namespace TwoKings\Bundle\EBikeBundle\Entity;
 
 /**
  */
-class BikeReview extends \PivotX\Doctrine\Entity\AutoEntity
+//class BikeReview extends \PivotX\Doctrine\Entity\AutoEntity
+class BikeReview
 {
     /**
      * @var integer $id
@@ -170,5 +171,125 @@ class BikeReview extends \PivotX\Doctrine\Entity\AutoEntity
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    /**
+     * Set comment_status
+     *
+     * @param string $commentStatus
+     */
+    public function setCommentStatus($commentStatus)
+    {
+        $this->comment_status = $commentStatus;
+    }
+
+    /**
+     * Get comment_status
+     *
+     * @return string 
+     */
+    public function getCommentStatus()
+    {
+        return $this->comment_status;
+    }
+
+    /**
+     * Set remote_addr
+     *
+     * @param string $remoteAddr
+     */
+    public function setRemoteAddr($remoteAddr)
+    {
+        $this->remote_addr = $remoteAddr;
+    }
+
+    /**
+     * Get remote_addr
+     *
+     * @return string 
+     */
+    public function getRemoteAddr()
+    {
+        return $this->remote_addr;
+    }
+
+    /**
+     * Set http_user_agent
+     *
+     * @param string $httpUserAgent
+     */
+    public function setHttpUserAgent($httpUserAgent)
+    {
+        $this->http_user_agent = $httpUserAgent;
+    }
+
+    /**
+     * Get http_user_agent
+     *
+     * @return string 
+     */
+    public function getHttpUserAgent()
+    {
+        return $this->http_user_agent;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set bike
+     *
+     * @param TwoKings\Bundle\EBikeBundle\Entity\Bike $bike
+     */
+    public function setBike(\TwoKings\Bundle\EBikeBundle\Entity\Bike $bike)
+    {
+        $this->bike = $bike;
+    }
+
+    /**
+     * Get bike
+     *
+     * @return TwoKings\Bundle\EBikeBundle\Entity\Bike 
+     */
+    public function getBike()
+    {
+        return $this->bike;
     }
 }

@@ -4,7 +4,8 @@ namespace TwoKings\Bundle\EBikeBundle\Entity;
 
 /**
  */
-class Page extends \PivotX\Doctrine\Entity\AutoEntity
+//class Page extends \PivotX\Doctrine\Entity\AutoEntity
+class Page 
 {
     /**
      * @var integer $id

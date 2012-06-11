@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 
+<!-- @todo on-invalid ignore DON't ignore! -->
+
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -15,8 +17,9 @@
         <!-- views -->
         <parameter key="pivotx.views.class">PivotX\Component\Views\Service</parameter>
         <parameter key="pivotx.twig.class">PivotX\Component\Twig\Service</parameter>
+        <parameter key="pivotx.doctrine.twig.class">PivotX\Doctrine\Twig\Service</parameter>
 
-        <!-- Translations -->
+        <!-- translations -->
         <parameter key="pivotx.translations.class">PivotX\Component\Translations\Service</parameter>
     </parameters>
 
@@ -53,6 +56,15 @@
         <service id="pivotx.translations" class="%pivotx.translations.class%" public="false">
             <argument type="service" id="pivotx.routing" />
             <argument type="service" id="doctrine" />
+        </service>
+
+        <service id="twig.extension.pivotx.doctrine" class="%pivotx.doctrine.twig.class%" public="false">
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- not very practicable to list all pivotx doctrine features, but ok for now -->
+        <service id="twig.extension.pivotx.doctrine.publishable" class="PivotX\Doctrine\Feature\Publishable\Twig" public="false">
+            <tag name="twig.extension" />
         </service>
     </services>
 
