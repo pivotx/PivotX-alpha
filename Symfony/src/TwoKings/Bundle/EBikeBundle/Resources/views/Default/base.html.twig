@@ -1,0 +1,38 @@
+{#
+    This is the base template for the site
+#}
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% block page_title %}E-Bike Selector {% endblock %}</title>
+
+
+    {% stylesheets 
+        '@TwoKingsEBikeBundle/Resources/public/css/*'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <style type="text/css">
+    #content.groot {
+        background-image: url({% image '@TwoKingsEBikeBundle/Resources/public/images/bg-300.png' %}{{ asset_url }}{% endimage %});
+    }
+    
+    #content.klein {
+        background-image: url({% image '@TwoKingsEBikeBundle/Resources/public/images/bg.png' %}{{ asset_url }}{% endimage %});
+    }
+    
+    #resultaten th {
+		background-image: url({% image '@TwoKingsEBikeBundle/Resources/public/images/bg.gif' %}{{ asset_url }}{% endimage %});
+	}
+    
+    </style>
+</head>
+
+<body>
+{% block body %}
+{% endblock %}
+</body>
+
+</html>

@@ -92,27 +92,28 @@ class Service
             $arguments['sitename'] = $site;
         }
 
-        //$translationtext = $this->entity_manager->findOneBy($arguments);
         $translationtext = $this->doctrine_registry->getRepository($this->entity_class)->findOneBy($arguments);
 
         if (is_null($translationtext)) {
             $translationtext = new $this->entity_class;
-            $translationtext->sitename  = $site;
-            $translationtext->groupname = $groupname;
-            $translationtext->name      = $name;
-            $translationtext->encoding  = 'utf-8';
+
+            $translationtext->setSitename($site);
+            $translationtext->setGroupname($groupname);
+            $translationtext->setName($name);
+            $translationtext->setEncoding('utf-8');
             // @todo when Timestampable works this should be removed
-            $translationtext->date_created  = new \DateTime();
-            $translationtext->date_modified = new \DateTime();
+            $translationtext->setDateCreated(new \DateTime());
+            $translationtext->setDateModified(new \DateTime());
             // @todo should auto-detect languages here
-            $translationtext->text_nl   = $key;
-            $translationtext->text_en   = $key;
+            $translationtext->setTextNl($key);
+            $translationtext->setTextEn($key);
+
             $this->entity_manager->persist($translationtext);
             $this->entity_manager->flush();
         }
 
         $method = 'getText'.ucfirst($language);
-        if ($translationtext->hasMethod($method)) {
+        if (method_exists($translationtext,$method)) {
             return $translationtext->$method();
         }
 

@@ -75,6 +75,16 @@ class RoutePrefixes
     }
 
     /**
+     * Get all the prefixes
+     *
+     * @return array the prefixes
+     */
+    public function getAll()
+    {
+        return $this->prefixes;
+    }
+
+    /**
      * Try to find a prefix that matches this URL
      *
      * @param string $url  Url to match

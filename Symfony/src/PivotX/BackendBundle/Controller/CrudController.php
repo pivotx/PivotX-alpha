@@ -75,17 +75,17 @@ class CrudController extends Controller
                     //*/
 
                     // if we encounter this method, ignore this field in the crud
-                    if ($item->hasMethod('getCrudIgnore_'.$mapname)) {
+                    if (method_exists($item,'getCrudIgnore_'.$mapname)) {
                         continue;
                     }
                     // if we encounter this method, overwrite arguments
-                    if ($item->hasMethod('getCrudArguments_'.$mapname)) {
+                    if (method_exists($item,'getCrudArguments_'.$mapname)) {
                         $method         = 'getCrudArguments_'.$mapname;
                         $crud_arguments = $item->$method();
                         $args           = array_merge($args,$crud_arguments);
                     }
                     // if we encounter this method, change type to 'choice' and fill in the options
-                    if ($item->hasMethod('getCrudChoices_'.$mapname)) {
+                    if (method_exists($item,'getCrudChoices_'.$mapname)) {
                         $method          = 'getCrudChoices_'.$mapname;
                         $choices         = $item->$method();
                         $type            = 'choice';
@@ -96,7 +96,7 @@ class CrudController extends Controller
                         }
                     }
                     // only type gets overwritten
-                    if ($item->hasMethod('getCrudType_'.$mapname)) {
+                    if (method_exists($item,'getCrudType_'.$mapname)) {
                         $method = 'getCrudType_'.$mapname;
                         $type   = $item->$method();
                     }
@@ -137,6 +137,14 @@ class CrudController extends Controller
 
         $items = \PivotX\Component\Views\Views::loadView($crud['entity'].'/findAll');
 
+        $page_variable = $this->get('pivotx.translations')->translate('pagination.page_variable');
+        if ($request->query->has($page_variable)) {
+            $items->setCurrentPage($request->query->getInt($page_variable), 10);
+        }
+        else {
+            $items->setCurrentPage(1, 10);
+        }
+
         $widgets = array(
             'BackendBundle:CrudWidgets:General.html.twig',
             'BackendBundle:CrudWidgets:Selection.html.twig',
@@ -150,6 +158,7 @@ class CrudController extends Controller
             'items' => $items
         );
 
+        // @todo should not be hard-wired here of course
         $table_html = $this
             ->render('TwoKingsEBikeBundle:Crud:'.$crud['entity'].'.table.html.twig', $context)
             ->getContent()

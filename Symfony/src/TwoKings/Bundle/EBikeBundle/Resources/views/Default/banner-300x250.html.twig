@@ -1,0 +1,101 @@
+{% extends "TwoKingsEBikeBundle:Default:base.html.twig" %}
+
+{% block page_title %}
+    Banner 300x350
+{% endblock %}
+
+{% block body %}
+
+<div id="content" class="klein">
+    {% image '@TwoKingsEBikeBundle/Resources/public/images/header.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+    {% image '@TwoKingsEBikeBundle/Resources/public/images/header-tekst.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+    {% image '@TwoKingsEBikeBundle/Resources/public/images/divider.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+
+
+    <form method="get" action="{{ ref('bike/results') }}">
+    
+    <table align="center">
+		<tr>
+			<td class="label"><label>{{ translate('banner.field.brand') }}:</label></td>
+			<td>
+    
+    
+        {% loadView 'Brand/loadSorted' as brands %}
+        <select name="merk">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for brand in brands.result %}
+            <option value="{{ brand.publicid }}">{{ brand.title }}</option>
+        {% endfor %}
+        </select>
+
+        	</td>
+		</tr>
+
+
+		<tr>
+			<td class="label"><label>Gewicht:</label></td>
+			<td>
+		
+
+        {% loadView 'BikeSelection/getWeights' as weights %}
+        <select name="gewicht">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for weight in weights.result %}
+            <option value="{{ weight.value }}">{{ weight.title }}</option>
+        {% endfor %}
+        </select>
+
+        	</td>
+		</tr>
+
+		
+	
+
+
+		<tr>
+			<td class="label"><label>Prijs:</label></td>
+			<td>
+
+
+        {% loadView 'BikeSelection/getPrices' as prices %}
+        <select name="prijs">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for price in prices.result %}
+            <option value="{{ price.value }}">{{ price.title }}</option>
+        {% endfor %}
+        </select>
+
+        </td>
+		</tr>
+        
+        </table>
+        
+        <!--
+        <input type="submit">
+        -->
+        
+        
+    
+	
+	{% image '@TwoKingsEBikeBundle/Resources/public/images/divider.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+	
+	<div class="resultaat">
+	{% loadView 'Bike/loadResults' as bikes %}
+	<p>Er voldoen {{ bikes.length }} e-bikes aan deze selectie</p>
+	</div>
+	
+	<button type="submit" value="clicked">
+	
+	{% image '@TwoKingsEBikeBundle/Resources/public/images/button.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+	
+	</button>
+	
+	</form>
+	
+</div>
+
+
+{% endblock %}

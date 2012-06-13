@@ -74,6 +74,16 @@ class RouteCollection
     }
 
     /**
+     * Get all the routes
+     *
+     * @return array the routes
+     */
+    public function getAll()
+    {
+        return $this->routes;
+    }
+
+    /**
      * Try to find a route that matches this URL
      *
      * @param array $filter Simplified filter to match
@@ -108,6 +118,10 @@ class RouteCollection
         foreach($this->routes as $route) {
             $routematch = $route->matchReference($filter, $reference, $check_rewrites);
             if (!is_null($routematch)) {
+                if (isset($_GET['debugit']) && ($_GET['debugit'] == 1)) {
+                    echo '<br/><strong>inside collection/reference</strong>: '; var_dump($reference);
+                    echo '<br/><strong>inside collection/routematch</strong>: '; var_dump($routematch);
+                }
                 return $routematch;
             }
         }

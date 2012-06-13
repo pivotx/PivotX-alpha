@@ -128,6 +128,16 @@ class RouteSetup
     }
 
     /**
+     * Get all the routeprefixeses
+     *
+     * @return array $routeprefixes
+     */
+    public function getRoutePrefixeses()
+    {
+        return $this->routeprefixeses;
+    }
+
+    /**
      * Add routecollection
      *
      * This method implements a fluent interface.
@@ -139,6 +149,16 @@ class RouteSetup
         $this->routecollections[] = $routecollection;
 
         return $this;
+    }
+
+    /**
+     * Get all the routecollections
+     *
+     * @return array $routecollections
+     */
+    public function getRouteCollections()
+    {
+        return $this->routecollections;
     }
 
     /**

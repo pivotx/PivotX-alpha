@@ -38,6 +38,8 @@ class Service
         // @todo remove this when we have another solution
         // inject ourselves and the logger into the Views component
         \PivotX\Component\Views\Views::setServices($this, $logger);
+
+        //echo "loaded views service\n";
     }
 
     public function registerView(ViewInterface $view)

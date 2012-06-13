@@ -79,15 +79,31 @@ class EBikeCommand extends ContainerAwareCommand
             if ($flushit) {
                 $em->flush();
             }
+            
+            $upublicids = array();
 
             foreach($bikes as $bike) {
                 $brandobject = $brand_repository->findOneBy(array('title'=>$bike['f_merk']));
+
+                $publicid = preg_replace('|[^a-z0-9]+|','-',strtolower(trim($bike['f_type'])));
+                if (isset($upublicids[$publicid])) {
+                    for($i=1; $i < 100; $i++) {
+                        $publicid_attempt = $publicid . '-' . $i;
+                        if (!isset($upublicids[$publicid_attempt])) {
+                            $publicid = $publicid_attempt;
+                            break;
+                        }
+                    }
+                }
+                
+                $upublicids[$publicid] = true;
 
                 $bikeobject = new \TwoKings\Bundle\EBikeBundle\Entity\Bike;
 
                 $bikeobject->setViewable(true);
                 $bikeobject->setPublishState('published');
                 $bikeobject->setTitle($bike['f_type']);
+                $bikeobject->setPublicid($publicid);
                 $bikeobject->setAvailable($bike['f_leverbaar'] == 'J');
                 $bikeobject->setDateCreated(new \DateTime());
                 $bikeobject->setDateModified(new \DateTime());

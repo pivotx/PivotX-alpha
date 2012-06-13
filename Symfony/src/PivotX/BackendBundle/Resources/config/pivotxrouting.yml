@@ -21,10 +21,10 @@ languages:
 
 routeprefixes:
     - filter:       { target: "desktop", site: "pivotx-backend", language: "nl" }
-      prefix:       "http://px4bmfw.twokings.eu/pivotx/nl/"
+      prefix:       "http://e-bike.twokings.eu/pivotx/nl/"
 
     - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
-      prefix:       "http://px4bmfw.twokings.eu/pivotx/en/"
+      prefix:       "http://e-bike.twokings.eu/pivotx/en/"
 
 routes:
     - filter:       { target: "desktop", site: "pivotx-backend", language: false }
@@ -65,6 +65,21 @@ routes:
       requirements:
           entity:   "[A-Za-z_]+[A-Za-z0-9]+"
           id:       "[0-9]+"
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_developer/routing"
+      public:       "developer/routing"
+      defaults:     { _controller: "BackendBundle:Developer:showRouting" }
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_developer/views"
+      public:       "developer/views"
+      defaults:     { _controller: "BackendBundle:Developer:showViews" }
+
+    - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
+      pattern:      "_developer/formats"
+      public:       "developer/formats"
+      defaults:     { _controller: "BackendBundle:Developer:showFormats" }
 
     - filter:       { target: "desktop", site: "pivotx-backend", language: "en" }
       pattern:      "_page/not-found"

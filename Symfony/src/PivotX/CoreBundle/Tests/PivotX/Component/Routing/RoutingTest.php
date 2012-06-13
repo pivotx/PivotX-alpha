@@ -176,6 +176,21 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($routematch->buildUrl(),'http://pivotx.nl/to-internal-invalid');
     }
 
+    public function testReferenceWithArgsToUrl()
+    {
+        $reference = new Reference(null,'(site=main&language=nl)@archive/2012-01?page=2');
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/archief/2012-01?page=2');
+
+        $reference = new Reference(null,'(site=main&language=nl)@archive/'.date('Y-m').'?page=2');
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
+        $this->assertEquals($routematch->buildUrl(),'http://pivotx.nl/laatste-nieuws?page=2');
+
+        $reference = new Reference(null,'(site=main&language=en)@_page/to-internal-invalid');
+        $this->assertNotNull($routematch = $this->routesetup->matchReference($reference));
+        $this->assertNotEquals($routematch->buildUrl(),'http://pivotx.nl/to-internal-invalid');
+    }
+
     public function testReferenceQueryToUrl()
     {
         $reference = new Reference(null,'(site=main&language=nl)@archive/'.date('Y-m').'?queryargs');

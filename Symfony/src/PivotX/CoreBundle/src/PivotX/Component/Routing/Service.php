@@ -37,8 +37,8 @@ class Service
         $this->latest_routematch = null;
 
         if ($file === false) {
-            // @todo should be removed
-            $fname = '/home/marcel/public_html/px4b/Symfony/app/config/pivotxrouting.yml';
+            // @todo should be different
+            $fname = dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))))).'/app/config/pivotxrouting.yml';
             $this->load($fname);
         }
     }
@@ -46,7 +46,7 @@ class Service
     public function load($fname)
     {
         //echo "Loading Route Service..\n";
-        $this->logger->info('Loading Route Service '.$fname);
+        $this->logger->info('Loading PivotX Routefile '.$fname);
 
         // @todo this is really wrong
         $config = Yaml::parse($fname);

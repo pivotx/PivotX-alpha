@@ -1,4 +1,9 @@
 <?php
+/**
+ * AutoEntityRepository
+ *
+ * @todo this class will be removed
+ */
 
 namespace PivotX\Doctrine\Repository;
 

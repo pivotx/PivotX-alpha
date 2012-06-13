@@ -12,8 +12,8 @@
         </thead>
 
         <tbody>
-        {% for item in items.Results %}
-            <tr class="{{ item.crudGetRowClass() }}">
+        {% for item in items.result %}
+            <tr class="{# item.crudGetRowClass() #}">
                 <td class="select-checkbox">
                     <input type="checkbox" name="id{{ item.id }}" data-id="{{ item.id }}">
                 </td>

@@ -1,0 +1,36 @@
+{% extends "BackendBundle:Base:content_and_meta.html.twig" %}
+
+{% block content %}
+
+    <table class="developer table table-striped table-bordered">
+        <tbody>
+        {% set previous_group = '' %}
+        {% for item in items.result %}
+            {% if previous_group!=item.group %}
+            <tr>
+                <th colspan="3">{{ item.group }}</th>
+            </tr>
+                {% set previous_group = item.group %}
+            {% endif %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>
+                    {{ item.description }}
+                {% if item.codeexample %}
+                    <div class="on-row-hover btn-group">
+                        {% if item.codeexample %}<a class="btn btn-mini" data-show="code-example">{% raw %}{% code %}{% endraw %}</a>{% endif %}
+                    </div>
+                    <div class="toggles code-example">
+                        <hr />
+                        {{ item.codeexample|raw }}
+                    </div>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+

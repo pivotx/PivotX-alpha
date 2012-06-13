@@ -1,6 +1,12 @@
 
+/* @todo these should be more specified */
+
 .on-row-hover {
     visibility: hidden;
+}
+
+.on-row-active {
+    visibility: visible !important;
 }
 
 tr:hover .on-row-hover {

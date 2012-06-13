@@ -1,12 +1,12 @@
         <ul class="nav nav-list">
             <li class="nav-header">General information</li>
             <li>
-            {% if items.counttotalresults == 0 %}
+            {% if items.length == 0 %}
                 <p>There are no items.</p>
-            {% elseif items.counttotalresults == 1 %}
-                <p>There is {{ items.counttotalresults }} item.</p>
+            {% elseif items.length == 1 %}
+                <p>There is {{ items.length }} item.</p>
             {% else %}
-                <p>There are {{ items.counttotalresults }} items.</p>
+                <p>There are {{ items.length }} items.</p>
             {% endif %}
             </li>
             <li>

@@ -1,0 +1,263 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+/***** Banners *****/
+
+#content.groot {
+	width: 300px;
+	height: 300px;
+	background-image: url(../images/bg-300.png);	
+	}
+
+#content.klein {
+	width: 300px;
+	height: 250px;	
+	}
+	
+#content img {
+	display: block;
+	margin: 0 auto;
+}
+	
+#content table {
+	width: 250px;
+}
+	
+label {
+	color: #000;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: arial, helvetica, sans-serif;
+}
+	
+p {
+	color: #31632C;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: arial, helvetica, sans-serif;
+	margin: 0 auto;
+}
+	
+.resultaat {
+	text-align: center;
+	margin: 10px 0;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+/***** Resulaten overzicht *****/
+
+#resultaten {
+	width: 680px;
+}
+	
+#resultaten, #resultaten td, #resultaten th {
+	border: 1px solid #81C501;
+	border-collapse: collapse;
+	padding: 10px;
+	text-align: left;
+	color: #212121;
+	font-family: arial, helvetica, sans-serif;
+}
+	
+#resultaten th {
+	font-size: 13px;
+	background-color:#E1F0FE;
+	background-image: url(img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: 95% 50%;
+}
+	
+#resultaten th:last-child {
+	background-image: none;
+}
+	
+#resultaten td {
+	font-size: 12px;
+}
+	
+#resultaten td.merk {
+	font-weight: bold;
+}
+	
+#resultaten td.info a {
+	color: #212121;
+}
+	
+#resultaten td.rating span {
+	display: block;
+}
+	
+#resultaten td.rating p {
+	margin: 0;
+	color: #999;
+	font-size: 11px;
+}
+	
+.paginatie {
+	width: 680px;
+	text-align: center;
+}
+	
+.paginatie ul {
+	list-style-type: none;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+}
+	
+.paginatie li {
+	display: inline;
+	margin: 0 2px;
+}
+	
+.paginatie li a {
+	color: #212121;
+}
+	
+.verfijn-selectie h3 {
+	color: #80C500;
+	font-size: 15px;
+	font-family: arial, helvetica, sans-serif;
+}
+	
+.verfijn-selectie {
+	width: 680px;
+}
+	
+.verfijn-selectie .selections {
+	width: 300px;
+	display: inline-block;
+	margin-right: 30px;
+	margin-bottom: 10px;
+}
+	
+.verfijn-selectie .selections label {
+	color: #212121;
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	width: 70px;
+	display: inline-block;
+}
+	
+.verfijn-selectie .selections select {
+	width: 225px;
+}
+	
+.verfijn-selectie .button {
+	float: right;
+}
+	
+h1 {
+	color: #8F0E35;
+	font-size: 24px;
+	font-family: arial, helvetica, sans-serif;
+}
+
+/***** Fiets details *****/
+
+#fiets-details {
+	width: 680px;
+}
+	
+#fiets-details {
+	border-collapse: collapse;
+}
+	
+#fiets-details td, #fiets-details th {
+	border: 1px solid #81C501;
+	border-collapse: collapse;
+	padding: 10px;
+	text-align: left;
+	color: #212121;
+	font-family: arial, helvetica, sans-serif;
+}
+	
+#fiets-details th, #fiets-details td.details, #fiets-details td.omschrijving {
+	font-size: 13px;
+	background-color:#F4F9FC; 
+}
+	
+#fiets-details th.fiets-naam {
+	color: #81C501;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+}
+		
+h1 {
+	color: #8F0E35;
+	font-size: 24px;
+	font-family: arial, helvetica, sans-serif;
+}
+	
+#fiets-details a {
+	color: #990033;
+}
+	
+#fiets-details th {
+	height: 30px;
+}
+
+#fiets-details td.suggesties {
+	border: 0;
+	padding-left: 0;
+	padding-bottom: 0	
+}
+
+#fiets-details td.omschrijving {
+	vertical-align: text-top;
+}
+
+#fiets-details h3 {
+	color: #7FC500;
+	font-size: 15px;
+	font-family: arial, helvetica, sans-serif;
+}
+
+#fiets-details td.suggesties table {
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+	font-size: 13px;
+}
+
+.terug-overzicht {
+	display: inline-block;
+	width: 680px;
+	margin: 15px 0;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #81C501;
+}
+
+#reviews {
+	width: 680px;
+}
+
+.review-header h3, .review-header img, .review-header p {
+	display: inline-block;
+}
+
+.review-header p {
+	color: #222;
+	font-size: 12px;
+	margin-left: 120px;
+}
+
+.review-header a {
+	color: #334AA5;
+}
+
+.review-header h3 {
+	color: #334AA5;
+	font-size: 15px;
+	font-family: arial, helvetica, sans-serif;
+	padding: 0;
+	margin: 0 150px 0 0;
+	line-height: 200%;
+}

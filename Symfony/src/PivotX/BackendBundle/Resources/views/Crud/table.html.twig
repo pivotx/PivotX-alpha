@@ -4,6 +4,7 @@
 
     {{ table|raw }}
 
+    {% include "BackendBundle:Include:pagination.html.twig" with {'items': items, 'link':['_table/',crud.entity,'?',translate('pagination.page_variable'),'=%s']|join } %}
 {% endblock %}
 
 

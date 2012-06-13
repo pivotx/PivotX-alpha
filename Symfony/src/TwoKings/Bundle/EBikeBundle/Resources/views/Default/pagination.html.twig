@@ -1,0 +1,18 @@
+
+{% if items.noofpages > 1 %}
+
+    {% set pagination = pagination(items, link, link_arguments) %}
+
+    <div class="paginatie">
+    <ul>
+    {% for page in pagination.result %}
+        {% if page.link %}
+        <li class="{% if page.class %}{{ page.class }}{% endif %}"><a href="{{ page.link }}">{{ page.title }}</a></li>
+        {% else %}
+        <li class="{% if page.class %}{{ page.class }}{% endif %}"><a href="#">{{ page.title }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    </div>
+
+{% endif %}

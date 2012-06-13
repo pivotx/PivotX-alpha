@@ -1,7 +1,0 @@
-parameters:
-#    two_kings_e_bike.example.class: TwoKings\Bundle\EBikeBundle\Example
-
-services:
-#    two_kings_e_bike.example:
-#        class: %two_kings_e_bike.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

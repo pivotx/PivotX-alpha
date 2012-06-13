@@ -16,6 +16,11 @@
 
         <!-- views -->
         <parameter key="pivotx.views.class">PivotX\Component\Views\Service</parameter>
+
+        <!-- formats -->
+        <parameter key="pivotx.formats.class">PivotX\Component\Formats\Service</parameter>
+
+        <!-- twig -->
         <parameter key="pivotx.twig.class">PivotX\Component\Twig\Service</parameter>
         <parameter key="pivotx.doctrine.twig.class">PivotX\Doctrine\Twig\Service</parameter>
 
@@ -47,13 +52,18 @@
             <argument type="service" id="logger" on-invalid="ignore" />
         </service>
 
+        <service id="pivotx.formats" class="%pivotx.formats.class%">
+            <argument type="service" id="logger" on-invalid="ignore" />
+        </service>
+
         <service id="twig.extension.pivotx" class="%pivotx.twig.class%" public="false">
             <tag name="twig.extension" />
             <argument type="service" id="pivotx.routing" />
             <argument type="service" id="pivotx.translations" />
+            <argument type="service" id="pivotx.formats" />
         </service>
 
-        <service id="pivotx.translations" class="%pivotx.translations.class%" public="false">
+        <service id="pivotx.translations" class="%pivotx.translations.class%" public="true">
             <argument type="service" id="pivotx.routing" />
             <argument type="service" id="doctrine" />
         </service>

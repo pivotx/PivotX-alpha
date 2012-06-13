@@ -1,0 +1,149 @@
+{% extends "TwoKingsEBikeBundle:Default:base.html.twig" %}
+
+{% block page_title %}
+    Resultaten
+{% endblock %}
+
+{% block body %}
+
+{% loadView 'Bike/loadResults' as bikes %}
+Resultaten = {{ bikes.length }}
+<table id="resultaten">
+<thead>
+	<tr>
+		<th>
+            {% if bikes.queryarguments.sorteer=='merk' %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!merk','pagina','1')]|join) }}">Merk</a>
+            {% else %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','merk','pagina','1')]|join) }}">Merk</a>
+            {% endif %}
+        </th>
+		<th>
+            {% if bikes.queryarguments.sorteer=='model' %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!model','pagina','1')]|join) }}">Model</a>
+            {% else %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','model','pagina','1')]|join) }}">Model</a>
+            {% endif %}
+        </th>
+		<th>
+            {% if bikes.queryarguments.sorteer=='bereik' %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!bereik','pagina','1')]|join) }}">Bereik</a>
+            {% else %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','bereik','pagina','1')]|join) }}">Bereik</a>
+            {% endif %}
+        </th>
+		<th>
+            {% if bikes.queryarguments.sorteer=='prijs' %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!prijs','pagina','1')]|join) }}">Prijs</a>
+            {% else %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','prijs','pagina','1')]|join) }}">Prijs</a>
+            {% endif %}
+        </th>
+		<th>
+            {% if bikes.queryarguments.sorteer=='gewicht' %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!gewicht','pagina','1')]|join) }}">Gewicht</a>
+            {% else %}
+            <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','gewicht','pagina','1')]|join) }}">Gewicht</a>
+            {% endif %}
+        </th>
+		<th><a href="#nogniet">Reviews</a></th>
+		<th></th>
+	</tr>
+</thead>
+<tbody>
+
+{% for bike in bikes.result %}
+
+    <tr>
+        <td class="merk">{{ bike.brand.title }}</td>
+        <td>{{ bike.title }}</td>
+        <td>{{ bike.rangeavg }}</td>
+        <td>{{ bike.price|formatas('Price/EUR') }}</td>
+        <td>{{ bike.weight|formatas('Weight/kg') }}</td>
+        <td class="rating"> </td>
+        <td class="info"><a href="{{ ref(['bike/',bike.publicid,'?',bikes.queryarguments|formatas('Querystring')]|join) }}">Meer info</a></td>
+    </tr>
+    
+    
+{% endfor %}
+
+
+
+
+
+</tbody>
+</table>
+
+    {% include "TwoKingsEBikeBundle:Default:pagination.html.twig" with {'items': bikes, 'link':['bike/results']|join, 'link_arguments': {'pagina': '%s'} } %}
+
+
+<form method="get" action="{{ ref('bike/results') }}">
+<div class="verfijn-selectie">
+	<h3>Verfijn of verbreed je selectie</h3>
+	
+	<div class="selections">
+		<label>Merk:</label>
+		{% loadView 'Brand/loadSorted' as brands %}
+        <select name="merk">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for brand in brands.result %}
+            <option value="{{ brand.publicid }}">{{ brand.title }}</option>
+        {% endfor %}
+        </select>
+	</div>
+	
+	<div class="selections">
+		<label>Gewicht:</label>
+		{% loadView 'BikeSelection/getWeights' as weights %}
+        <select name="gewicht">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for weight in weights.result %}
+            <option value="{{ weight.value }}">{{ weight.title }}</option>
+        {% endfor %}
+        </select>
+	</div>
+	
+	<div class="selections">
+		<label>Bereik:</label>
+		{% loadView 'BikeSelection/getRanges' as ranges %}
+        <select name="bereik">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for range in ranges.result %}
+            <option value="{{ range.value }}">{{ range.title }}</option>
+        {% endfor %}
+        </select>
+	</div>
+	
+	<div class="selections">
+		<label>Prijs:</label>
+		{% loadView 'BikeSelection/getPrices' as prices %}
+        <select name="prijs">
+        <option value="">Maakt niet uit</option>
+		<option value="">--------------</option>
+        {% for price in prices.result %}
+            <option value="{{ price.value }}">{{ price.title }}</option>
+        {% endfor %}
+        </select>
+	</div>
+	
+	
+	<div class="button">
+	<button type="submit" value="clicked">
+	
+	{% image '@TwoKingsEBikeBundle/Resources/public/images/verzend.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+	
+	</button>
+	</div>
+</form>	
+	
+	
+</div>
+
+
+
+
+
+{% endblock %}

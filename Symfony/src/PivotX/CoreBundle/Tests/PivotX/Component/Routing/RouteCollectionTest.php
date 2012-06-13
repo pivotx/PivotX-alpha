@@ -37,14 +37,14 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
                 new Route(
                     '_page/latest-news', 'latest-news',
                     array(),
-                    array('_rewrite' => new Reference(null,'(en)@archive/'.date('Y-m')))
+                    array('_rewrite' => new Reference(null,'(language=en)@archive/'.date('Y-m')))
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 new Route(
                     '_page/latest-news', 'laatste-nieuws',
                     array(),
-                    array('_rewrite' => new Reference(null,'(nl)@archive/'.date('Y-m')))
+                    array('_rewrite' => new Reference(null,'(language=nl)@archive/'.date('Y-m')))
                 ))
 
             ->add(
@@ -68,14 +68,14 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
                 new Route(
                     '', 'belasting',
                     array(),
-                    array('_redirect' => new Reference(null,'(en)@category/taxes'))
+                    array('_redirect' => new Reference(null,'(language=en)@category/taxes'))
                 ))
             ->add(
                 array( 'language' => 'nl', 'site' => 'main', 'target' => false ),
                 new Route(
                     '', 'belasting',
                     array(),
-                    array('_redirect' => new Reference(null,'(nl)@category/taxes'))
+                    array('_redirect' => new Reference(null,'(language=nl)@category/taxes'))
                 ))
             ;
     }
@@ -122,11 +122,11 @@ class RouteCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testReferenceToRoute()
     {
-        $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@_page/latest-news')));
+        $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'(site=main&language=en)@_page/latest-news')));
         // @todo should test the value of routematch
-        $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@archive/2012-01')));
+        $this->assertNotNull($routematch = $this->routecollection->matchReference(new Reference(null,'(site=main&language=en)@archive/2012-01')));
 
-        $this->assertNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@_page/last-news')));
-        $this->assertNull($routematch = $this->routecollection->matchReference(new Reference(null,'main/(en)@archive/201201')));
+        $this->assertNull($routematch = $this->routecollection->matchReference(new Reference(null,'(site=main&language=en)@_page/last-news')));
+        $this->assertNull($routematch = $this->routecollection->matchReference(new Reference(null,'(site=main&language=en)@archive/201201')));
     }
 }

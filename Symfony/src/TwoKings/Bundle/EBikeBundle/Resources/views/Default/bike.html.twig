@@ -1,0 +1,105 @@
+{% extends "TwoKingsEBikeBundle:Default:base.html.twig" %}
+
+{% block page_title %}
+    {{ bike.brand.title }} {{ bike.title }}
+{% endblock %}
+
+{% block body %}
+ 
+ 
+ 
+ 
+    
+    <h1>{{ bike.brand.title }} {{ bike.title }}</h1>
+
+ 
+    
+
+
+
+<table id="fiets-details">
+	<tr>
+		<td rowspan="5" width="295">
+		
+		{% image '@TwoKingsEBikeBundle/Resources/public/images/fiets.png' %}<img src="{{ asset_url }}" alt="" align="left" />{% endimage %}
+		
+		</td>
+		<th colspan="2" class="fiets-naam">
+			{{ bike.brand.title }} {{ bike.title }}
+		</th>
+	</tr>
+	<tr>
+		<th width="10%">Model</th>
+		<td class="details">{{ bike.title }} - <a href="">Download de brochure</a></td>
+	</tr>
+	<tr>
+		<th>Jaar</th>
+		<td class="details">{{ bike.yearbuilt }}</td>
+	</tr>
+	<tr>
+		<th>Gewicht</th>
+		<td class="details">{{ bike.weight|formatas('Weight/kg') }}</td>
+	</tr>
+	<tr>
+		<th>Prijs</th>
+		<td class="details">{{ bike.price|formatas('Price/EUR') }}</td>
+	</tr>
+	<tr>
+		<td class="suggesties">
+		<h3>Bekijk ook:</h3>
+			<table width="200">
+				<tr>
+					<th>Merk</th>
+					<th>Model</th>
+				</tr>
+				<tr>
+					<td>Giant</td>
+					<td>Twist Go Double LDS</td>
+				</tr>
+				<tr>
+					<td>Giant</td>
+					<td>Twist Go Double LDS</td>
+				</tr>
+				<tr>
+					<td>Giant</td>
+					<td>Twist Go Double LDS</td>
+				</tr>
+				<tr>
+					<td>Giant</td>
+					<td>Twist Go Double LDS</td>
+				</tr>
+				<tr>
+					<td>Giant</td>
+					<td>Twist Go Double LDS</td>
+				</tr>
+			</table>
+		</td>
+		<td colspan="2" class="omschrijving">
+			{{ bike.info }}
+		</td>
+	</tr>
+</table>
+
+
+<div class="terug-overzicht">
+	<a href="{{ ref(['bike/results?',queryarguments|formatas('Querystring')]|join) }}">
+	{% image '@TwoKingsEBikeBundle/Resources/public/images/terug-overzicht.png' %}<img src="{{ asset_url }}" alt="" align="right" />{% endimage %}
+	</a>
+</div>
+
+<div id="reviews">
+
+	<div class="review-header">
+		<h3>2 reviews</h3>
+		
+		{% image '@TwoKingsEBikeBundle/Resources/public/images/plaats-review.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
+		
+		<p><strong>Sorteer op:</strong> <a href="">Beste reviews</a> | <a href="">Datum</a></p>
+		
+	</div>
+
+</div>
+
+
+
+{% endblock %}

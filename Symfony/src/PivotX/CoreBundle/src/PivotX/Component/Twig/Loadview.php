@@ -30,7 +30,7 @@ class Loadview extends \Twig_TokenParser
             // @todo make this work
             //$name = $viewexpr->getAttribute('name');
         }
-        $name = preg_replace('|[^a-z0-9]+|','_',$view);
+        $name = preg_replace('|[^a-z0-9]+|','_', $view);
 
         $asexpr = null;
         if ($this->parser->getStream()->test(\Twig_Token::NAME_TYPE, 'as')) {

@@ -29,28 +29,20 @@ class Views
             return;
         }
 
-        //self::$logger->info('loadView "'.$name.'" called');
-
         $view = self::$views_service->findView($name);
 
         if (is_null($view)) {
             // @todo throw an exception?
             //echo "view not found\n";
+            self::$logger->err('Call for loadView "'.$name.'"  - view not found');
             return false;
         }
 
-
-        // pagination, should it be here?
-
-        $limit  = null;
-        $offset = null;
-
-        $limit = 15;
+        self::$logger->info('Call for loadView "'.$name.'" - view found');
 
         if (!is_null($arguments)) {
             $view->setArguments($arguments);
         }
-        $view->setRange($limit, $offset);
 
         return $view;
     }

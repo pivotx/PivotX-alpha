@@ -1,0 +1,82 @@
+{% extends "BackendBundle:Base:content_and_meta.html.twig" %}
+
+{% block content %}
+
+    <table class="developer table table-striped table-bordered">
+        <caption>Prefixes</caption>
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Target</th>
+                <th>Language</th>
+                <th>URL prefix</th>
+            </tr>
+        </thead>
+    {% for prefix in prefixes.result %}
+        <tbody>
+            <tr>
+                <td>{{ prefix.filter.site }}</td>
+                <td>{{ prefix.filter.target }}</td>
+                <td>{{ prefix.filter.language }}</td>
+                <td>{{ prefix.prefix }}</td>
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+
+    <table class="developer table table-striped table-bordered">
+        <caption>Routes</caption>
+        <thead>
+            <tr>
+                <th>Site</th>
+                <th>Target</th>
+                <th>Language</th>
+                <th>Local reference</th>
+            </tr>
+        </thead>
+    {% for route in routes.result %}
+        <tbody>
+            <tr>
+                <td>
+                    {% if route.filter.site|length==0 %}
+                        <em>any</em>
+                    {% else %}
+                        {{ route.filter.site|join(', ') }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if route.filter.target|length==0 %}
+                        <em>any</em>
+                    {% else %}
+                        {{ route.filter.target|join(', ') }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if route.filter.language|length==0 %}
+                        <em>any</em>
+                    {% else %}
+                        {{ route.filter.language|join(', ') }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ route.entity }}/{{ route.entityfilter }}
+
+                    <div class="on-row-hover btn-group">
+                        <a class="btn btn-mini" data-show="code-example">{% raw %}{% code %}{% endraw %}</a>
+                    </div>
+
+                    <div class="toggles code-example">
+                        <hr />
+<pre class="prettify linenums">
+&lt;a href="{% raw %}{{ ref('{% endraw %}{{ route.entity }}/{{ route.entityfilter }}{% raw %}') }}{% endraw %}"&gt;link&lt;/a&gt; &lt;!-- (this example doesn't work) --&gt;
+</pre>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+
+{% endblock %}
+
+

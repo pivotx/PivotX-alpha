@@ -375,11 +375,18 @@ class Route
                         if ($reference->getAnchorQuery() !== false) {
                             $arguments['_anchor_query'] = $reference->getAnchorQuery();
                         }
-                        return new RouteMatch($this,$arguments);
+                        return new RouteMatch($this, $arguments);
                     }
                 }
                 else if ($this->efilter == $efilter) {
-                    return new RouteMatch($this);
+                    $arguments = array();
+                    if ($reference->getQuery() !== false) {
+                        $arguments['_query'] = $reference->getQuery();
+                    }
+                    if ($reference->getAnchorQuery() !== false) {
+                        $arguments['_anchor_query'] = $reference->getAnchorQuery();
+                    }
+                    return new RouteMatch($this, $arguments);
                 }
             }
         }

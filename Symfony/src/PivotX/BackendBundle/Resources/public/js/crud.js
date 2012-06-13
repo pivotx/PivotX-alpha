@@ -52,7 +52,7 @@ function updateCrudMeta(crud_id)
     });
 }
 
-$(function() {
+$(function(){
     // Handler for .ready() called.
 
     $('table.crud').each(function(){
