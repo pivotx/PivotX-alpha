@@ -3,12 +3,12 @@
             <li>
                 <p>
                     <strong>{{ item.title }}</strong>
-                {% if items.countTotalResults == 0 %}
+                {% if items.length == 0 %}
                     has no comments.
-                {% elseif items.countTotalResults == 1 %}
-                    has {{ items.countTotalResults }} comment.
+                {% elseif items.length == 1 %}
+                    has {{ items.length }} comment.
                 {% else %}
-                    has {{ items.countTotalResults }} comments.
+                    has {{ items.length }} comments.
                 {% endif %}
                 </p>
 

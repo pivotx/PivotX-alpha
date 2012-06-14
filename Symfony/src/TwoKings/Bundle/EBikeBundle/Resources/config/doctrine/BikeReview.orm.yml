@@ -34,15 +34,8 @@ TwoKings\Bundle\EBikeBundle\Entity\BikeReview:
         timestampable:
           on: update
     viewable:
-      type: integer
+      type: boolean
       length: null
-      precision: 0
-      scale: 0
-      nullable: false
-      unique: false
-    comment_status:
-      type: string
-      length: 32
       precision: 0
       scale: 0
       nullable: false
@@ -71,6 +64,13 @@ TwoKings\Bundle\EBikeBundle\Entity\BikeReview:
     email:
       type: string
       length: 255
+      precision: 0
+      scale: 0
+      nullable: false
+      unique: false
+    rating:
+      type: integer
+      length: null
       precision: 0
       scale: 0
       nullable: false

@@ -11,35 +11,35 @@ Resultaten = {{ bikes.length }}
 <table id="resultaten">
 <thead>
 	<tr>
-		<th>
+		<th class="merk">
             {% if bikes.queryarguments.sorteer=='merk' %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!merk','pagina','1')]|join) }}">Merk</a>
             {% else %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','merk','pagina','1')]|join) }}">Merk</a>
             {% endif %}
         </th>
-		<th>
+		<th class="model">
             {% if bikes.queryarguments.sorteer=='model' %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!model','pagina','1')]|join) }}">Model</a>
             {% else %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','model','pagina','1')]|join) }}">Model</a>
             {% endif %}
         </th>
-		<th>
+		<th class="bereik">
             {% if bikes.queryarguments.sorteer=='bereik' %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!bereik','pagina','1')]|join) }}">Bereik</a>
             {% else %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','bereik','pagina','1')]|join) }}">Bereik</a>
             {% endif %}
         </th>
-		<th>
+		<th class="prijs">
             {% if bikes.queryarguments.sorteer=='prijs' %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!prijs','pagina','1')]|join) }}">Prijs</a>
             {% else %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','prijs','pagina','1')]|join) }}">Prijs</a>
             {% endif %}
         </th>
-		<th>
+		<th class="gewicht">
             {% if bikes.queryarguments.sorteer=='gewicht' %}
             <a href="{{ ref(['bike/results?',bikes.queryarguments|formatas('Querystring','sorteer','!gewicht','pagina','1')]|join) }}">Gewicht</a>
             {% else %}
@@ -60,7 +60,18 @@ Resultaten = {{ bikes.length }}
         <td>{{ bike.rangeavg }}</td>
         <td>{{ bike.price|formatas('Price/EUR') }}</td>
         <td>{{ bike.weight|formatas('Weight/kg') }}</td>
-        <td class="rating"> </td>
+        <td class="rating">
+            {% if bike.reviewrating > 0 %}
+                <span>{% for star in range(1,bike.reviewrating) %}{% image '@TwoKingsEBikeBundle/Resources/public/images/ster.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}{% endfor %}</span>
+            {% endif %}
+            {% if bike.noofreviews == 0 %}
+                <p>geen reviews</p>
+            {% elseif bike.noofreviews == 1 %}
+               <p>1 review</p>
+            {% else %}
+                <p>{{ bike.noofreviews }} reviews</p>
+            {% endif %}
+        </td>
         <td class="info"><a href="{{ ref(['bike/',bike.publicid,'?',bikes.queryarguments|formatas('Querystring')]|join) }}">Meer info</a></td>
     </tr>
     

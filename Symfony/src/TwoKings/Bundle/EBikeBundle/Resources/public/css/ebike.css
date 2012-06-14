@@ -67,15 +67,33 @@ button {
 }
 	
 #resultaten th {
-	font-size: 13px;
 	background-color:#E1F0FE;
 	background-image: url(img/bg.gif);
 	background-repeat: no-repeat;
 	background-position: 95% 50%;
 }
+
+#resultaten th a {
+	font-size: 13px;
+	color: #222;
+	text-decoration: none;
+	padding-right: 100%;
+}
 	
 #resultaten th:last-child {
 	background-image: none;
+}
+
+#resultaten th.merk {
+	width: 75px;
+}
+
+#resultaten th.bereik {
+	width: 50px;	
+}
+
+#resultaten th.gewicht {
+	width: 65px;
 }
 	
 #resultaten td {
@@ -98,6 +116,7 @@ button {
 	margin: 0;
 	color: #999;
 	font-size: 11px;
+	font-weight: normal;
 }
 	
 .paginatie {
@@ -239,8 +258,12 @@ h1 {
 	width: 680px;
 }
 
-.review-header h3, .review-header img, .review-header p {
+.review-header {
 	display: inline-block;
+}
+
+.review-header h3, .review-header img, .review-header p {
+	float: left;
 }
 
 .review-header p {
@@ -259,5 +282,74 @@ h1 {
 	font-family: arial, helvetica, sans-serif;
 	padding: 0;
 	margin: 0 150px 0 0;
-	line-height: 200%;
+}
+
+/***** Reviews + review form ******/
+
+#reviews form {
+	margin-top: 20px;
+	border-top: 1px solid #81C501;
+}
+
+#reviews form input, #reviews form textarea {
+	border: 1px solid #B5D6E7;
+	padding: 5px;
+}
+
+#reviews form div {
+	margin: 10px 0;
+}
+
+#reviews form label {
+	width: 150px;
+	display: inline-block;
+}
+
+#reviews form div#form_rating label {
+	width: 20px;
+}
+
+#reviews form label.required:after {
+	content: "*";
+	color: #f00;
+}
+
+#reviews form #form_rating label:after {
+	content: "";
+}
+
+#form_comment {
+	display: block;
+	width: 350px;
+	height: 200px;
+}
+
+#reviews .review {
+	background-color: #F4F9FC;
+	padding: 10px;
+	margin: 10px 0;
+	font-family: arial, helvetica, sans-serif;
+}
+
+#reviews .review p {
+	color: #222;
+	font-weight: normal;
+}
+
+.review .naam {
+	
+	font-size: 15px;
+	color: #990033;
+	font-weight: normal;
+}
+
+.reviewheader {
+	margin-bottom: 15px;
+}
+
+small {
+	display: block;
+	margin-top: 10px;
+	font-size: 11px;
+	font-style: italic;
 }

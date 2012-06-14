@@ -4,7 +4,7 @@ namespace TwoKings\Bundle\EBikeBundle\Views;
 
 use \PivotX\Component\Views\AbstractView;
 
-class loadSortedBrands extends AbstractView
+class loadBikeReviews extends AbstractView
 {
     private $doctrine_registry;
 
@@ -13,10 +13,10 @@ class loadSortedBrands extends AbstractView
         $this->doctrine_registry = $doctrine_registry;
         $this->name              = $name;
         $this->group             = 'TwoKings/EBikeBundle';
-        $this->description       = 'Load all the brands sorted by title';
+        $this->description       = 'Load viewable reviews for a bike';
 
         $this->long_description = <<<THEEND
-This view returns all the brands sorted by title.
+ This view picks up the <code>current bike</code> the paging argument <code>pagina</code>.
 THEEND;
 
         $this->arguments    = array();
@@ -26,15 +26,22 @@ THEEND;
 
     protected function buildQuery()
     {
-        return $this->doctrine_registry->getRepository('TwoKingsEBikeBundle:Brand')->createQueryBuilder('b')
-            ;
+        $qb = $this->doctrine_registry->getRepository('TwoKingsEBikeBundle:BikeReview')->createQueryBuilder('br');
+
+        $qb->where('br.viewable = 1');
+
+        if (isset($this->arguments['bike'])) {
+            $qb->andWhere('br.bike = :bike')->setParameter('bike', $this->arguments['bike']);
+        }
+
+        return $qb;
     }
 
     public function getResult()
     {
         $query = $this
             ->buildQuery()
-            ->orderBy('b.title', 'ASC')
+            ->orderBy('br.date_modified', 'DESC')
             ->setFirstResult($this->range_offset)
             ->setMaxResults($this->range_limit)
             ->getQuery();
@@ -48,9 +55,19 @@ THEEND;
     {
         $query = $this
             ->buildQuery()
-            ->select('count(b.id)')
+            ->select('count(br.id)')
             ->getQuery();
 
         return $query->getSingleScalarResult();
+    }
+
+    public function getLengthAndRating()
+    {
+        $query = $this
+            ->buildQuery()
+            ->select('count(br.id) as length, sum(br.rating) as total_rating')
+            ->getQuery();
+
+        return $query->getSingleResult();
     }
 }

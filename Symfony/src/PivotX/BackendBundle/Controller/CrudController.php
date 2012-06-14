@@ -214,7 +214,7 @@ class CrudController extends Controller
         return $this->render('BackendBundle:Crud:table.html.twig', $context);
     }
 
-    public function showRecordAction(Request $request)
+    public function showGetRecordAction(Request $request, $entity_manager, $item)
     {
         $html = array(
             'language' => 'en',
@@ -228,35 +228,68 @@ class CrudController extends Controller
             'entity' => $request->get('entity'),
             'id' => $request->get('id')
         );
-        $entity_class = $this->getEntityClass($crud['entity']);
 
-        $em = $this->get('doctrine')->getEntityManager();
-
-        if ($crud['id'] > 0) {
-            $item = $em->find($entity_class,$crud['id']);
-        }
-        else {
-            $item = new $entity_class;
-        }
-
-        $form = $this->getForm($em, $item);
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($item);
-                $em->flush();
-
-                $url = $this->container->get('pivotx.routing')->buildUrl('_table/'.$crud['entity']);
-                return $this->redirect($url);
-            }
-        }
+        $form = $this->getForm($entity_manager, $item);
 
         return $this->render(
             'BackendBundle:Crud:record.html.twig',
             array('html' => $html, 'crud' => $crud, 'item' => $item, 'form' => $form->createView())
         );
+    }
+
+    public function showPostOrPutRecordAction(Request $request, $entity_manager, $item)
+    {
+        $form = $this->getForm($entity_manager, $item);
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $entity_manager->persist($item);
+            $entity_manager->flush();
+
+            $url = $this->get('pivotx.routing')->buildUrl('_table/'.$request->get('entity'));
+
+            // only when POST
+            return $this->redirect($url);
+        }
+    }
+
+    public function showDeleteRecordAction(Request $request, $entity_manager, $item)
+    {
+        $entity_manager->remove($item);
+        $entity_manager->flush();
+
+        $data = array(
+            'code' => '200',
+            'message' => 'Succesfully deleted.',
+        );
+
+        $content = json_encode($data);
+
+        return new \Symfony\Component\HttpFoundation\Response($content, $data['code']);
+    }
+
+    public function showRecordAction(Request $request)
+    {
+        $entity_class = $this->getEntityClass($request->get('entity'));
+        $entity_manager = $this->get('doctrine')->getEntityManager();
+
+        if ($request->get('id') > 0) {
+            $item = $entity_manager->find($entity_class,$request->get('id'));
+        }
+        else {
+            $item = new $entity_class;
+        }
+        
+
+        if (in_array($request->getMethod(), array('DELETE'))) {
+            return $this->showDeleteRecordAction($request, $entity_manager, $item);
+        }
+        if (in_array($request->getMethod(), array('POST', 'PUT'))) {
+            return $this->showPostOrPutRecordAction($request, $entity_manager, $item);
+        }
+        if (in_array($request->getMethod(), array('GET'))) {
+            return $this->showGetRecordAction($request, $entity_manager, $item);
+        }
     }
 }

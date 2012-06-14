@@ -34,6 +34,9 @@ class Service
         $format = new ManyFormats('Distance/km', 'TwoKings/EBikeBundle', 'Convert kilometers to "### km"');
         $this->pivotx_formats->registerFormat($format);
 
+        $format = new ManyFormats('Date/long', 'TwoKings/EBikeBundle', 'Long formatted date');
+        $this->pivotx_formats->registerFormat($format);
+
         $format = new ManyFormats('Querystring', 'TwoKings/EBikeBundle', 'Simple way to create a querystring');
         $this->pivotx_formats->registerFormat($format);
     }

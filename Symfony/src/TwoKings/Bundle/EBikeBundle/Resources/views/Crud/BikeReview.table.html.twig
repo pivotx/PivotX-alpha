@@ -5,6 +5,7 @@
                     <input type="checkbox" name="id-toggle" data-id="id-toggle">
                 </th>
                 <th>Id</th>
+                <th>Show</th>
                 <th>Date</th>
                 <th>User</th>
                 <th>Comment</th>
@@ -21,25 +22,33 @@
                     № {{ item.id }}
                 </td>
                 <td>
+                    {% if item.viewable %}
+                        Show
+                    {% else %}
+                        Hide
+                    {% endif %}
+                </td>
+                <td>
                     <span>
                         {{ item.DateCreated|date('Y-m-d H:i:s') }}
                     </span>
 
                     <div class="btn-group on-row-hover">
                         <a class="btn btn-mini" href="{{ ref(['_table/',crud.entity,'/',item.id]|join) }}"><i class="icon-pencil icon-white"></i> edit</a>
-                        <a class="btn btn-mini btn-danger" href="{{ ref(['_table/',crud.entity,'/',item.id,'?action=delete']|join) }}"><i class="icon-trash icon-white"></i> delete</a>
+                        <a class="btn btn-mini btn-danger crud-delete" href="{{ ref(['_table/',crud.entity,'/',item.id,'?action=delete']|join) }}"><i class="icon-trash icon-white"></i> delete</a>
                     </div>
                 </td>
                 <td>
                     {# @todo find out why get* is necessary #}
                     <strong>{{ item.getName }}</strong><br/>
-                    from <em>{{ item.getRemoteAddr }}</em> using <em>{{ item.getHttpUserAgent }}</em>
+                    from <em>{{ item.getRemoteAddr }}</em> using <em title="{{ item.getHttpUserAgent }}">{{ item.getHttpUserAgent|slice(0,20) }}&hellip;</em>
                 </td>
                 <td>
                     <span>{{ item.comment|striptags|slice(0, 30) }}
                     
                     {# publish block review show hide #}
 
+                    {#
                     {% if item.getCommentStatus == 'publish' %}
                         <div class="btn-group on-row-hover">
                             <button class="btn btn-mini btn-warning"><i class="icon-thumbs-down icon-white"></i> block</button>
@@ -49,7 +58,7 @@
                             <button class="btn btn-mini btn-success"><i class="icon-thumbs-up icon-white"></i> unblock</button>
                         </div>
                     {% endif %}
-
+                    #}
                 </td>
             </tr>
         {% endfor %}

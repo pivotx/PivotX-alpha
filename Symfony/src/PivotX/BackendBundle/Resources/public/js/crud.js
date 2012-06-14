@@ -108,5 +108,44 @@ $(function(){
         });
 
         updateCrudMeta(crud_id);
+
+        $('a.crud-delete', this).on('click', function(e){
+            var delete_el = this;
+
+            e.preventDefault();
+
+            modalDelete('Delete', '<p>Something about what we are about to delete</p>', function(){
+                // @todo we should add feedback here
+
+                modalProgressOpen('Deleting', '<p>Deleting the following item(s)..</p>');
+                modalProgressUpdate(20,80,3000);
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: $(delete_el).attr('href'),
+                    dataType: 'json',
+                    success: function(data, textStatus, jqXHR){
+                        if (data.code == 200) {
+                            $('#default-modal div.modal-body').html('<p>'+data.message+'</p>');
+                            modalProgressUpdate(80, 100, 1500);
+                            if (typeof data.location != 'undefined') {
+                                setTimeout('document.location = "' + data.location + '"', 1500);
+                            }
+                            else {
+                                setTimeout('document.location = document.location', 1500);
+                            }
+                        }
+                        else {
+                            modalProgressClose();
+                            modalMessageError('Error', data.message);
+                        }
+                    },
+                    error: function(data, textStatus, jqXHR){
+                        modalProgressClose();
+                        modalMessageError('Error', '<p>Something unexpected went wrong.</p>');
+                    }
+                });
+            });
+        });
     });
 });

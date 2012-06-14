@@ -18,21 +18,21 @@ class ManyFormats extends AbstractFormat
                 if ($in < 1) {
                     return '';
                 }
-                return number_format($in / 1000, 1, ',', '.').' kg';
+                return number_format($in / 1000, 1, ',', '.').' kg';
                 break;
 
             case 'Price/EUR':
                 if ($in < 1) {
                     return '';
                 }
-                return '€ '.number_format($in / 100, 2, ',', '.');
+                return '€ '.number_format($in / 100, 2, ',', '.');
                 break;
 
             case 'Distance/km':
                 if ($in < 1) {
                     return '';
                 }
-                return number_format($in, 0, ',', '.').' km';
+                return number_format($in, 0, ',', '.').' km';
                 break;
 
             case 'Querystring':
@@ -50,6 +50,18 @@ class ManyFormats extends AbstractFormat
                     $out .= $k . '=' . rawurlencode($v);
                 }
                 return $out;
+
+            case 'Date/long':
+                if (is_int($in)) {
+                    $utime = $in;
+                }
+                else if ($in instanceof \DateTime) {
+                    $utime = $in->getTimestamp();
+                }
+                else if (is_string($in) && ($in == (int) $in)) {
+                    $utime = (int) $in;
+                }
+                return strftime('%e %B %Y, %H:%S', $utime);
         }
 
         return $in . ' ('.$this->name.')';

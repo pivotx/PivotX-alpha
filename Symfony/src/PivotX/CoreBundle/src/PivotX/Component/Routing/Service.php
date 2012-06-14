@@ -197,8 +197,10 @@ class Service
         }
 
         // @todo we created absolute url's for too easy
-        //       for now we insert app_dev.php and fix it all later
-        $url = str_replace('twokings.eu/','twokings.eu/app_dev.php/',$url);
+        // @todo for now we insert app_dev.php when the curren URI has it
+        if (strpos($_SERVER['REQUEST_URI'],'app_dev.php')) {
+            $url = str_replace('twokings.eu/','twokings.eu/app_dev.php/',$url);
+        }
 
         return $url;
     }

@@ -1,0 +1,44 @@
+
+
+
+	<div class="review-header">
+        {% if bike.noofreviews == 0 %}
+            <h3>Geen reviews</h3>
+        {% elseif bike.noofreviews == 1%}
+            <h3>1 review</h3>
+        {% else %}
+            <h3>{{ bike.noofreviews }} reviews</h3>
+        {% endif %}
+		
+		<a href="#nieuw">{% image '@TwoKingsEBikeBundle/Resources/public/images/plaats-review.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}</a>
+		
+		<p><strong>Sorteer op:</strong> <a href="">Beste reviews</a> | <a href="">Datum</a></p>
+		
+	</div>
+
+
+
+
+
+{% for review in reviews.result %}
+
+    <div class="review">
+    <div class="reviewheader">
+        <p><span class="naam">{{ review.name }}</span> over de {{ bike.brand.title }} {{ bike.title }} - {% for star in range(1,review.rating) %}{% image '@TwoKingsEBikeBundle/Resources/public/images/ster.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}{% endfor %}</p>
+        
+        
+    </div>
+           
+       <p>{{ review.comment|nl2br }}</p>
+       
+       <small>{{ review.datemodified|formatas('Date/long') }}</small>
+       
+    </div>
+
+{% else %}
+
+    <p>
+        Er zijn geen reviews.
+    </p>
+
+{% endfor %}

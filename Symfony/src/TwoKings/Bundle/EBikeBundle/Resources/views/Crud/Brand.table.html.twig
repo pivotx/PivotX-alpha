@@ -25,7 +25,7 @@
 
                     <div class="btn-group on-row-hover">
                         <a class="btn btn-mini" href="{{ ref(['_table/',crud.entity,'/',item.id]|join) }}"><i class="icon-pencil icon-white"></i> edit</a>
-                        <button class="btn btn-mini btn-danger"><i class="icon-trash icon-white"></i> delete</button>
+                        <a class="btn btn-mini btn-danger crud-delete" href="{{ ref(['_table/',crud.entity,'/',item.id,'?action=delete']|join) }}"><i class="icon-trash icon-white"></i> delete</a>
                     </div>
                 </td>
             </tr>

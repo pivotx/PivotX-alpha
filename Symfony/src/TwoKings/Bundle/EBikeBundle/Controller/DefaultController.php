@@ -142,16 +142,89 @@ class DefaultController extends Controller
         return $this->render('TwoKingsEBikeBundle:Default:results.html.twig', $context);
     }
 
+    protected function getNewBikeReviewForm($bikereview)
+    {
+        $translations = $this->get('pivotx.translations');
+
+        $rating_choices = array(
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
+            '5' => '5'
+        );
+
+        $builder = $this
+            ->createFormBuilder($bikereview)
+            ->add('name', 'text', array ( 'label' => $translations->translate('bikereview.form.new.name') ))
+            ->add('email', 'email', array ( 'label' => $translations->translate('bikereview.form.new.email') )) 
+            ->add('rating', 'choice', array ( 'label' => $translations->translate('bikereview.form.new.rating'), 'choices' =>  $rating_choices, 'expanded' => true )) 
+            ->add('comment', 'textarea', array ( 'label' => $translations->translate('bikereview.form.new.comment') ))
+            ;
+
+        return $builder->getForm();
+    }
+
+    protected function updateBikeReviews($bike)
+    {
+        $reviews_view = $this->get('pivotx.views')->findView('Bike/loadReviews');
+        $reviews_view->setArguments(array('bike' => $bike->getId()));
+
+        $info = $reviews_view->getLengthAndRating();
+
+        $bike->setNoOfReviews($info['length']);
+        if ($info['length'] > 0) {
+            $bike->setReviewRating($info['total_rating'] / $info['length']);
+        }
+        else {
+            $bike->setReviewRating(0);
+        }
+    }
+
     public function showBikeAction(Request $request, $publicid)
     {
         $context = $this->getSharedContext();
 
-        $repository = $this->get('doctrine')->getRepository('TwoKingsEBikeBundle:Bike');
+        $repository = $this->getDoctrine()->getRepository('TwoKingsEBikeBundle:Bike');
 
         list($view_arguments, $query_arguments) = $this->getQueryArguments($request);
 
-        $context['bike'] = $repository->findOneBy(array( 'publicid' => $publicid ));
-        $context['queryarguments'] = $query_arguments;
+        $bike       = $repository->findOneBy(array( 'publicid' => $publicid ));
+        $bikereview = new \TwoKings\Bundle\EBikeBundle\Entity\BikeReview;
+        $form       = $this->getNewBikeReviewForm($bikereview);
+
+        $reviews_view = $this->get('pivotx.views')->findView('Bike/loadReviews');
+        $reviews_view->setArguments(array('bike' => $bike->getId()));
+
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $bikereview->setBike($bike);
+                $bikereview->setDateCreated(new \DateTime());
+                $bikereview->setDateModified(new \DateTime());
+                $bikereview->setHttpUserAgent($request->server->get('HTTP_USER_AGENT'));
+                $bikereview->setRemoteAddr($request->getClientIp());
+                $bikereview->setViewable(1);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($bikereview);
+                $em->flush();
+
+                $this->updateBikeReviews($bike);
+                $em->persist($bike);
+                $em->flush();
+
+                // @todo we should go back to the proper URL
+                $url = $this->container->get('pivotx.routing')->buildUrl('bike/'.$bike->getPublicid());
+                return $this->redirect($url);
+            }
+        }
+
+        $context['bike']                = $bike;
+        $context['queryarguments']      = $query_arguments;
+        $context['bikereview_new_form'] = $form->createView();
+        $context['reviews']             = $reviews_view;
 
         return $this->render('TwoKingsEBikeBundle:Default:bike.html.twig', $context);
     }

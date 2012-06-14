@@ -2,6 +2,11 @@
 
 namespace TwoKings\Bundle\EBikeBundle\Entity;
 
+use Symfony\Component\Validator\Constraints\MinLength;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
 /**
  */
 //class BikeReview extends \PivotX\Doctrine\Entity\AutoEntity
@@ -28,11 +33,6 @@ class BikeReview
     private $viewable;
 
     /**
-     * @var text $comment_status
-     */
-    private $comment_status;
-
-    /**
      * @var text $remote_addr
      */
     private $remote_addr;
@@ -51,6 +51,11 @@ class BikeReview
      * @var text $email
      */
     private $email;
+
+    /**
+     * @var integer $rating
+     */
+    private $rating;
 
     /**
      * @var text $comment
@@ -134,6 +139,26 @@ class BikeReview
     }
 
     /**
+     * Set rating
+     *
+     * @param text $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return text 
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
      * Set comment
      *
      * @param text $comment
@@ -171,26 +196,6 @@ class BikeReview
     public function getReviews()
     {
         return $this->reviews;
-    }
-
-    /**
-     * Set comment_status
-     *
-     * @param string $commentStatus
-     */
-    public function setCommentStatus($commentStatus)
-    {
-        $this->comment_status = $commentStatus;
-    }
-
-    /**
-     * Get comment_status
-     *
-     * @return string 
-     */
-    public function getCommentStatus()
-    {
-        return $this->comment_status;
     }
 
     /**
@@ -291,5 +296,32 @@ class BikeReview
     public function getBike()
     {
         return $this->bike;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('name', new NotBlank(array(
+            'message' => 'U moet een naam invoeren'
+        )));
+        $metadata->addPropertyConstraint('name', new MinLength(array(
+            'limit' => 2,
+            'message' => 'Uw naam moet tenminste 2 karakters bevatten.'
+        )));
+        $metadata->addPropertyConstraint('email', new NotBlank(array(
+            'message' => 'U moet een e-mailadres invoeren'
+        )));
+        $metadata->addPropertyConstraint('email', new Email(array(
+            'message' => 'U moet hier een e-mailadres invoeren.',
+        )));
+        $metadata->addPropertyConstraint('rating', new NotBlank(array(
+            'message' => 'U moet een beoordeling invoeren'
+        )));
+        $metadata->addPropertyConstraint('comment', new NotBlank(array(
+            'message' => 'U moet een opmerking invoeren'
+        )));
+        $metadata->addPropertyConstraint('comment', new MinLength(array(
+            'limit' => 20,
+            'message' => 'U moet tenminste 20 karakters invoeren.'
+        )));
     }
 }

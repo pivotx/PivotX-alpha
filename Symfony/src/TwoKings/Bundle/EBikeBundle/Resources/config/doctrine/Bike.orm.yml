@@ -47,39 +47,23 @@ TwoKings\Bundle\EBikeBundle\Entity\Bike:
       scale: 0
       nullable: false
       unique: false
-    publish_state:
+    title:
       type: string
-      length: 32
+      length: 255
       precision: 0
       scale: 0
       nullable: false
       unique: false
-      auto_entity:
-        publishable:
-          type: state
-    publish_on:
-      type: datetime
+    no_of_reviews:
+      type: integer
       length: null
       precision: 0
       scale: 0
-      nullable: true
+      nullable: false
       unique: false
-      auto_entity:
-        publishable:
-          type: publish
-    depublish_on:
-      type: datetime
+    review_rating:
+      type: integer
       length: null
-      precision: 0
-      scale: 0
-      nullable: true
-      unique: false
-      auto_entity:
-        publishable:
-          type: depublish
-    title:
-      type: string
-      length: 255
       precision: 0
       scale: 0
       nullable: false

@@ -33,19 +33,14 @@ class Bike
     private $viewable;
 
     /**
-     * @var string $publish_state
+     * @var integer $no_of_reviews
      */
-    private $publish_state;
+    private $no_of_reviews;
 
     /**
-     * @var datetime $publish_on
+     * @var integer $review_rating
      */
-    private $publish_on;
-
-    /**
-     * @var datetime $depublish_on
-     */
-    private $depublish_on;
+    private $review_rating;
 
     /**
      * @var string $title
@@ -233,63 +228,43 @@ class Bike
     }
 
     /**
-     * Set publish_state
+     * Set no_of_reviews
      *
-     * @param string $publishState
+     * @param string $noofreviews
      */
-    public function setPublishState($publishState)
+    public function setNoOfReviews($no_of_reviews)
     {
-        $this->publish_state = $publishState;
+        $this->no_of_reviews = $no_of_reviews;
     }
 
     /**
-     * Get publish_state
+     * Get no_of_reviews
      *
      * @return string 
      */
-    public function getPublishState()
+    public function getNoOfReviews()
     {
-        return $this->publish_state;
+        return $this->no_of_reviews;
     }
 
     /**
-     * Set publish_on
+     * Set review_rating
      *
-     * @param datetime $publishOn
+     * @param string $reviewRating
      */
-    public function setPublishOn($publishOn)
+    public function setReviewRating($reviewRating)
     {
-        $this->publish_on = $publishOn;
+        $this->review_rating = $reviewRating;
     }
 
     /**
-     * Get publish_on
+     * Get review_rating
      *
-     * @return datetime 
+     * @return string 
      */
-    public function getPublishOn()
+    public function getReviewRating()
     {
-        return $this->publish_on;
-    }
-
-    /**
-     * Set depublish_on
-     *
-     * @param datetime $depublishOn
-     */
-    public function setDepublishOn($depublishOn)
-    {
-        $this->depublish_on = $depublishOn;
-    }
-
-    /**
-     * Get depublish_on
-     *
-     * @return datetime 
-     */
-    public function getDepublishOn()
-    {
-        return $this->depublish_on;
+        return $this->review_rating;
     }
 
     /**

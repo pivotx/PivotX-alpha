@@ -89,17 +89,11 @@
 
 <div id="reviews">
 
-	<div class="review-header">
-		<h3>2 reviews</h3>
-		
-		{% image '@TwoKingsEBikeBundle/Resources/public/images/plaats-review.png' %}<img src="{{ asset_url }}" alt="" />{% endimage %}
-		
-		<p><strong>Sorteer op:</strong> <a href="">Beste reviews</a> | <a href="">Datum</a></p>
-		
-	</div>
+{% include "TwoKingsEBikeBundle:Include:bikereviews.html.twig" %}
+
+{% include "TwoKingsEBikeBundle:Include:bikereview_new.html.twig" %}
 
 </div>
-
 
 
 {% endblock %}

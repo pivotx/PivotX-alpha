@@ -36,6 +36,10 @@ class Service
         $this->pivotx_views->registerView($view);
         unset($view);
 
+        $view = new loadBikeReviews($this->doctrine_registry, 'Bike/loadReviews');
+        $this->pivotx_views->registerView($view);
+        unset($view);
+
         /*
         $view = new \PivotX\Component\Views\ArrayView(
             array(

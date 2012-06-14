@@ -6,8 +6,8 @@
                 </th>
                 <th>Id</th>
                 <th>Title</th>
+                <th>Year</th>
                 <th>Reviews</th>
-                <th>State</th>
             </tr>
         </thead>
 
@@ -28,31 +28,20 @@
 
                     <div class="btn-group on-row-hover">
                         <a class="btn btn-mini" href="{{ ref(['_table/Bike/',item.id]|join) }}"><i class="icon-pencil icon-white"></i> edit</a>
-                        <button class="btn btn-mini btn-danger"><i class="icon-trash icon-white"></i> delete</button>
+                        <a class="btn btn-mini btn-danger crud-delete" href="{{ ref(['_table/',crud.entity,'/',item.id,'?action=delete']|join) }}"><i class="icon-trash icon-white"></i> delete</a>
                     </div>
                 </td>
                 <td>
-                    {{ item.reviews|length }}
+                    {{ item.yearbuilt }}
+                </td>
+                <td>
+                    {{ item.reviews|length }} total, {{ item.noofreviews }} visible
 
                     {% if item.reviews|length > 0 %}
                     <div class="btn-group on-row-hover">
                         <a class="btn btn-mini" href="{{ ref(['_table/Bike/',item.id,'/BikeReview']|join) }}"><i class="icon-comment icon-white"></i> reviews</a>
                     </div>
                     {% endif %}
-                </td>
-                <td>
-                    <span>{{ item.DateModified|date('Y-m-d') }}</span>
-
-                    {% if isPublished(item) %}
-                        <div class="btn-group on-row-hover">
-                            <button class="btn btn-mini btn-warning"><i class="icon-thumbs-down icon-white"></i> depublish</button>
-                        </div>
-                    {% else %}
-                        <div class="btn-group on-row-hover">
-                            <button class="btn btn-mini btn-success"><i class="icon-thumbs-up icon-white"></i> publish</button>
-                        </div>
-                    {% endif %}
-
                 </td>
             </tr>
         {% endfor %}
